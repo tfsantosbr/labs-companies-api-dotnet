@@ -13,7 +13,7 @@
   - Id (único)
   - CNPJ (único)
   - Nome Empresarial (único)
-  - Porte (ME, Eireli, LTDA, etc.)
+  - Natureza Jurídica (ME, Eireli, LTDA, etc.)
   - Atividade Econômica Principal (1-N)
   - Endereço
   - Data de Criação
@@ -24,7 +24,7 @@
   - Id do Usuário
   - Id da Qualificação de Sócios
   - Data de Entrada
-- **Cadastro de Funcionários da Empresa (Company Partners)**
+- **Cadastro de Funcionários da Empresa (Company Employee)**
   - Funcionários (1-N)
   - Id do Usuário
   - Id do Cargo do Funcionário
@@ -36,6 +36,7 @@
 
 ## Regras dos Casos de Uso
 
+- A empresa precisa ser criada com pelo menos 1 sócio
 - Um funcionário não pode estar em mais de uma empresa
 - Não pode atribuir o funcionário mais de uma vez na mesma empresa
 - Não pode atribuir o sócio mais de uma vez na mesma empresa
