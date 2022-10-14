@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+
 using Companies.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddCors(setup => 
+builder.Services.AddCors(setup =>
     setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -25,7 +26,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    await app.MigrateAndSeedData();
+    app.MigrateAndSeedData();
 }
 
 app.UseSwagger();

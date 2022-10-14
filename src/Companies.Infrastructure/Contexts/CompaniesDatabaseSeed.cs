@@ -1,6 +1,8 @@
+using Companies.Domain.Base.ValueObjects;
 using Companies.Domain.Features.CompanyEmployeePositions;
 using Companies.Domain.Features.CompanyMainActivities;
 using Companies.Domain.Features.CompanyPartnerQualifications;
+using Companies.Domain.Features.Users;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -15,28 +17,27 @@ public class CompaniesDatabaseSeed
         _context = context;
     }
 
-    public async Task SeedDataAsync()
+    public void SeedData()
     {
-        await Task.WhenAll(
-            SeedCompanyEmployeePositionsAsync(),
-            SeedCompanyMainActivitiesAsync(),
-            SeedCompanyPartnerQualificationsAsync()
-        );
+        SeedCompanyEmployeePositions();
+        SeedCompanyMainActivities();
+        SeedCompanyPartnerQualifications();
+        SeedUsers();
     }
 
     #region [ Company Employee Positions ]
 
-    private async Task SeedCompanyEmployeePositionsAsync()
+    private void SeedCompanyEmployeePositions()
     {
-        if (!await _context.CompanyEmployeePositions.AnyAsync())
+        if (!_context.CompanyEmployeePositions.Any())
         {
-            var companyEmployeePosition1 = new CompanyEmployeePosition(1, "Director");
-            var companyEmployeePosition2 = new CompanyEmployeePosition(2, "Administrator");
-            var companyEmployeePosition3 = new CompanyEmployeePosition(3, "Developer");
-            var companyEmployeePosition4 = new CompanyEmployeePosition(4, "Architect");
+            var companyEmployeePosition1 = new CompanyEmployeePosition(1, "Diretor");
+            var companyEmployeePosition2 = new CompanyEmployeePosition(2, "Administrador");
+            var companyEmployeePosition3 = new CompanyEmployeePosition(3, "Programador");
+            var companyEmployeePosition4 = new CompanyEmployeePosition(4, "Arquiteto");
             var companyEmployeePosition5 = new CompanyEmployeePosition(5, "Designer");
 
-            await _context.CompanyEmployeePositions.AddRangeAsync(
+            _context.CompanyEmployeePositions.AddRange(
                 companyEmployeePosition1,
                 companyEmployeePosition2,
                 companyEmployeePosition3,
@@ -44,7 +45,7 @@ public class CompaniesDatabaseSeed
                 companyEmployeePosition5
                 );
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 
@@ -52,42 +53,42 @@ public class CompaniesDatabaseSeed
 
     #region [ Company Main Activities ]
 
-    private async Task SeedCompanyMainActivitiesAsync()
+    private void SeedCompanyMainActivities()
     {
-        if (!await _context.CompanyMainActivities.AnyAsync())
+        if (!_context.CompanyMainActivities.Any())
         {
-            var companyMainActivity1 = new CompanyMainActivity(4781400, 
+            var companyMainActivity1 = new CompanyMainActivity(4781400,
                 "Comércio varejista de artigos do vestuário e acessórios");
 
-            var companyMainActivity2 = new CompanyMainActivity(9492800, 
+            var companyMainActivity2 = new CompanyMainActivity(9492800,
                 "Atividades de organizações políticas");
 
-            var companyMainActivity3 = new CompanyMainActivity(5611203, 
+            var companyMainActivity3 = new CompanyMainActivity(5611203,
                 "Lanchonetes casas de chá de sucos e similares");
 
-            var companyMainActivity4 = new CompanyMainActivity(5611201, 
+            var companyMainActivity4 = new CompanyMainActivity(5611201,
                 "Restaurantes e similares");
 
-            var companyMainActivity5 = new CompanyMainActivity(9602501, 
+            var companyMainActivity5 = new CompanyMainActivity(9602501,
                 "Cabeleireiros manicure e pedicure");
 
-            var companyMainActivity6 = new CompanyMainActivity(4399103, 
+            var companyMainActivity6 = new CompanyMainActivity(4399103,
                 "Obras de alvenaria");
 
-            var companyMainActivity7 = new CompanyMainActivity(9430800, 
+            var companyMainActivity7 = new CompanyMainActivity(9430800,
                 "Atividades de associações de defesa de direitos sociais");
 
-            var companyMainActivity8 = new CompanyMainActivity(7319002, 
+            var companyMainActivity8 = new CompanyMainActivity(7319002,
                 "Promoção de vendas");
 
-            var companyMainActivity9 = new CompanyMainActivity(4723700, 
+            var companyMainActivity9 = new CompanyMainActivity(4723700,
                 "Comércio varejista de bebidas");
 
-            var companyMainActivity10 = new CompanyMainActivity(4774100, 
+            var companyMainActivity10 = new CompanyMainActivity(4774100,
                 "Comércio varejista de artigos de óptica");
 
 
-            await _context.CompanyMainActivities.AddRangeAsync(
+            _context.CompanyMainActivities.AddRange(
                 companyMainActivity1,
                 companyMainActivity2,
                 companyMainActivity3,
@@ -100,7 +101,7 @@ public class CompaniesDatabaseSeed
                 companyMainActivity10
                 );
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 
@@ -108,9 +109,9 @@ public class CompaniesDatabaseSeed
 
     #region [ Company Partner Qualifications ]
 
-    private async Task SeedCompanyPartnerQualificationsAsync()
+    private void SeedCompanyPartnerQualifications()
     {
-        if (!await _context.CompanyPartnerQualifications.AnyAsync())
+        if (!_context.CompanyPartnerQualifications.Any())
         {
             var companyPartnerQualification1 = new CompanyPartnerQualification(5, "Administrador");
             var companyPartnerQualification2 = new CompanyPartnerQualification(10, "Diretor");
@@ -118,7 +119,7 @@ public class CompaniesDatabaseSeed
             var companyPartnerQualification4 = new CompanyPartnerQualification(22, "Sócio");
             var companyPartnerQualification5 = new CompanyPartnerQualification(54, "Fundador");
 
-            await _context.CompanyPartnerQualifications.AddRangeAsync(
+            _context.CompanyPartnerQualifications.AddRange(
                 companyPartnerQualification1,
                 companyPartnerQualification2,
                 companyPartnerQualification3,
@@ -126,7 +127,44 @@ public class CompaniesDatabaseSeed
                 companyPartnerQualification5
                 );
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+        }
+    }
+
+    #endregion
+
+
+    #region [ Users ]
+
+    private void SeedUsers()
+    {
+        if (!_context.Users.Any())
+        {
+            var user1 = new User(new CompleteName("Tiago", "Santos"), new Email("tiago@email.com"));
+            var user2 = new User(new CompleteName("Iran", "Nunes"), new Email("iran@email.com"));
+            var user3 = new User(new CompleteName("Bruna", "Oliveira"), new Email("bruna@email.com"));
+            var user4 = new User(new CompleteName("Maria", "Gorete"), new Email("maria@email.com"));
+            var user5 = new User(new CompleteName("Natalia", "Lourenço"), new Email("natalia@email.com"));
+            var user6 = new User(new CompleteName("Roberto", "Justus"), new Email("roberto@email.com"));
+            var user7 = new User(new CompleteName("Kim", "Katagiri"), new Email("kim@email.com"));
+            var user8 = new User(new CompleteName("Renan", "Oliveira"), new Email("renan@email.com"));
+            var user9 = new User(new CompleteName("Will", "Toshio"), new Email("will@email.com"));
+            var user10 = new User(new CompleteName("Carol", "Castro"), new Email("carol@email.com"));
+
+            _context.Users.AddRange(
+                user1,
+                user2,
+                user3,
+                user4,
+                user5,
+                user6,
+                user7,
+                user8,
+                user9,
+                user10
+                );
+
+            _context.SaveChanges();
         }
     }
 

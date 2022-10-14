@@ -14,7 +14,7 @@ public static class InfrastructureExtensions
         services.AddDbContext<CompaniesContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("Postgres"), builder =>
                 {
-                    builder.MigrationsAssembly("Agape.NoPaper.Infrastructure");
+                    builder.MigrationsAssembly("Companies.Infrastructure");
                 }));
 
         // add unit of work
@@ -24,7 +24,7 @@ public static class InfrastructureExtensions
         return services;
     }
 
-    public async static Task MigrateAndSeedData(this WebApplication app)
+    public static void MigrateAndSeedData(this WebApplication app)
     {
         using (var scope = app.Services.CreateScope())
         {
@@ -34,7 +34,7 @@ public static class InfrastructureExtensions
 
             var databaseSeed = new CompaniesDatabaseSeed(context);
 
-            await databaseSeed.SeedDataAsync();
+            databaseSeed.SeedData();
         }
     }
 }

@@ -2,19 +2,18 @@
 
 - **Cadastro de Atividade Econômica Principal (Main Activity)**
   - Código (único)
-  - Descrição (único)
+  - Descrição
   
 - **Cadastro de Qualificação de Sócios (Company Partner Qualifications)**
   - Código (único)
-  - Descrição (único)
-  - Exemplos: Titular, Presidente, Diretor, Administrador
+  - Descrição
   
 - **Cadastro de Cargos de Funcionários (Company Employee Positions)**
-  - Código (único)
-  - Descrição (único)
-  - Exemplos: Gerente, Desenvolvedor, Vendedor, Etc
+  - Id (único)
+  - Descrição
   
 - **Cadastro de Empresa (Companies)**
+  - Id (único)
   - CNPJ (único)
   - Nome Empresarial (único)
   - Porte (ME, Eireli, LTDA, etc.)
@@ -32,8 +31,8 @@
   - Data de Atualização
   
 - **Cadastro de Usuários (Users)**
+  - Id (único)
   - Nome (único)
-  - E-mail (único)
 
 ## Regras dos Casos de Uso
 
