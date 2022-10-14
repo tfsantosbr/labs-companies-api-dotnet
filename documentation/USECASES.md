@@ -3,15 +3,12 @@
 - **Cadastro de Atividade Econômica Principal (Main Activity)**
   - Código (único)
   - Descrição
-  
 - **Cadastro de Qualificação de Sócios (Company Partner Qualifications)**
   - Código (único)
   - Descrição
-  
 - **Cadastro de Cargos de Funcionários (Company Employee Positions)**
   - Id (único)
   - Descrição
-  
 - **Cadastro de Empresa (Companies)**
   - Id (único)
   - CNPJ (único)
@@ -19,17 +16,20 @@
   - Porte (ME, Eireli, LTDA, etc.)
   - Atividade Econômica Principal (1-N)
   - Endereço
-  - Sócios (N-N)
-    - Id do Usuário
-    - Id da Qualificação de Sócios
-    - Data de Entrada
-  - Funcionários (1-N)
-    - Id do Usuário
-    - Id do Cargo do Funcionário
-    - Data de Entrada
   - Data de Criação
   - Data de Atualização
-  
+  - Funcionários (1-N)
+  - Sócios (N-N)
+- **Cadastro de Sócios da Empresa (Company Partners)**
+  - Id do Usuário
+  - Id da Qualificação de Sócios
+  - Data de Entrada
+- **Cadastro de Funcionários da Empresa (Company Partners)**
+  - Funcionários (1-N)
+  - Id do Usuário
+  - Id do Cargo do Funcionário
+  - Data de Entrada
+
 - **Cadastro de Usuários (Users)**
   - Id (único)
   - Nome (único)
