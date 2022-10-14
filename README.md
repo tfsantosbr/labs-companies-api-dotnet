@@ -1,5 +1,10 @@
 # Companies API
 
+## Documentations
+
+- [Tasks](.documentation/../documentation/TASKS.md)
+- [Use Cases](.documentation/../documentation/USECASES.md)
+
 ## Patterns Used In This Application
 
 - [Domain Driven Design](https://balta.io/cursos/modelando-dominios-ricos)
