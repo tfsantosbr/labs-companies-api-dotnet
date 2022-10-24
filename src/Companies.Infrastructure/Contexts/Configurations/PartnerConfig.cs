@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Companies.Domain.Features.Users;
+using Companies.Domain.Features.Partners;
 
 namespace Companies.Infrastructure.Contexts.Configurations;
 
-public class UserConfig : IEntityTypeConfiguration<User>
+public class PartnerConfig : IEntityTypeConfiguration<Partner>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<Partner> builder)
     {
-        builder.ToTable("Users").HasKey(u => u.Id);
+        builder.ToTable("Partners").HasKey(u => u.Id);
 
         builder.Property(u => u.Id).ValueGeneratedNever();
 

@@ -1,7 +1,7 @@
 # TASKS
 
 - [ ] Domínio
-  - [ ] Criação do Domínio
+  - [x] Criação do Domínio
   - [ ] Testes unitários do Domínio
 
 ---

@@ -1,10 +1,7 @@
 using Companies.Domain.Base.ValueObjects;
-using Companies.Domain.Features.CompanyEmployeePositions;
 using Companies.Domain.Features.CompanyMainActivities;
 using Companies.Domain.Features.CompanyPartnerQualifications;
-using Companies.Domain.Features.Users;
-
-using Microsoft.EntityFrameworkCore;
+using Companies.Domain.Features.Partners;
 
 namespace Companies.Infrastructure.Contexts;
 
@@ -19,37 +16,10 @@ public class CompaniesDatabaseSeed
 
     public void SeedData()
     {
-        SeedCompanyEmployeePositions();
         SeedCompanyMainActivities();
         SeedCompanyPartnerQualifications();
-        SeedUsers();
+        SeedPartners();
     }
-
-    #region [ Company Employee Positions ]
-
-    private void SeedCompanyEmployeePositions()
-    {
-        if (!_context.CompanyEmployeePositions.Any())
-        {
-            var companyEmployeePosition1 = new CompanyEmployeePosition(1, "Diretor");
-            var companyEmployeePosition2 = new CompanyEmployeePosition(2, "Administrador");
-            var companyEmployeePosition3 = new CompanyEmployeePosition(3, "Programador");
-            var companyEmployeePosition4 = new CompanyEmployeePosition(4, "Arquiteto");
-            var companyEmployeePosition5 = new CompanyEmployeePosition(5, "Designer");
-
-            _context.CompanyEmployeePositions.AddRange(
-                companyEmployeePosition1,
-                companyEmployeePosition2,
-                companyEmployeePosition3,
-                companyEmployeePosition4,
-                companyEmployeePosition5
-                );
-
-            _context.SaveChanges();
-        }
-    }
-
-    #endregion
 
     #region [ Company Main Activities ]
 
@@ -133,35 +103,34 @@ public class CompaniesDatabaseSeed
 
     #endregion
 
+    #region [ Partners ]
 
-    #region [ Users ]
-
-    private void SeedUsers()
+    private void SeedPartners()
     {
-        if (!_context.Users.Any())
+        if (!_context.Partners.Any())
         {
-            var user1 = new User(new CompleteName("Tiago", "Santos"), new Email("tiago@email.com"));
-            var user2 = new User(new CompleteName("Iran", "Nunes"), new Email("iran@email.com"));
-            var user3 = new User(new CompleteName("Bruna", "Oliveira"), new Email("bruna@email.com"));
-            var user4 = new User(new CompleteName("Maria", "Gorete"), new Email("maria@email.com"));
-            var user5 = new User(new CompleteName("Natalia", "Lourenço"), new Email("natalia@email.com"));
-            var user6 = new User(new CompleteName("Roberto", "Justus"), new Email("roberto@email.com"));
-            var user7 = new User(new CompleteName("Kim", "Katagiri"), new Email("kim@email.com"));
-            var user8 = new User(new CompleteName("Renan", "Oliveira"), new Email("renan@email.com"));
-            var user9 = new User(new CompleteName("Will", "Toshio"), new Email("will@email.com"));
-            var user10 = new User(new CompleteName("Carol", "Castro"), new Email("carol@email.com"));
+            var partner1 = new Partner(new CompleteName("Tiago", "Santos"), new Email("tiago@email.com"));
+            var partner2 = new Partner(new CompleteName("Iran", "Nunes"), new Email("iran@email.com"));
+            var partner3 = new Partner(new CompleteName("Bruna", "Oliveira"), new Email("bruna@email.com"));
+            var partner4 = new Partner(new CompleteName("Maria", "Gorete"), new Email("maria@email.com"));
+            var partner5 = new Partner(new CompleteName("Natalia", "Lourenço"), new Email("natalia@email.com"));
+            var partner6 = new Partner(new CompleteName("Roberto", "Justus"), new Email("roberto@email.com"));
+            var partner7 = new Partner(new CompleteName("Kim", "Katagiri"), new Email("kim@email.com"));
+            var partner8 = new Partner(new CompleteName("Renan", "Oliveira"), new Email("renan@email.com"));
+            var partner9 = new Partner(new CompleteName("Will", "Toshio"), new Email("will@email.com"));
+            var partner10 = new Partner(new CompleteName("Carol", "Castro"), new Email("carol@email.com"));
 
-            _context.Users.AddRange(
-                user1,
-                user2,
-                user3,
-                user4,
-                user5,
-                user6,
-                user7,
-                user8,
-                user9,
-                user10
+            _context.Partners.AddRange(
+                partner1,
+                partner2,
+                partner3,
+                partner4,
+                partner5,
+                partner6,
+                partner7,
+                partner8,
+                partner9,
+                partner10
                 );
 
             _context.SaveChanges();

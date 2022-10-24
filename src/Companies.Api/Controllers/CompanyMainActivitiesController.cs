@@ -11,6 +11,7 @@ namespace Companies.Api.Controllers;
 public class CompanyMainActivitiesController : ControllerBase
 {
     private DbSet<CompanyMainActivity> _companyMainActivities;
+    
     public CompanyMainActivitiesController(CompaniesContext context)
     {
         _companyMainActivities = context.CompanyMainActivities;

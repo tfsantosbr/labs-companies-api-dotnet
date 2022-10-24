@@ -11,6 +11,7 @@ namespace Companies.Api.Controllers;
 public class CompanyPartnerQualificationsController : ControllerBase
 {
     private DbSet<CompanyPartnerQualification> _companyPartnerQualifications;
+    
     public CompanyPartnerQualificationsController(CompaniesContext context)
     {
         _companyPartnerQualifications = context.CompanyPartnerQualifications;

@@ -1,17 +1,17 @@
 using Companies.Domain.Base.ValueObjects;
 
-namespace Companies.Domain.Features.Users;
+namespace Companies.Domain.Features.Partners;
 
-public class User
+public class Partner
 {
-    public User(CompleteName completeName, Email email, Guid? id = null)
+    public Partner(CompleteName completeName, Email email, Guid? id = null)
     {
         Id = id ?? Guid.NewGuid();
         CompleteName = completeName;
         Email = email;
     }
 
-    private User()
+    private Partner()
     {
     }
 

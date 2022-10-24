@@ -1,5 +1,5 @@
-using Companies.Domain.Features.Users;
-using Companies.Domain.Features.Users.Models;
+using Companies.Domain.Features.Partners;
+using Companies.Domain.Features.Partners.Models;
 using Companies.Infrastructure.Contexts;
 
 using Microsoft.AspNetCore.Mvc;
@@ -8,22 +8,22 @@ using Microsoft.EntityFrameworkCore;
 namespace Companies.Api.Controllers;
 
 [ApiController]
-[Route("users")]
-public class UsersController : ControllerBase
+[Route("partners")]
+public class PartnersController : ControllerBase
 {
-    private DbSet<User> _users;
+    private DbSet<Partner> _partners;
 
-    public UsersController(CompaniesContext context)
+    public PartnersController(CompaniesContext context)
     {
-        _users = context.Users;
+        _partners = context.Partners;
     }
 
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var items = await _users
+        var items = await _partners
             .AsNoTracking()
-            .Select(u => new UserItem
+            .Select(u => new PartnerItem
             {
                 Id = u.Id,
                 Name = u.CompleteName.ToString(),

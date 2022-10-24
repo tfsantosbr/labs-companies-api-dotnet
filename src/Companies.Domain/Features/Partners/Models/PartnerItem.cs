@@ -1,6 +1,6 @@
-namespace Companies.Domain.Features.Users.Models;
+namespace Companies.Domain.Features.Partners.Models;
 
-public class UserItem
+public class PartnerItem
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;

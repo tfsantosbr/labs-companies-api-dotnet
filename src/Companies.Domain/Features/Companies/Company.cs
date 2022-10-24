@@ -6,8 +6,12 @@ namespace Companies.Domain.Features.Companies;
 
 public class Company
 {
+    // Fields
+
     private readonly List<CompanyPartner> _partners = new List<CompanyPartner>();
-    private readonly List<CompanyEmployee> _employees = new List<CompanyEmployee>();
+    private readonly List<CompanyPhone> _phones = new List<CompanyPhone>();
+
+    // Constructors
 
     public Company(
         Cnpj cnpj, string name, CompanyLegalNatureType legalNature, int mainActivityId,
@@ -31,6 +35,8 @@ public class Company
     {
     }
 
+    // Properties
+
     public Guid Id { get; private set; }
     public Cnpj Cnpj { get; private set; } = default!;
     public string Name { get; private set; } = default!;
@@ -41,11 +47,13 @@ public class Company
     public DateTime UpdatedAt { get; private set; }
     public CompanyMainActivity MainActivity { get; private set; } = default!;
     public IReadOnlyCollection<CompanyPartner> Partners => _partners.AsReadOnly();
-    public IReadOnlyCollection<CompanyEmployee> Employees => _employees.AsReadOnly();
+    public IReadOnlyCollection<CompanyPhone> Phones => _phones.AsReadOnly();
+
+    // Public Methods
 
     public void Update(
         string name, CompanyLegalNatureType legalNature, int mainActivityId,
-        Address address, DateTime createdAt, DateTime updatedAt)
+        Address address, DateTime createdAt, DateTime updatedAt, IEnumerable<CompanyPhone> phones)
     {
         Name = name;
         LegalNature = legalNature;
@@ -53,13 +61,20 @@ public class Company
         Address = address;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
+        
+        UpdatePhones(phones);
     }
 
     public void AddPartner(CompanyPartner partner) => _partners.Add(partner);
-    public CompanyPartner? GetPartner(Guid userId) => _partners.FirstOrDefault(p => p.UserId == userId);
     public void RemovePartner(CompanyPartner partner) => _partners.Remove(partner);
 
-    public void AddEmployee(CompanyEmployee employee) => _employees.Add(employee);
-    public CompanyEmployee? GetEmployee(Guid userId) => _employees.FirstOrDefault(p => p.UserId == userId);
-    public void RemoveEmployee(CompanyEmployee employee) => _employees.Remove(employee);
+    // Private Methods
+    
+    private void UpdatePhones(IEnumerable<CompanyPhone> phones)
+    {
+        _phones.Clear();
+
+        foreach (var phone in phones)
+            _phones.Add(phone);
+    }
 }
