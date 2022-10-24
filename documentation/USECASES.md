@@ -6,7 +6,9 @@ API de cadastro de **Empresas**, com seus respectivos **Sócios**
 
 - A empresa precisa ser criada com pelo menos 1 sócio
 - Não pode atribuir o sócio mais de uma vez na mesma empresa
-- Disponibilizar endpoints para o gerencimaneto de sócios (Create, Read, Delete)
+- Disponibilizar endpoints listar as atividades econômicas
+- Disponibilizar endpoints listar as qualificações dos sócios
+- Disponibilizar endpoints gerenciamento dos sócios (Create, Read, Update, Delete)
 - Disponibilizar endpoints para o gerenciamento da empresa (Create, Read, Update, Delete)
 - Disponibilizar endpoints para o gerencimaneto dos sócios da empresa (Create, Read, Delete)
   
