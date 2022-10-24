@@ -7,9 +7,9 @@
 ---
 
 - [ ] Infraestrutura
-  - [ ] Mapeamento Domínio > Banco de Dados
-  - [ ] Criação das migrações
-  - [ ] Seed de dados de Teste
+  - [x] Mapeamento Domínio > Banco de Dados
+  - [x] Criação das migrações
+  - [x] Seed de dados de Teste
   - [ ] Implementação do Repositório
 
 ---

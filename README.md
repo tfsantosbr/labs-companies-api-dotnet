@@ -2,8 +2,9 @@
 
 ## Documentations
 
-- [Tasks](.documentation/../documentation/TASKS.md)
-- [Use Cases](.documentation/../documentation/USECASES.md)
+- [Tasks](./documentation/../documentation/TASKS.md)
+- [Use Cases](./documentation/../documentation/USECASES.md)
+- [Technical Debts](./documentation/TECHNICAL_DEBTS.md)
 
 ## Patterns Used In This Application
 
