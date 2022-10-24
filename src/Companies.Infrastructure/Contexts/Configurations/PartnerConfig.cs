@@ -10,12 +10,10 @@ public class PartnerConfig : IEntityTypeConfiguration<Partner>
     {
         builder.ToTable("Partners").HasKey(u => u.Id);
 
-        builder.Property(u => u.Id).ValueGeneratedNever();
-
         builder.OwnsOne(p => p.CompleteName, completeName =>
         {
             completeName.Property(p => p.FirstName).HasColumnName("FirstName").IsRequired().HasMaxLength(300);
-            completeName.Property(p => p.Lastname).HasColumnName("Lastname").IsRequired().HasMaxLength(300);
+            completeName.Property(p => p.LastName).HasColumnName("LastName").IsRequired().HasMaxLength(300);
         });
 
         builder.OwnsOne(p => p.Email, email =>

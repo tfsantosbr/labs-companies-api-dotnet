@@ -20,3 +20,9 @@
   - [ ] Criação e implementação dos endpoints da API
   - [ ] Testes integrados da API
   - [ ] Testes de estresse da API
+
+---
+
+- [ ] Publicação
+  - [ ] Dockerfile da API
+  - [ ] Docker Compose com a API e Infraestrutura configurados

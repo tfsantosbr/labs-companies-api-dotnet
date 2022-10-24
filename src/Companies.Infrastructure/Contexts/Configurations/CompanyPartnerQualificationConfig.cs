@@ -11,6 +11,6 @@ public class CompanyPartnerQualificationConfig : IEntityTypeConfiguration<Compan
         builder.ToTable("CompanyPartnerQualifications").HasKey(cpq => cpq.Code);
         
         builder.Property(cpq => cpq.Code).ValueGeneratedNever();
-        builder.Property(cpq => cpq.Description).HasColumnType("varchar").HasMaxLength(300);
+        builder.Property(cpq => cpq.Description).HasMaxLength(300);
     }
 }

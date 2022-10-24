@@ -15,7 +15,7 @@ public class Company
 
     public Company(
         Cnpj cnpj, string name, CompanyLegalNatureType legalNature, int mainActivityId,
-        Address address, DateTime createdAt, DateTime updatedAt, IEnumerable<CompanyPartner> partners, 
+        Address address, IEnumerable<CompanyPartner> partners, IEnumerable<CompanyPhone>? phones = null,
         Guid? id = null)
     {
         Id = id ?? Guid.NewGuid();
@@ -24,8 +24,10 @@ public class Company
         LegalNature = legalNature;
         MainActivityId = mainActivityId;
         Address = address;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+
+        AddPhones(phones);
 
         foreach (var partner in partners)
             AddPartner(partner);
@@ -53,15 +55,14 @@ public class Company
 
     public void Update(
         string name, CompanyLegalNatureType legalNature, int mainActivityId,
-        Address address, DateTime createdAt, DateTime updatedAt, IEnumerable<CompanyPhone> phones)
+        Address address, IEnumerable<CompanyPhone> phones)
     {
         Name = name;
         LegalNature = legalNature;
         MainActivityId = mainActivityId;
         Address = address;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        
+        UpdatedAt = DateTime.UtcNow;
+
         UpdatePhones(phones);
     }
 
@@ -69,10 +70,22 @@ public class Company
     public void RemovePartner(CompanyPartner partner) => _partners.Remove(partner);
 
     // Private Methods
-    
-    private void UpdatePhones(IEnumerable<CompanyPhone> phones)
+
+    private void UpdatePhones(IEnumerable<CompanyPhone>? phones)
     {
         _phones.Clear();
+
+        if (phones == null || !phones.Any())
+            return;
+
+        foreach (var phone in phones)
+            _phones.Add(phone);
+    }
+
+    private void AddPhones(IEnumerable<CompanyPhone>? phones)
+    {
+        if (phones == null || !phones.Any())
+            return;
 
         foreach (var phone in phones)
             _phones.Add(phone);

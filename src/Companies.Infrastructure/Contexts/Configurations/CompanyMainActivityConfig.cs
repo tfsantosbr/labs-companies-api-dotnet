@@ -11,6 +11,6 @@ public class CompanyMainActivityConfig : IEntityTypeConfiguration<CompanyMainAct
         builder.ToTable("CompanyMainActivities").HasKey(cma => cma.Code);
         
         builder.Property(cma => cma.Code).ValueGeneratedNever();
-        builder.Property(cma => cma.Description).HasColumnType("varchar").HasMaxLength(300);
+        builder.Property(cma => cma.Description).HasMaxLength(300);
     }
 }

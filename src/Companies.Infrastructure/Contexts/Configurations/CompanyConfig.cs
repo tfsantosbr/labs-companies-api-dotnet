@@ -11,12 +11,12 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
     {
         builder.ToTable("Companies").HasKey(c => c.Id);
 
-        builder.Property(c => c.Name).HasColumnType("varchar").HasMaxLength(500);
+        builder.Property(c => c.Name).HasMaxLength(500);
 
         builder.OwnsOne(c => c.Cnpj, cnpj =>
         {
             cnpj.Property(c => c.Number)
-                .HasColumnName("Cnpj").HasColumnType("varchar").IsRequired().HasMaxLength(300);
+                .HasColumnName("Cnpj").IsRequired().HasMaxLength(300);
 
             cnpj.HasIndex(c => c.Number).IsUnique();
         });
@@ -34,7 +34,6 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
         });
 
         builder.HasOne(c => c.MainActivity).WithMany().HasForeignKey(c => c.MainActivityId);
-        builder.HasMany(c => c.Partners).WithOne(cp => cp.Company).HasForeignKey(cp => cp.CompanyId);
         builder.HasMany(c => c.Phones).WithOne().HasForeignKey(c => c.CompanyId);
 
         builder.HasIndex(c => c.Name).IsUnique();

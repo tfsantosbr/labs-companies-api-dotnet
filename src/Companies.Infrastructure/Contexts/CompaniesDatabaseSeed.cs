@@ -1,4 +1,6 @@
 using Companies.Domain.Base.ValueObjects;
+using Companies.Domain.Features.Companies;
+using Companies.Domain.Features.Companies.Enums;
 using Companies.Domain.Features.CompanyMainActivities;
 using Companies.Domain.Features.CompanyPartnerQualifications;
 using Companies.Domain.Features.Partners;
@@ -19,6 +21,7 @@ public class CompaniesDatabaseSeed
         SeedCompanyMainActivities();
         SeedCompanyPartnerQualifications();
         SeedPartners();
+        SeedCompanies();
     }
 
     #region [ Company Main Activities ]
@@ -109,16 +112,55 @@ public class CompaniesDatabaseSeed
     {
         if (!_context.Partners.Any())
         {
-            var partner1 = new Partner(new CompleteName("Tiago", "Santos"), new Email("tiago@email.com"));
-            var partner2 = new Partner(new CompleteName("Iran", "Nunes"), new Email("iran@email.com"));
-            var partner3 = new Partner(new CompleteName("Bruna", "Oliveira"), new Email("bruna@email.com"));
-            var partner4 = new Partner(new CompleteName("Maria", "Gorete"), new Email("maria@email.com"));
-            var partner5 = new Partner(new CompleteName("Natalia", "Lourenço"), new Email("natalia@email.com"));
-            var partner6 = new Partner(new CompleteName("Roberto", "Justus"), new Email("roberto@email.com"));
-            var partner7 = new Partner(new CompleteName("Kim", "Katagiri"), new Email("kim@email.com"));
-            var partner8 = new Partner(new CompleteName("Renan", "Oliveira"), new Email("renan@email.com"));
-            var partner9 = new Partner(new CompleteName("Will", "Toshio"), new Email("will@email.com"));
-            var partner10 = new Partner(new CompleteName("Carol", "Castro"), new Email("carol@email.com"));
+            var partner1 = new Partner(
+                new CompleteName("Tiago", "Santos"),
+                new Email("tiago@email.com"),
+                id: new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"));
+
+            var partner2 = new Partner(
+                new CompleteName("Iran", "Nunes"),
+                new Email("iran@email.com"),
+                id: new Guid("9132b269-ff90-402d-88d0-2f9e7fdb312f"));
+
+            var partner3 = new Partner(
+                new CompleteName("Bruna", "Oliveira"),
+                new Email("bruna@email.com"),
+                id: new Guid("bcb63995-49c2-49d2-82ae-8c06183bfd2e"));
+
+            var partner4 = new Partner(
+                new CompleteName("Maria", "Gorete"),
+                new Email("maria@email.com"),
+                id: new Guid("012af8a2-8de0-45b7-b9c7-dcfdb3b491b3"));
+
+            var partner5 = new Partner(
+                new CompleteName("Natalia", "Lourenço"),
+                new Email("natalia@email.com"),
+                id: new Guid("fd532165-d7fd-44bb-b19b-f8e2a1c2073f"));
+
+            var partner6 = new Partner(
+                new CompleteName("Roberto", "Justus"),
+                new Email("roberto@email.com"),
+                id: new Guid("650e25ab-9b3b-4aaa-9b9a-45edb4527129"));
+
+            var partner7 = new Partner(
+                new CompleteName("Kim", "Katagiri"),
+                new Email("kim@email.com"),
+                id: new Guid("a2f7cb01-6e1e-4831-ad0e-c62e77286e88"));
+
+            var partner8 = new Partner(
+                new CompleteName("Renan", "Oliveira"),
+                new Email("renan@email.com"),
+                id: new Guid("f0a4ffdb-543b-4f38-9a3d-94e973789b74"));
+
+            var partner9 = new Partner(
+                new CompleteName("Will", "Toshio"),
+                new Email("will@email.com"),
+                id: new Guid("c7baa255-6bfb-4d67-91da-fc1d858fdf00"));
+
+            var partner10 = new Partner(
+                new CompleteName("Carol", "Castro"),
+                new Email("carol@email.com"),
+                id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891"));
 
             _context.Partners.AddRange(
                 partner1,
@@ -132,6 +174,52 @@ public class CompaniesDatabaseSeed
                 partner9,
                 partner10
                 );
+
+            _context.SaveChanges();
+        }
+    }
+
+    #endregion
+
+    #region [ Companies ]
+
+    private void SeedCompanies()
+    {
+        if (!_context.Companies.Any())
+        {
+            var parners = new[]
+            {
+                new CompanyPartner(new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"), 54, new DateOnly(2022, 1, 1))
+            };
+
+            var phones = new[]
+            {
+                new CompanyPhone(new Phone("11","999999999")),
+                new CompanyPhone(new Phone("11","988888888")),
+                new CompanyPhone(new Phone("11","977777777")),
+            };
+
+            var company1 = new Company(
+                id: new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
+                cnpj: new Cnpj("01244660000180"),
+                name: "TF Santos Informática",
+                legalNature: CompanyLegalNatureType.EIRELI,
+                mainActivityId: 4781400,
+                address: new Address(
+                    postalCode: "79091719",
+                    street: "Avenida Prefeito Lúdio Martins Coelho",
+                    number: "863",
+                    complement: null,
+                    neighborhood: "Residencial Oliveira",
+                    city: "Campo Grande",
+                    state: "MS",
+                    country: "Brasil"
+                ),
+                partners: parners,
+                phones: phones
+            );
+
+            _context.Companies.AddRange(company1);
 
             _context.SaveChanges();
         }

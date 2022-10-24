@@ -13,7 +13,7 @@ public class CompanyPartnerConfig : IEntityTypeConfiguration<CompanyPartner>
             .HasKey(ce => new { ce.CompanyId, ce.PartnerId });
 
         builder.HasOne(ce => ce.Qualification).WithMany().HasForeignKey(ce => ce.QualificationId);
-        builder.HasOne(ce => ce.Partner).WithMany().HasForeignKey(ce => ce.PartnerId);
-        builder.HasOne(ce => ce.Company).WithMany().HasForeignKey(ce => ce.CompanyId);
+        builder.HasOne(ce => ce.Partner).WithMany(p => p.Companies).HasForeignKey(ce => ce.PartnerId);
+        builder.HasOne(ce => ce.Company).WithMany(p => p.Partners).HasForeignKey(ce => ce.CompanyId);
     }
 }

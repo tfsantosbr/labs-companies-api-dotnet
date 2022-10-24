@@ -9,12 +9,14 @@ public class CompanyPhoneConfig : IEntityTypeConfiguration<CompanyPhone>
 {
     public void Configure(EntityTypeBuilder<CompanyPhone> builder)
     {
-        builder.ToTable("CompanyPhones").HasKey(cp => new { cp.CompanyId, cp.Phone.Number });
+        builder.ToTable("CompanyPhones").HasKey(cp => cp.Id);
 
         builder.OwnsOne(cp => cp.Phone, phoneBuilder =>
         {
-            phoneBuilder.Property(p => p.Number).HasColumnType("varchar").HasMaxLength(10);
-            phoneBuilder.HasIndex(p => p.Number).IsUnique();
+            phoneBuilder.Property(p => p.CountryCode).HasColumnName("CountryCode").HasMaxLength(3);
+            phoneBuilder.Property(p => p.Number).HasColumnName("Number").HasMaxLength(10);
+
+            phoneBuilder.HasIndex(p => new { p.CountryCode, p.Number }).IsUnique();
         });
     }
 }
