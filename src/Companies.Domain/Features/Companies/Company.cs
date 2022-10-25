@@ -1,6 +1,9 @@
 using Companies.Domain.Base.ValueObjects;
 using Companies.Domain.Features.Companies.Enums;
+using Companies.Domain.Features.Companies.Validations;
 using Companies.Domain.Features.CompanyMainActivities;
+
+using FluentValidation;
 
 namespace Companies.Domain.Features.Companies;
 
@@ -31,6 +34,8 @@ public class Company
 
         foreach (var partner in partners)
             AddPartner(partner);
+
+        EnsureValidation();
     }
 
     private Company()
@@ -64,6 +69,8 @@ public class Company
         UpdatedAt = DateTime.UtcNow;
 
         UpdatePhones(phones);
+
+        EnsureValidation();
     }
 
     public void AddPartner(CompanyPartner partner) => _partners.Add(partner);
@@ -89,5 +96,10 @@ public class Company
 
         foreach (var phone in phones)
             _phones.Add(phone);
+    }
+
+    private void EnsureValidation()
+    {
+        new CompanyValidator().ValidateAndThrow(this);
     }
 }
