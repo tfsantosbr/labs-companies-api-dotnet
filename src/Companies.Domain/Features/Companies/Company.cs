@@ -1,6 +1,5 @@
 using Companies.Domain.Base.ValueObjects;
 using Companies.Domain.Features.Companies.Enums;
-using Companies.Domain.Features.Companies.Validations;
 using Companies.Domain.Features.CompanyMainActivities;
 
 using FluentValidation;
@@ -30,12 +29,19 @@ public class Company
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
 
+        if (HasEmptyPartners(partners))
+            throw new Exception("The company must be created with at least one partner");
+
+        if (IsDuplicatedPartners(partners))
+            throw new Exception("There are duplicate partners in the company");
+
+        if (IsDuplicatedPhones(phones))
+            throw new Exception("There are duplicate phones in the company");
+
         AddPhones(phones);
 
         foreach (var partner in partners)
             AddPartner(partner);
-
-        EnsureValidation();
     }
 
     private Company()
@@ -68,15 +74,53 @@ public class Company
         Address = address;
         UpdatedAt = DateTime.UtcNow;
 
-        UpdatePhones(phones);
+        if (IsDuplicatedPhones(phones))
+            throw new Exception("There are duplicate phones in the company");
 
-        EnsureValidation();
+        UpdatePhones(phones);
     }
 
-    public void AddPartner(CompanyPartner partner) => _partners.Add(partner);
-    public void RemovePartner(CompanyPartner partner) => _partners.Remove(partner);
+    public void AddPartner(CompanyPartner partner)
+    {
+        if (IsDuplicatedPartner(partner))
+            throw new Exception("This partner is already linked with the company");
+
+        _partners.Add(partner);
+    }
+
+    public void RemovePartner(CompanyPartner partner)
+    {
+        if (PartnerNotExists(partner))
+            throw new Exception("This partner not exists in this company");
+
+        _partners.Remove(partner);
+    }
+
 
     // Private Methods
+
+    private bool IsDuplicatedPartners(IEnumerable<CompanyPartner> partners)
+    {
+        return partners
+            .GroupBy(p => p.PartnerId)
+            .Any(g => g.Count() > 1);
+    }
+
+    private bool HasEmptyPartners(IEnumerable<CompanyPartner> partners)
+    {
+        return !partners.Any();
+    }
+
+    private bool IsDuplicatedPartner(CompanyPartner partner)
+    {
+        return _partners.Any(p => p.PartnerId == partner.PartnerId);
+    }
+
+
+    private bool PartnerNotExists(CompanyPartner partner)
+    {
+        return !_partners.Any(p => p.PartnerId == partner.PartnerId);
+    }
 
     private void UpdatePhones(IEnumerable<CompanyPhone>? phones)
     {
@@ -98,8 +142,14 @@ public class Company
             _phones.Add(phone);
     }
 
-    private void EnsureValidation()
+
+    private bool IsDuplicatedPhones(IEnumerable<CompanyPhone>? phones)
     {
-        new CompanyValidator().ValidateAndThrow(this);
+        if (phones == null)
+            return false;
+
+        return phones
+            .GroupBy(p => new { p.Phone.CountryCode, p.Phone.Number })
+            .Any(g => g.Count() > 1);
     }
 }

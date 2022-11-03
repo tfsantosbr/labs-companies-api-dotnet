@@ -36,7 +36,7 @@ API de cadastro de **Empresas**, com seus respectivos **Sócios**
 - Endereço
 - Data de Criação
 - Data de Atualização
-- Telefones (único) (1-N)
+- Telefones (1-N)
 - Sócios (N-N)
 
 # Cadastro de Sócios da Empresa (Company Partners)
