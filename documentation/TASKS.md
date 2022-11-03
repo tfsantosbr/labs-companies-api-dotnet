@@ -6,17 +6,21 @@
 
 ---
 
-- [ ] Infraestrutura
-  - [x] Mapeamento Domínio > Banco de Dados
-  - [x] Criação das migrações
-  - [x] Seed de dados de Teste
-  - [ ] Implementação do Repositório
-
----
-
 - [ ] Aplicação
   - [ ] Criação e implementação dos casos de uso (Comandos, Handlers, Responses, etc)
+    - [ ] Empresas
+      - [ ] Cadastrar Empresa
+      - [ ] Atualizar Empresa
+      - [ ] Remover Empresa
+      - [ ] Cadastrar Sócio
+      - [ ] Remover Sócio
   - [ ] Testes unitários dos casos de uso
+    - [ ] Empresas
+      - [ ] Cadastrar Empresa
+      - [ ] Atualizar Empresa
+      - [ ] Remover Empresa
+      - [ ] Cadastrar Sócio
+      - [ ] Remover Sócio
   - [ ] Criação e implementação dos endpoints da API
     - [x] Endpoints para listar as atividades econômicas
     - [x] Endpoints para listar as qualificações dos sócios
@@ -25,6 +29,14 @@
     - [ ] Endpoints para o gerencimaneto dos sócios da empresa (Create, Read, Delete)
   - [ ] Testes integrados da API
   - [ ] Testes de estresse da API
+
+---
+
+- [ ] Infraestrutura
+  - [x] Mapeamento Domínio > Banco de Dados
+  - [x] Criação das migrações
+  - [x] Seed de dados de Teste
+  - [ ] Implementação do Repositório
 
 ---
 
