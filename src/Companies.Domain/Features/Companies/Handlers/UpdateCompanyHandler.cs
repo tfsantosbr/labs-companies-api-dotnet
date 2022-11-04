@@ -1,3 +1,4 @@
+using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Base.Persistence;
 using Companies.Domain.Base.ValueObjects;
@@ -9,7 +10,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class UpdateCompanyHandler : IRequestHandler<UpdateCompany, Response>
+public class UpdateCompanyHandler : CommandHandler, IRequestHandler<UpdateCompany, Response>
 {
     // Fields
 
@@ -87,15 +88,5 @@ public class UpdateCompanyHandler : IRequestHandler<UpdateCompany, Response>
     private async Task<bool> IsDuplicatedName(string name, Guid ignoreId)
     {
         return await _companyRepository.AnyByName(name, ignoreId);
-    }
-
-    private Response ErrorResponse(string code, string errorMessage)
-    {
-        return Response.Error(new Notification(code, errorMessage));
-    }
-
-    private Response RequestErrorsResponse(IEnumerable<Notification> notifications)
-    {
-        return Response.Error(notifications);
     }
 }

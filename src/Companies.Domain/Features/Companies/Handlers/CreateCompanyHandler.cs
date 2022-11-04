@@ -1,3 +1,4 @@
+using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Base.Persistence;
 using Companies.Domain.Base.ValueObjects;
@@ -9,7 +10,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class CreateCompanyHandler : IRequestHandler<CreateCompany, Response<Company>>
+public class CreateCompanyHandler : CommandHandler<Company>, IRequestHandler<CreateCompany, Response<Company>>
 {
     // Fields
 
@@ -106,13 +107,5 @@ public class CreateCompanyHandler : IRequestHandler<CreateCompany, Response<Comp
         return await _companyRepository.AnyByCnpj(cnpj);
     }
 
-    private Response<Company> ErrorResponse(string code, string errorMessage)
-    {
-        return Response<Company>.Error(new Notification(code, errorMessage));
-    }
-
-    private Response<Company> RequestErrorsResponse(IEnumerable<Notification> notifications)
-    {
-        return Response<Company>.Error(notifications);
-    }
+    
 }
