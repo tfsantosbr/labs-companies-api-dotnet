@@ -9,14 +9,14 @@
 - [ ] Aplicação
   - [ ] Criação e implementação dos casos de uso (Comandos, Handlers, Responses, etc)
     - [ ] Empresas
-      - [ ] Cadastrar Empresa
+      - [x] Cadastrar Empresa
       - [ ] Atualizar Empresa
       - [ ] Remover Empresa
       - [ ] Cadastrar Sócio
       - [ ] Remover Sócio
   - [ ] Testes unitários dos casos de uso
     - [ ] Empresas
-      - [ ] Cadastrar Empresa
+      - [x] Cadastrar Empresa
       - [ ] Atualizar Empresa
       - [ ] Remover Empresa
       - [ ] Cadastrar Sócio

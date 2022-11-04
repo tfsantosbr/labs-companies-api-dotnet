@@ -137,7 +137,7 @@ public class CreateCompanyTests
     {
         // arrange
 
-        void createCompanyWithValidData() => CompanyHelper.CreateValidCompany();
+        void createCompanyWithValidData() => CompanyHelper.GenerateValidCompany();
 
         // act
 

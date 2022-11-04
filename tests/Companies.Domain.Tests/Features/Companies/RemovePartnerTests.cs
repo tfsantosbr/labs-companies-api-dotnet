@@ -10,7 +10,7 @@ public class RemovePartnerTests
     {
         // arrange
 
-        var company = CompanyHelper.CreateValidCompany();
+        var company = CompanyHelper.GenerateValidCompany();
         var nonExistingPartner = new CompanyPartner(
             new Guid("030068f4-d7bf-484f-8fd0-7b001ed8831a"), 54, new DateOnly(2022, 1, 1)
         );
@@ -29,7 +29,7 @@ public class RemovePartnerTests
     {
         // arrange
 
-        var company = CompanyHelper.CreateValidCompany();
+        var company = CompanyHelper.GenerateValidCompany();
         var existingPartner = new CompanyPartner(
             new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"), 54, new DateOnly(2022, 1, 1)
         );

@@ -12,7 +12,7 @@ public class UpdateCompanyTests
     {
         // arrange
 
-        var company = CompanyHelper.CreateValidCompany();
+        var company = CompanyHelper.GenerateValidCompany();
         var duplicatedPhones = new[]
         {
             new CompanyPhone(new Phone("11","999999999")),
@@ -48,7 +48,7 @@ public class UpdateCompanyTests
     {
         // arrange
 
-        var company = CompanyHelper.CreateValidCompany();
+        var company = CompanyHelper.GenerateValidCompany();
         var duplicatedPhones = new[]
         {
             new CompanyPhone(new Phone("11","999999999")),

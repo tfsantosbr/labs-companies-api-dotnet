@@ -39,4 +39,9 @@ public class CompanyRepository : ICompanyRepository
                 (ignoredId == null || company.Id == ignoredId)
             );
     }
+
+    public async Task<Company?> GetById(Guid companyId)
+    {
+        return await _companies.FirstOrDefaultAsync(c => c.Id == companyId);
+    }
 }

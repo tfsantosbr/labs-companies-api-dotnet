@@ -5,6 +5,7 @@ API de cadastro de **Empresas**, com seus respectivos **Sócios**
 ## Regras de Negócio
 
 - A empresa precisa ser criada com pelo menos 1 sócio
+- O CNPJ poderá ser informado SOMENTE no cadastro da empresa
 - Não pode atribuir o sócio mais de uma vez na mesma empresa
 - Disponibilizar endpoints para listar as atividades econômicas
 - Disponibilizar endpoints para listar as qualificações dos sócios

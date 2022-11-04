@@ -115,5 +115,4 @@ public class CreateCompanyHandler : IRequestHandler<CreateCompany, Response<Comp
     {
         return Response<Company>.Error(notifications);
     }
-
 }

@@ -2,16 +2,15 @@ using FluentValidation;
 
 namespace Companies.Domain.Features.Companies.Commands.Validators;
 
-public class CreateCompanyValidator : AbstractValidator<CreateCompany>
+public class UpdateCompanyValidator : AbstractValidator<UpdateCompany>
 {
-    public CreateCompanyValidator()
+    public UpdateCompanyValidator()
     {
-        RuleFor(p => p.Cnpj).NotEmpty().MaximumLength(14);
         RuleFor(p => p.Name).NotEmpty().MaximumLength(500);
         RuleFor(p => p.LegalNature).NotEmpty().IsInEnum();
         RuleFor(p => p.MainActivityId).NotEmpty();
         RuleFor(p => p.Address).NotEmpty();
-
+        
         When(p => p.Address != null, () =>
         {
             RuleFor(p => p.Address.PostalCode).NotEmpty().MaximumLength(15);
@@ -24,18 +23,8 @@ public class CreateCompanyValidator : AbstractValidator<CreateCompany>
             RuleFor(p => p.Address.Country).NotEmpty().MaximumLength(60);
         });
 
-        RuleFor(p => p.Partners)
-            .NotEmpty()
-            .WithMessage("The company must be created with at least one partner")
-            .Must(partners =>
-                partners == null ||
-                !partners.GroupBy(p => p.PartnerId).Any(g => g.Count() > 1)
-            )
-            .WithMessage("There are duplicate partners in the company")
-            ;
-
         RuleFor(p => p.Phones)
-            .Must(phones =>
+            .Must(phones =>  
                 phones == null ||
                 !phones
                     .GroupBy(p => new { p.CountryCode, p.Number })

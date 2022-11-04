@@ -9,7 +9,7 @@ namespace Companies.Domain.Tests.Base.Helpers;
 
 public class CompanyHelper
 {
-    public static Company CreateValidCompany()
+    public static Company GenerateValidCompany()
     {
         var partners = new[]
         {
@@ -48,7 +48,7 @@ public class CompanyHelper
         return company;
     }
 
-    internal static CreateCompany CreateValidCompanyCommand()
+    public static CreateCompany GenerateValidCreateCompanyCommand()
     {
         return new CreateCompany
         {
@@ -64,7 +64,7 @@ public class CompanyHelper
                 Complement = "Test",
                 Neighborhood = "Test",
                 City = "Test",
-                State = "Test",
+                State = "TS",
                 Country = "Test"
             },
             Partners = new[]
@@ -76,6 +76,36 @@ public class CompanyHelper
                     JoinedAt = new DateOnly(2022,1,1),
                     QualificationCode = 1
                 }
+            },
+            Phones = new[]
+            {
+                new PhoneModel
+                {
+                    CountryCode = "11",
+                    Number = "999999999"
+                }
+            }
+        };
+    }
+
+    public static UpdateCompany GenerateValidUpdateCompanyCommand()
+    {
+        return new UpdateCompany
+        {
+            CompanyId = Guid.NewGuid(),
+            Name = "Company Test",
+            LegalNature = CompanyLegalNatureType.EIRELI,
+            MainActivityId = 1,
+            Address = new AddressModel
+            {
+                PostalCode = "00000001",
+                Street = "Test",
+                Number = "1",
+                Complement = "Test",
+                Neighborhood = "Test",
+                City = "Test",
+                State = "TS",
+                Country = "Test"
             },
             Phones = new[]
             {

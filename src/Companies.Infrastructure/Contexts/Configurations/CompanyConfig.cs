@@ -16,21 +16,21 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
         builder.OwnsOne(c => c.Cnpj, cnpj =>
         {
             cnpj.Property(c => c.Number)
-                .HasColumnName("Cnpj").IsRequired().HasMaxLength(300);
+                .HasColumnName("Cnpj").IsRequired().HasMaxLength(14);
 
             cnpj.HasIndex(c => c.Number).IsUnique();
         });
 
         builder.OwnsOne(p => p.Address, address =>
         {
-            address.Property(p => p.PostalCode).HasColumnName("PostalCode").HasMaxLength(15);
-            address.Property(p => p.Street).HasColumnName("Street").HasMaxLength(200);
-            address.Property(p => p.Number).HasColumnName("AddressNumber").HasMaxLength(10);
+            address.Property(p => p.PostalCode).HasColumnName("PostalCode").IsRequired().HasMaxLength(15);
+            address.Property(p => p.Street).HasColumnName("Street").IsRequired().HasMaxLength(200);
+            address.Property(p => p.Number).HasColumnName("AddressNumber").IsRequired().HasMaxLength(10);
             address.Property(p => p.Complement).HasColumnName("Complement").HasMaxLength(120);
-            address.Property(p => p.Neighborhood).HasColumnName("Neighborhood").HasMaxLength(100);
-            address.Property(p => p.City).HasColumnName("City").HasMaxLength(80);
-            address.Property(p => p.State).HasColumnName("State").HasMaxLength(3);
-            address.Property(p => p.Country).HasColumnName("Country").HasMaxLength(60);
+            address.Property(p => p.Neighborhood).HasColumnName("Neighborhood").IsRequired().HasMaxLength(100);
+            address.Property(p => p.City).HasColumnName("City").IsRequired().HasMaxLength(80);
+            address.Property(p => p.State).HasColumnName("State").IsRequired().HasMaxLength(3);
+            address.Property(p => p.Country).HasColumnName("Country").IsRequired().HasMaxLength(60);
         });
 
         builder.HasOne(c => c.MainActivity).WithMany().HasForeignKey(c => c.MainActivityId);
