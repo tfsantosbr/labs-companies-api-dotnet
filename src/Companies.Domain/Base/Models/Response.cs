@@ -1,6 +1,6 @@
 namespace Companies.Domain.Base.Models;
 
-public class Response<T> where T: class
+public class Response<T> where T : class
 {
     public T? Data { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
@@ -18,6 +18,16 @@ public class Response<T> where T: class
     {
         var response = new Response<T>();
         response.Notifications.Add(notification);
+
+        return response;
+    }
+
+    public static Response<T> Error(IEnumerable<Notification> notifications)
+    {
+        var response = new Response<T>();
+
+        foreach (var notification in notifications)
+            response.Notifications.Add(notification);
 
         return response;
     }

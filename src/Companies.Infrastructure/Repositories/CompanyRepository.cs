@@ -19,4 +19,14 @@ public class CompanyRepository : ICompanyRepository
     {
         await _companies.AddAsync(company);
     }
+
+    public Task<bool> AnyByCnpj(string cnpj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> AnyByName(string name)
+    {
+        throw new NotImplementedException();
+    }
 }
