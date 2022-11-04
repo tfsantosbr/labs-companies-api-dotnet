@@ -11,14 +11,14 @@
     - [ ] Empresas
       - [x] Cadastrar Empresa
       - [x] Atualizar Empresa
-      - [ ] Remover Empresa
-      - [ ] Cadastrar Sócio
-      - [ ] Remover Sócio
+      - [x] Remover Empresa
+      - [x] Cadastrar Sócio
+      - [x] Remover Sócio
   - [ ] Testes unitários dos casos de uso
     - [ ] Empresas
       - [x] Cadastrar Empresa
       - [x] Atualizar Empresa
-      - [ ] Remover Empresa
+      - [x] Remover Empresa
       - [ ] Cadastrar Sócio
       - [ ] Remover Sócio
   - [ ] Criação e implementação dos endpoints da API
@@ -36,7 +36,7 @@
   - [x] Mapeamento Domínio > Banco de Dados
   - [x] Criação das migrações
   - [x] Seed de dados de Teste
-  - [ ] Implementação do Repositório
+  - [x] Implementação do Repositório
 
 ---
 

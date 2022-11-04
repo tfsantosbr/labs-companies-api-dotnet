@@ -83,9 +83,15 @@ public class Company
     public void AddPartner(CompanyPartner partner)
     {
         if (IsDuplicatedPartner(partner))
-            throw new Exception("This partner is already linked with the company");
+            throw new Exception("This partner is already linked with this company");
 
         _partners.Add(partner);
+    }
+
+    
+    public CompanyPartner? GetPartner(Guid partnerId)
+    {
+        return _partners.FirstOrDefault(p=>p.PartnerId==partnerId);
     }
 
     public void RemovePartner(CompanyPartner partner)

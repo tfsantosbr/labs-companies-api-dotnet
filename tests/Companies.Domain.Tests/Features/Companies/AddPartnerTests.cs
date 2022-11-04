@@ -21,7 +21,7 @@ public class AddPartnerTests
 
         // assert
 
-        Assert.Contains(exception.Message, "This partner is already linked with the company");
+        Assert.Contains(exception.Message, "This partner is already linked with this company");
     }
 
     [Fact]

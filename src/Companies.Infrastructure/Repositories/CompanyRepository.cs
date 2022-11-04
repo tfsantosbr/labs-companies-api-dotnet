@@ -42,7 +42,16 @@ public class CompanyRepository : ICompanyRepository
 
     public async Task<Company?> GetById(Guid companyId)
     {
-        return await _companies.FirstOrDefaultAsync(c => c.Id == companyId);
+        return await _companies
+            .Include(p => p.Phones)
+            .FirstOrDefaultAsync(c => c.Id == companyId);
+    }
+
+    public async Task<Company?> GetCompanyWithPartnersById(Guid companyId)
+    {
+        return await _companies
+            .Include(p => p.Partners)
+            .FirstOrDefaultAsync(c => c.Id == companyId);
     }
 
     public void Remove(Company company)
