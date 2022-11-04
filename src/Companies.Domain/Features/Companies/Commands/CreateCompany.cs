@@ -8,11 +8,11 @@ namespace Companies.Domain.Features.Companies.Commands;
 
 public class CreateCompany : IRequest<Response<Company>>
 {
-    public string Cnpj { get; private set; } = default!;
-    public string Name { get; private set; } = default!;
-    public CompanyLegalNatureType LegalNature { get; private set; }
-    public int MainActivityId { get; private set; }
-    public AddressModel Address { get; private set; } = default!;
+    public string Cnpj { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public CompanyLegalNatureType LegalNature { get; set; }
+    public int MainActivityId { get; set; }
+    public AddressModel Address { get; set; } = default!;
     public IEnumerable<CompanyPartnerModel> Partners { get; set; } = default!;
     public IEnumerable<PhoneModel> Phones { get; set; } = default!;
 }

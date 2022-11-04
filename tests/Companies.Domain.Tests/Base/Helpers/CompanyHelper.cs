@@ -1,6 +1,9 @@
+using Companies.Domain.Base.Models;
 using Companies.Domain.Base.ValueObjects;
 using Companies.Domain.Features.Companies;
+using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Enums;
+using Companies.Domain.Features.Companies.Models;
 
 namespace Companies.Domain.Tests.Base.Helpers;
 
@@ -45,5 +48,43 @@ public class CompanyHelper
         return company;
     }
 
-    
+    internal static CreateCompany CreateValidCompanyCommand()
+    {
+        return new CreateCompany
+        {
+            Cnpj = "00000000000001",
+            Name = "Company Test",
+            LegalNature = CompanyLegalNatureType.EIRELI,
+            MainActivityId = 1,
+            Address = new AddressModel
+            {
+                PostalCode = "00000001",
+                Street = "Test",
+                Number = "1",
+                Complement = "Test",
+                Neighborhood = "Test",
+                City = "Test",
+                State = "Test",
+                Country = "Test"
+            },
+            Partners = new[]
+            {
+                new CompanyPartnerModel
+                {
+                    PartnerId = Guid.NewGuid(),
+                    QualificationId = 1,
+                    JoinedAt = new DateOnly(2022,1,1),
+                    QualificationCode = 1
+                }
+            },
+            Phones = new[]
+            {
+                new PhoneModel
+                {
+                    CountryCode = "11",
+                    Number = "999999999"
+                }
+            }
+        };
+    }
 }

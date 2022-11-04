@@ -6,7 +6,7 @@ public class CreateCompanyValidator : AbstractValidator<CreateCompany>
 {
     public CreateCompanyValidator()
     {
-        RuleFor(p => p.Cnpj).NotEmpty().MaximumLength(11);
+        RuleFor(p => p.Cnpj).NotEmpty().MaximumLength(14);
         RuleFor(p => p.Name).NotEmpty().MaximumLength(500);
 
         RuleFor(p => p.Partners)

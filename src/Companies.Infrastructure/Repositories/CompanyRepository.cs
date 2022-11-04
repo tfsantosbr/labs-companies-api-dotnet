@@ -14,19 +14,29 @@ public class CompanyRepository : ICompanyRepository
     {
         _companies = context.Companies;
     }
-    
+
     public async Task Add(Company company)
     {
         await _companies.AddAsync(company);
     }
 
-    public Task<bool> AnyByCnpj(string cnpj)
+    public async Task<bool> AnyByCnpj(string cnpj, Guid? ignoredId = null)
     {
-        throw new NotImplementedException();
+        return await _companies
+            .AsNoTracking()
+            .AnyAsync(company =>
+                company.Cnpj.Number == cnpj &&
+                (ignoredId == null || company.Id == ignoredId)
+            );
     }
 
-    public Task<bool> AnyByName(string name)
+    public async Task<bool> AnyByName(string name, Guid? ignoredId = null)
     {
-        throw new NotImplementedException();
+        return await _companies
+            .AsNoTracking()
+            .AnyAsync(company =>
+                company.Name == name &&
+                (ignoredId == null || company.Id == ignoredId)
+            );
     }
 }
