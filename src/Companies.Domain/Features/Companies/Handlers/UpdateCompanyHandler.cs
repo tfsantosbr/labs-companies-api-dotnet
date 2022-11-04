@@ -43,7 +43,7 @@ public class UpdateCompanyHandler : IRequestHandler<UpdateCompany, Response>
 
         await _unitOfWork.CommitAsync();
 
-        return Response<Company>.Ok(company);
+        return Response.Ok();
     }
 
     // Private Methods

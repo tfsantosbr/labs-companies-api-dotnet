@@ -12,6 +12,11 @@ public class Response<T> : Response where T : class
         };
     }
 
+    public static new Response<T> Ok()
+    {
+        return new Response<T>();
+    }
+
     public static new Response<T> Error(Notification notification)
     {
         var response = new Response<T>();
@@ -52,5 +57,10 @@ public class Response
             response.Notifications.Add(notification);
 
         return response;
+    }
+
+    public static Response Ok()
+    {
+        return new Response();
     }
 }

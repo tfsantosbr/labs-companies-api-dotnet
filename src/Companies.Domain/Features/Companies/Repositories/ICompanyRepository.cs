@@ -6,4 +6,5 @@ public interface ICompanyRepository
     Task<bool> AnyByName(string name, Guid? ignoredId = null);
     Task<bool> AnyByCnpj(string cnpj, Guid? ignoredId = null);
     Task<Company?> GetById(Guid companyId);
+    void Remove(Company company);
 }

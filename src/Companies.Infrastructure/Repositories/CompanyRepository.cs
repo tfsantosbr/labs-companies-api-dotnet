@@ -44,4 +44,9 @@ public class CompanyRepository : ICompanyRepository
     {
         return await _companies.FirstOrDefaultAsync(c => c.Id == companyId);
     }
+
+    public void Remove(Company company)
+    {
+        _companies.Remove(company);
+    }
 }
