@@ -1,26 +1,26 @@
 # TASKS
 
-- [ ] Domínio
+- [x] Domínio
   - [x] Criação do Domínio
   - [x] Testes unitários das entidades
 
 ---
 
 - [ ] Aplicação
-  - [ ] Criação e implementação dos casos de uso (Comandos, Handlers, Responses, etc)
-    - [ ] Empresas
+  - [x] Criação e implementação dos casos de uso (Comandos, Handlers, Responses, etc)
+    - [x] Empresas
       - [x] Cadastrar Empresa
       - [x] Atualizar Empresa
       - [x] Remover Empresa
       - [x] Cadastrar Sócio
       - [x] Remover Sócio
-  - [ ] Testes unitários dos casos de uso
-    - [ ] Empresas
+  - [x] Testes unitários dos casos de uso
+    - [x] Empresas
       - [x] Cadastrar Empresa
       - [x] Atualizar Empresa
       - [x] Remover Empresa
-      - [ ] Cadastrar Sócio
-      - [ ] Remover Sócio
+      - [x] Cadastrar Sócio
+      - [x] Remover Sócio
   - [ ] Criação e implementação dos endpoints da API
     - [x] Endpoints para listar as atividades econômicas
     - [x] Endpoints para listar as qualificações dos sócios

@@ -1,3 +1,6 @@
+using Companies.Domain.Base.Pagination;
+using Companies.Domain.Features.Companies.Models;
+
 namespace Companies.Domain.Features.Companies.Repositories;
 
 public interface ICompanyRepository
@@ -9,4 +12,5 @@ public interface ICompanyRepository
     void Remove(Company company);
     Task<Company?> GetCompanyWithPartnersById(Guid companyId);
     Task<bool> AnyPartnerById(Guid partnerId);
+    Task<IPagedList<CompanyItem>> Find(CompanyParameters parameters);
 }

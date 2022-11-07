@@ -1,4 +1,6 @@
+using Companies.Domain.Base.Pagination;
 using Companies.Domain.Features.Companies;
+using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
 using Companies.Infrastructure.Contexts;
 
@@ -8,14 +10,20 @@ namespace Companies.Infrastructure.Repositories;
 
 public class CompanyRepository : ICompanyRepository
 {
+    // Fields
+
     private readonly DbSet<Company> _companies;
     private readonly DbSet<CompanyPartner> _companyPartners;
+
+    // Constructors
 
     public CompanyRepository(CompaniesContext context)
     {
         _companies = context.Set<Company>();
         _companyPartners = context.Set<CompanyPartner>();
     }
+
+    // Implementations
 
     public async Task Add(Company company)
     {
@@ -66,5 +74,58 @@ public class CompanyRepository : ICompanyRepository
     public void Remove(Company company)
     {
         _companies.Remove(company);
+    }
+
+    public async Task<IPagedList<CompanyItem>> Find(CompanyParameters parameters)
+    {
+        var query = _companies.AsNoTracking();
+
+        query = Filter(parameters, query);
+
+        query = Order(parameters, query);
+
+        var total = await query.CountAsync();
+
+        var items = await query
+            .Skip((parameters.Page - 1) * parameters.PageSize)
+            .Take(parameters.PageSize)
+            .Select(c => new CompanyItem
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Cnpj = c.Cnpj.Number
+            })
+            .ToListAsync();
+
+        return new PagedList<CompanyItem>(items, total, parameters.Page, parameters.PageSize);
+    }
+
+    // Private Methods
+
+    private static IQueryable<Company> Order(
+        CompanyParameters parameters, IQueryable<Company> query)
+    {
+        query = parameters.OrderBy switch
+        {
+            "name-asc" => query.OrderBy(u => u.Name),
+            "name-desc" => query.OrderByDescending(u => u.Name),
+
+            _ => query.OrderBy(u => u.Name),
+        };
+        return query;
+    }
+
+    private static IQueryable<Company> Filter(
+        CompanyParameters parameters, IQueryable<Company> query)
+    {
+        if (parameters.Query is not null)
+        {
+            query = query.Where(p =>
+                p.Name.StartsWith(parameters.Query) ||
+                p.Cnpj.Number.StartsWith(parameters.Query)
+            );
+        }
+
+        return query;
     }
 }
