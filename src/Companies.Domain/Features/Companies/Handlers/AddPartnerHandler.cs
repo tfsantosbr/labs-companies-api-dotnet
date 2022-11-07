@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class AddCompanyPartnerHandler : CommandHandler, IRequestHandler<AddCompanyPartner, Response>
+public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Response>
 {
     // Fields
 
@@ -18,7 +18,7 @@ public class AddCompanyPartnerHandler : CommandHandler, IRequestHandler<AddCompa
 
     // Constructors
 
-    public AddCompanyPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
+    public AddPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
     {
         _companyRepository = companyRepository;
         _unitOfWork = unitOfWork;
@@ -26,7 +26,7 @@ public class AddCompanyPartnerHandler : CommandHandler, IRequestHandler<AddCompa
 
     // Implementations
 
-    public async Task<Response> Handle(AddCompanyPartner request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(AddPartner request, CancellationToken cancellationToken)
     {
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
@@ -54,9 +54,9 @@ public class AddCompanyPartnerHandler : CommandHandler, IRequestHandler<AddCompa
 
     // Private Methods
 
-    private bool IsInvalidRequest(AddCompanyPartner request, out IEnumerable<Notification> notifications)
+    private bool IsInvalidRequest(AddPartner request, out IEnumerable<Notification> notifications)
     {
-        var validator = new AddCompanyPartnerValidator();
+        var validator = new AddPartnerValidator();
         var result = validator.Validate(request);
 
         notifications = result.Errors.Select(e =>

@@ -4,8 +4,10 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class RemoveCompanyPartner : IRequest<Response>
+public class AddPartner : IRequest<Response>
 {
     public Guid CompanyId { get; set; }
     public Guid PartnerId { get; set; }
+    public int QualificationId { get; set; }
+    public DateOnly JoinedAt { get; set; }
 }

@@ -9,12 +9,12 @@ using NSubstitute;
 
 namespace Companies.Domain.Tests.Features.Companies.Handlers;
 
-public class RemoveCompanyPartnerCompanyHandlerTests
+public class RemovePartnerHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemoveCompanyPartnerCompanyHandlerTests()
+    public RemovePartnerHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();

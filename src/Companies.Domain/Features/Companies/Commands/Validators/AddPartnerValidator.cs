@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace Companies.Domain.Features.Companies.Commands.Validators;
 
-public class AddCompanyPartnerValidator : AbstractValidator<AddCompanyPartner>
+public class AddPartnerValidator : AbstractValidator<AddPartner>
 {
-    public AddCompanyPartnerValidator()
+    public AddPartnerValidator()
     {
         RuleFor(cp => cp.CompanyId).NotEmpty();
         RuleFor(cp => cp.PartnerId).NotEmpty();

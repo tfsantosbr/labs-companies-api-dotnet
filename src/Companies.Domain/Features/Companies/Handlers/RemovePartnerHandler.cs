@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class RemoveCompanyPartnerHandler : CommandHandler, IRequestHandler<RemoveCompanyPartner, Response>
+public class RemovePartnerHandler : CommandHandler, IRequestHandler<RemovePartner, Response>
 {
     // Fields
 
@@ -18,7 +18,7 @@ public class RemoveCompanyPartnerHandler : CommandHandler, IRequestHandler<Remov
 
     // Constructors
 
-    public RemoveCompanyPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
+    public RemovePartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
     {
         _companyRepository = companyRepository;
         _unitOfWork = unitOfWork;
@@ -26,7 +26,7 @@ public class RemoveCompanyPartnerHandler : CommandHandler, IRequestHandler<Remov
 
     // Implementations
 
-    public async Task<Response> Handle(RemoveCompanyPartner request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(RemovePartner request, CancellationToken cancellationToken)
     {
         var company = await _companyRepository.GetCompanyWithPartnersById(request.CompanyId);
 

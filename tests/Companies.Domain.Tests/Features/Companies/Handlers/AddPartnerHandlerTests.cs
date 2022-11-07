@@ -9,12 +9,12 @@ using NSubstitute;
 
 namespace Companies.Domain.Tests.Features.Companies.Handlers;
 
-public class AddCompanyPartnerCompanyHandlerTests
+public class AddPartnerHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddCompanyPartnerCompanyHandlerTests()
+    public AddPartnerHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
@@ -24,10 +24,21 @@ public class AddCompanyPartnerCompanyHandlerTests
     public async Task ShouldReturnErrorResponseWhenAddCompanyPartnerWithInvalidData()
     {
         // arrange
+        
+        var command = new AddPartner();
+
+        var handler = new AddPartnerHandler(
+            companyRepository: _companyRepository,
+            unitOfWork: _unitOfWork
+        );
 
         // act
 
+        var response = await handler.Handle(command, new CancellationToken());
+
         // assert
+
+        Assert.True(response.HasNotifications);
     }
 
     [Fact]
