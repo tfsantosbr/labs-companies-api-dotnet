@@ -28,7 +28,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanyMainActivities()
     {
-        if (!_context.CompanyMainActivities.Any())
+        if (!_context.Set<CompanyMainActivity>().Any())
         {
             var companyMainActivity1 = new CompanyMainActivity(4781400,
                 "Comércio varejista de artigos do vestuário e acessórios");
@@ -61,7 +61,7 @@ public class CompaniesDatabaseSeed
                 "Comércio varejista de artigos de óptica");
 
 
-            _context.CompanyMainActivities.AddRange(
+            _context.Set<CompanyMainActivity>().AddRange(
                 companyMainActivity1,
                 companyMainActivity2,
                 companyMainActivity3,
@@ -84,7 +84,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanyPartnerQualifications()
     {
-        if (!_context.CompanyPartnerQualifications.Any())
+        if (!_context.Set<CompanyPartnerQualification>().Any())
         {
             var companyPartnerQualification1 = new CompanyPartnerQualification(5, "Administrador");
             var companyPartnerQualification2 = new CompanyPartnerQualification(10, "Diretor");
@@ -92,7 +92,7 @@ public class CompaniesDatabaseSeed
             var companyPartnerQualification4 = new CompanyPartnerQualification(22, "Sócio");
             var companyPartnerQualification5 = new CompanyPartnerQualification(54, "Fundador");
 
-            _context.CompanyPartnerQualifications.AddRange(
+            _context.Set<CompanyPartnerQualification>().AddRange(
                 companyPartnerQualification1,
                 companyPartnerQualification2,
                 companyPartnerQualification3,
@@ -110,7 +110,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedPartners()
     {
-        if (!_context.Partners.Any())
+        if (!_context.Set<Partner>().Any())
         {
             var partner1 = new Partner(
                 new CompleteName("Tiago", "Santos"),
@@ -162,7 +162,7 @@ public class CompaniesDatabaseSeed
                 new Email("carol@email.com"),
                 id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891"));
 
-            _context.Partners.AddRange(
+            _context.Set<Partner>().AddRange(
                 partner1,
                 partner2,
                 partner3,
@@ -185,7 +185,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanies()
     {
-        if (!_context.Companies.Any())
+        if (!_context.Set<Company>().Any())
         {
             var parners = new[]
             {
@@ -219,7 +219,7 @@ public class CompaniesDatabaseSeed
                 phones: phones
             );
 
-            _context.Companies.AddRange(company1);
+            _context.Set<Company>().AddRange(company1);
 
             _context.SaveChanges();
         }

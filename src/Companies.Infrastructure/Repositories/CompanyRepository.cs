@@ -9,10 +9,12 @@ namespace Companies.Infrastructure.Repositories;
 public class CompanyRepository : ICompanyRepository
 {
     private readonly DbSet<Company> _companies;
+    private readonly DbSet<CompanyPartner> _companyPartners;
 
     public CompanyRepository(CompaniesContext context)
     {
-        _companies = context.Companies;
+        _companies = context.Set<Company>();
+        _companyPartners = context.Set<CompanyPartner>();
     }
 
     public async Task Add(Company company)
@@ -38,6 +40,13 @@ public class CompanyRepository : ICompanyRepository
                 company.Name == name &&
                 (ignoredId == null || company.Id == ignoredId)
             );
+    }
+
+    public async Task<bool> AnyPartnerById(Guid partnerId)
+    {
+        return await _companyPartners
+            .AsNoTracking()
+            .AnyAsync(cp => cp.PartnerId == partnerId);
     }
 
     public async Task<Company?> GetById(Guid companyId)

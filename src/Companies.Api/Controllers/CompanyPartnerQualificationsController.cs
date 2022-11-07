@@ -14,7 +14,7 @@ public class CompanyPartnerQualificationsController : ControllerBase
     
     public CompanyPartnerQualificationsController(CompaniesContext context)
     {
-        _companyPartnerQualifications = context.CompanyPartnerQualifications;
+        _companyPartnerQualifications = context.Set<CompanyPartnerQualification>();
     }
 
     [HttpGet]

@@ -34,7 +34,10 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
         var company = await _companyRepository.GetCompanyWithPartnersById(request.CompanyId);
 
         if (company == null)
-            return ErrorResponse("CompanyPartner", "Company not found");
+            return ErrorResponse("Company", "Company not found");
+
+        if (await PartnerNotFound(request.PartnerId))
+            return ErrorResponse("CompanyPartner", "Partner not found");
 
         if (IsPartnerAlreadyLinkedInCompany(company.Partners, request.PartnerId))
             return ErrorResponse("CompanyPartner", "This partner is already linked with this company");
@@ -65,9 +68,14 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
 
         return !result.IsValid;
     }
-    
+
     private bool IsPartnerAlreadyLinkedInCompany(IReadOnlyCollection<CompanyPartner> partners, Guid partnerId)
     {
         return partners.Any(p => p.PartnerId == partnerId);
+    }
+
+    private async Task<bool> PartnerNotFound(Guid partnerId)
+    {
+        return !await _companyRepository.AnyPartnerById(partnerId);
     }
 }

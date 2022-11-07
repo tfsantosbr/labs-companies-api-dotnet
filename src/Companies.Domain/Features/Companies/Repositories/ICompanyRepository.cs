@@ -8,4 +8,5 @@ public interface ICompanyRepository
     Task<Company?> GetById(Guid companyId);
     void Remove(Company company);
     Task<Company?> GetCompanyWithPartnersById(Guid companyId);
+    Task<bool> AnyPartnerById(Guid partnerId);
 }

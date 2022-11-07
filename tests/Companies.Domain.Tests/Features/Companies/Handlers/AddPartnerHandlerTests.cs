@@ -21,10 +21,10 @@ public class AddPartnerHandlerTests
     }
 
     [Fact]
-    public async Task ShouldReturnErrorResponseWhenAddCompanyPartnerWithInvalidData()
+    public async Task ShouldReturnErrorResponseWhenAddPartnerWithInvalidData()
     {
         // arrange
-        
+
         var command = new AddPartner();
 
         var handler = new AddPartnerHandler(
@@ -42,32 +42,132 @@ public class AddPartnerHandlerTests
     }
 
     [Fact]
-    public async Task ShouldReturnErrorResponseWhenAddCompanyPartnerInCompanyThatDoesntExist()
+    public async Task ShouldReturnErrorResponseWhenAddPartnerInCompanyThatDoesntExist()
     {
         // arrange
 
+        var command = new AddPartner
+        {
+            PartnerId = Guid.NewGuid(),
+            CompanyId = Guid.NewGuid(),
+            JoinedAt = new DateOnly(2022, 1, 1),
+            QualificationId = 1
+        };
+
+        var handler = new AddPartnerHandler(
+            companyRepository: _companyRepository,
+            unitOfWork: _unitOfWork
+        );
+
         // act
 
+        var response = await handler.Handle(command, new CancellationToken());
+
         // assert
+
+        Assert.Contains(response.Notifications, notification => notification.Message == "Company not found");
     }
 
     [Fact]
-    public async Task ShouldReturnErrorResponseWhenAddCompanyPartnerThatIsAlreadyLinkedInTheCompany()
+    public async Task ShouldReturnErrorResponseWhenAddPartnerThatDoesntExist()
     {
         // arrange
 
+        var company = CompanyHelper.GenerateValidCompany();
+
+        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+            .Returns(Task.FromResult<Company?>(company));
+
+        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
+
+        var command = new AddPartner
+        {
+            PartnerId = Guid.NewGuid(),
+            CompanyId = Guid.NewGuid(),
+            JoinedAt = new DateOnly(2022, 1, 1),
+            QualificationId = 1
+        };
+
+        var handler = new AddPartnerHandler(
+            companyRepository: _companyRepository,
+            unitOfWork: _unitOfWork
+        );
+
         // act
 
+        var response = await handler.Handle(command, new CancellationToken());
+
         // assert
+
+        Assert.Contains(response.Notifications, notification => notification.Message == "Partner not found");
     }
 
     [Fact]
-    public async Task ShouldAddCompanyPartnerWithSuccessWhenValidPartnerIsProvided()
+    public async Task ShouldReturnErrorResponseWhenAddPartnerThatIsAlreadyLinkedInTheCompany()
     {
         // arrange
 
+        var company = CompanyHelper.GenerateValidCompany();
+
+        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+            .Returns(Task.FromResult<Company?>(company));
+
+        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+
+        var command = new AddPartner
+        {
+            PartnerId = new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
+            CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
+            JoinedAt = new DateOnly(2022, 1, 1),
+            QualificationId = 1
+        };
+
+        var handler = new AddPartnerHandler(
+            companyRepository: _companyRepository,
+            unitOfWork: _unitOfWork
+        );
+
         // act
 
+        var response = await handler.Handle(command, new CancellationToken());
+
         // assert
+
+        Assert.Contains(response.Notifications, notification =>
+            notification.Message == "This partner is already linked with this company");
+    }
+
+    [Fact]
+    public async Task ShouldAddPartnerWithSuccessWhenValidPartnerIsProvided()
+    {
+        // arrange
+
+        var company = CompanyHelper.GenerateValidCompany();
+
+        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+            .Returns(Task.FromResult<Company?>(company));
+
+        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+
+        var command = new AddPartner
+        {
+            PartnerId = Guid.NewGuid(),
+            CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
+            JoinedAt = new DateOnly(2022, 1, 1),
+            QualificationId = 1
+        };
+
+        var handler = new AddPartnerHandler(
+            companyRepository: _companyRepository,
+            unitOfWork: _unitOfWork
+        );
+
+        // act
+
+        var response = await handler.Handle(command, new CancellationToken());
+
+        // assert
+
+        Assert.False(response.HasNotifications);
     }
 }

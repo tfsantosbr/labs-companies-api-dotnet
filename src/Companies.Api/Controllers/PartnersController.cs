@@ -22,7 +22,7 @@ public class PartnersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var items = await _context.Partners
+        var items = await _context.Set<Partner>()
             .AsNoTracking()
             .Select(u => new PartnerItem
             {
@@ -66,13 +66,13 @@ public class PartnersController : ControllerBase
     [HttpDelete("{partnerId}")]
     public async Task<IActionResult> Delete(Guid partnerId)
     {
-        var partner = await _context.Partners
+        var partner = await _context.Set<Partner>()
             .FirstOrDefaultAsync(p => p.Id == partnerId);
 
         if (partner == null)
             return NotFound(new { Code = "Partner", Message = "Partner not found" });
 
-        _context.Partners.Remove(partner);
+        _context.Set<Partner>().Remove(partner);
 
         await _context.SaveChangesAsync();
 
@@ -83,6 +83,9 @@ public class PartnersController : ControllerBase
 
     private async Task<bool> IsDuplicatedEmail(string email)
     {
-        return await _context.Partners.AsNoTracking().AnyAsync(p => p.Email.Address == email);
+        return await _context
+            .Set<Partner>()
+            .AsNoTracking()
+            .AnyAsync(p => p.Email.Address == email);
     }
 }

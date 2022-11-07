@@ -14,7 +14,7 @@ public class CompanyMainActivitiesController : ControllerBase
     
     public CompanyMainActivitiesController(CompaniesContext context)
     {
-        _companyMainActivities = context.CompanyMainActivities;
+        _companyMainActivities = context.Set<CompanyMainActivity>();
     }
 
     [HttpGet]

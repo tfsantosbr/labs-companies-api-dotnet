@@ -31,7 +31,7 @@ public class RemovePartnerHandler : CommandHandler, IRequestHandler<RemovePartne
         var company = await _companyRepository.GetCompanyWithPartnersById(request.CompanyId);
 
         if (company == null)
-            return ErrorResponse("CompanyPartner", "Company not found");
+            return ErrorResponse("Company", "Company not found");
 
         var partner = company.GetPartner(request.PartnerId);
 
