@@ -1,6 +1,7 @@
 using AutoMapper;
 
 using Companies.Domain.Base.Models;
+using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
 
@@ -33,6 +34,19 @@ public class CompanyController : ControllerBase
         return Ok(pagedItems);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateCompany([FromBody] CreateCompany request)
+    {
+        var response = await _mediator.Send(request);
+
+        if (response.HasNotifications)
+            return NotFound(response.Notifications);
+
+        var createdCompanyDetails = _mapper.Map<CompanyDetails>(response.Data);
+
+        return Created($"companies/{createdCompanyDetails.Id}", createdCompanyDetails);
+    }
+
     [HttpGet("{companyId}")]
     public async Task<IActionResult> GetCompany(Guid companyId)
     {
@@ -44,5 +58,29 @@ public class CompanyController : ControllerBase
         var companyDetails = _mapper.Map<CompanyDetails>(company);
 
         return Ok(companyDetails);
+    }
+
+    [HttpPut("{companyId}")]
+    public async Task<IActionResult> UpdateCompany(Guid companyId, [FromBody] UpdateCompany request)
+    {
+        request.CompanyId = companyId;
+
+        var response = await _mediator.Send(request);
+
+        if (response.HasNotifications)
+            return BadRequest(response.Notifications);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{companyId}")]
+    public async Task<IActionResult> RemoveCompany(Guid companyId)
+    {
+        var response = await _mediator.Send(new RemoveCompany(companyId));
+
+        if (response.HasNotifications)
+            return BadRequest(response.Notifications);
+
+        return NoContent();
     }
 }

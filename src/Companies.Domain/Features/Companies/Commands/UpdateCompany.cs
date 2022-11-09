@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies.Enums;
 
@@ -7,6 +9,7 @@ namespace Companies.Domain.Features.Companies.Commands;
 
 public class UpdateCompany : IRequest<Response>
 {
+    [JsonIgnore]
     public Guid CompanyId { get; set; }
     public string Name { get; set; } = default!;
     public CompanyLegalNatureType LegalNature { get; set; }
