@@ -30,9 +30,7 @@ builder.Services.AddApplication();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{
     app.MigrateAndSeedData();
-}
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -94,6 +94,27 @@ public class CompanyRepository : ICompanyRepository
         return new PagedList<CompanyItem>(items, total, parameters.Page, parameters.PageSize);
     }
 
+    public async Task<bool> AnyById(Guid companyId)
+    {
+        return await _companies
+            .AsNoTracking()
+            .AnyAsync(company => company.Id == companyId);
+    }
+
+    public async Task<IEnumerable<CompanyPartnerModel>> GetPartners(Guid companyId)
+    {
+        return await _companyPartners
+            .AsNoTracking()
+            .Where(cp => cp.CompanyId == companyId)
+            .Select(cp => new CompanyPartnerModel
+            {
+                PartnerId = cp.PartnerId,
+                QualificationId = cp.QualificationId,
+                JoinedAt = cp.JoinedAt.ToDateTime(TimeOnly.MinValue)
+            })
+            .ToListAsync();
+    }
+
     // Private Methods
 
     private static IQueryable<Company> Order(

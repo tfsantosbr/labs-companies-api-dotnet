@@ -25,7 +25,7 @@ public class RemovePartnerHandlerTests
     {
         // arrange
 
-        var command = new RemovePartner();
+        var command = new RemovePartner(Guid.NewGuid(), Guid.NewGuid());
 
         var handler = new RemovePartnerHandler(
             companyRepository: _companyRepository,
@@ -51,7 +51,7 @@ public class RemovePartnerHandlerTests
         _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        var command = new RemovePartner();
+        var command = new RemovePartner(Guid.NewGuid(), Guid.NewGuid());
 
         var handler = new RemovePartnerHandler(
             companyRepository: _companyRepository,
@@ -77,11 +77,10 @@ public class RemovePartnerHandlerTests
         _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        var command = new RemovePartner
-        {
-            PartnerId = new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
-            CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73")
-        };
+        var command = new RemovePartner(
+           companyId: new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
+           partnerId: new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d")
+        );
 
         var handler = new RemovePartnerHandler(
             companyRepository: _companyRepository,

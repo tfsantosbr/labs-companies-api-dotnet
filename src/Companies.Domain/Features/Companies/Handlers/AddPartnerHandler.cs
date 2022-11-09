@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Response>
+public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler<AddPartner, Response<CompanyPartner>>
 {
     // Fields
 
@@ -26,7 +26,7 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
 
     // Implementations
 
-    public async Task<Response> Handle(AddPartner request, CancellationToken cancellationToken)
+    public async Task<Response<CompanyPartner>> Handle(AddPartner request, CancellationToken cancellationToken)
     {
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
@@ -34,7 +34,7 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
         var company = await _companyRepository.GetById(request.CompanyId);
 
         if (company == null)
-            return ErrorResponse("Company", "Company not found");
+            return ErrorResponse("CompanyPartner", "Company not found");
 
         if (await PartnerNotFound(request.PartnerId))
             return ErrorResponse("CompanyPartner", "Partner not found");
@@ -52,7 +52,7 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
 
         await _unitOfWork.CommitAsync();
 
-        return Response.Ok();
+        return Response<CompanyPartner>.Ok(partner);
     }
 
     // Private Methods

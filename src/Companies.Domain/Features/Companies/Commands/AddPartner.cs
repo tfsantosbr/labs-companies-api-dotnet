@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class AddPartner : IRequest<Response>
+public class AddPartner : IRequest<Response<CompanyPartner>>
 {
     public Guid CompanyId { get; set; }
     public Guid PartnerId { get; set; }
