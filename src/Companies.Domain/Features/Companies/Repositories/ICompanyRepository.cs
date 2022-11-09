@@ -10,7 +10,6 @@ public interface ICompanyRepository
     Task<bool> AnyByCnpj(string cnpj, Guid? ignoredId = null);
     Task<Company?> GetById(Guid companyId);
     void Remove(Company company);
-    Task<Company?> GetCompanyWithPartnersById(Guid companyId);
     Task<bool> AnyPartnerById(Guid partnerId);
     Task<IPagedList<CompanyItem>> Find(CompanyParameters parameters);
 }

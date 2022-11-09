@@ -48,7 +48,7 @@ public class RemovePartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+        _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         var command = new RemovePartner();
@@ -74,7 +74,7 @@ public class RemovePartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+        _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         var command = new RemovePartner

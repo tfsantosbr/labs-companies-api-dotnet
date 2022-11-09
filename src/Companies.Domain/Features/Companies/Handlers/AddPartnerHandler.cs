@@ -31,7 +31,7 @@ public class AddPartnerHandler : CommandHandler, IRequestHandler<AddPartner, Res
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
 
-        var company = await _companyRepository.GetCompanyWithPartnersById(request.CompanyId);
+        var company = await _companyRepository.GetById(request.CompanyId);
 
         if (company == null)
             return ErrorResponse("Company", "Company not found");

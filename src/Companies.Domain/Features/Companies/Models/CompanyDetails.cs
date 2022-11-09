@@ -15,5 +15,5 @@ public class CompanyDetails
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     public IEnumerable<CompanyPartnerModel> Partners { get; set; } = default!;
-    public IEnumerable<PhoneModel> Phones { get; set; } = default!;
+    public IEnumerable<CompanyPhoneModel> Phones { get; set; } = default!;
 }

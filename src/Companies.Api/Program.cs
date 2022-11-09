@@ -2,12 +2,17 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 
 using Companies.Api.Extensions;
+using Companies.Domain.Features.Companies.Commands;
+
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    .AddJsonOptions(options => 
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+    );
 
 builder.Services.AddCors(setup =>
     setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
@@ -15,7 +20,7 @@ builder.Services.AddCors(setup =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddMediatR(typeof(CreatePoliticalParty));
+builder.Services.AddMediatR(typeof(CreateCompany));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddHealthChecks(configuration);

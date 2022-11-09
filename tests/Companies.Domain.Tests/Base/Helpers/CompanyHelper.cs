@@ -73,8 +73,7 @@ public class CompanyHelper
                 {
                     PartnerId = Guid.NewGuid(),
                     QualificationId = 1,
-                    JoinedAt = new DateOnly(2022,1,1),
-                    QualificationCode = 1
+                    JoinedAt = new DateTime(2022,1,1)
                 }
             },
             Phones = new[]

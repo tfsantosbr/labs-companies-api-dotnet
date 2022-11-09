@@ -28,7 +28,7 @@ public class RemovePartnerHandler : CommandHandler, IRequestHandler<RemovePartne
 
     public async Task<Response> Handle(RemovePartner request, CancellationToken cancellationToken)
     {
-        var company = await _companyRepository.GetCompanyWithPartnersById(request.CompanyId);
+        var company = await _companyRepository.GetById(request.CompanyId);
 
         if (company == null)
             return ErrorResponse("Company", "Company not found");

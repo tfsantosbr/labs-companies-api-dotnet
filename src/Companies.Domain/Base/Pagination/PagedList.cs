@@ -15,8 +15,6 @@ public class PagedList<T> : IPagedList<T> where T : new()
     public int PageSize { get; }
     public long TotalPages { get; }
     public long TotalRecords { get; }
-    public bool HasPrevious => PageNumber > 1;
-    public bool HasNext => PageNumber < TotalPages;
     public IEnumerable<T> Data { get; private set; }
 }
 

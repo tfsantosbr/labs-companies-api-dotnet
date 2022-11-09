@@ -75,7 +75,7 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+        _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
@@ -109,7 +109,7 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+        _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
@@ -144,7 +144,7 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetCompanyWithPartnersById(Arg.Any<Guid>())
+        _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));

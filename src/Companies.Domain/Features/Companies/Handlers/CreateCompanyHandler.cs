@@ -67,7 +67,7 @@ public class CreateCompanyHandler : CommandHandler<Company>, IRequestHandler<Cre
             new CompanyPartner(
                 partnerId: p.PartnerId,
                 qualificationId: p.QualificationId,
-                joinedAt: p.JoinedAt
+                joinedAt: DateOnly.FromDateTime(p.JoinedAt)
                 )
             );
 
@@ -107,5 +107,5 @@ public class CreateCompanyHandler : CommandHandler<Company>, IRequestHandler<Cre
         return await _companyRepository.AnyByCnpj(cnpj);
     }
 
-    
+
 }

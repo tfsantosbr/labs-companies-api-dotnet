@@ -61,12 +61,6 @@ public class CompanyRepository : ICompanyRepository
     {
         return await _companies
             .Include(p => p.Phones)
-            .FirstOrDefaultAsync(c => c.Id == companyId);
-    }
-
-    public async Task<Company?> GetCompanyWithPartnersById(Guid companyId)
-    {
-        return await _companies
             .Include(p => p.Partners)
             .FirstOrDefaultAsync(c => c.Id == companyId);
     }
