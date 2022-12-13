@@ -50,13 +50,6 @@ public class CompanyRepository : ICompanyRepository
             );
     }
 
-    public async Task<bool> AnyPartnerById(Guid partnerId)
-    {
-        return await _companyPartners
-            .AsNoTracking()
-            .AnyAsync(cp => cp.PartnerId == partnerId);
-    }
-
     public async Task<Company?> GetById(Guid companyId)
     {
         return await _companies

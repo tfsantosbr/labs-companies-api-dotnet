@@ -3,6 +3,7 @@ using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Handlers;
 using Companies.Domain.Features.Companies.Repositories;
+using Companies.Domain.Features.Partners.Repositories;
 using Companies.Domain.Tests.Base.Helpers;
 
 using NSubstitute;
@@ -12,11 +13,13 @@ namespace Companies.Domain.Tests.Features.Companies.Handlers;
 public class AddPartnerHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
+    private readonly IPartnerRepository _partnerRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public AddPartnerHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
+        _partnerRepository = Substitute.For<IPartnerRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
     }
 
@@ -29,6 +32,7 @@ public class AddPartnerHandlerTests
 
         var handler = new AddPartnerHandler(
             companyRepository: _companyRepository,
+            partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
         );
 
@@ -50,12 +54,13 @@ public class AddPartnerHandlerTests
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = Guid.NewGuid(),
-            JoinedAt = new DateOnly(2022, 1, 1),
+            JoinedAt = new DateTime(2022, 1, 1),
             QualificationId = 1
         };
 
         var handler = new AddPartnerHandler(
             companyRepository: _companyRepository,
+            partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
         );
 
@@ -78,18 +83,19 @@ public class AddPartnerHandlerTests
         _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
+        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
 
         var command = new AddPartner
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = Guid.NewGuid(),
-            JoinedAt = new DateOnly(2022, 1, 1),
+            JoinedAt = new DateTime(2022, 1, 1),
             QualificationId = 1
         };
 
         var handler = new AddPartnerHandler(
             companyRepository: _companyRepository,
+            partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
         );
 
@@ -112,18 +118,19 @@ public class AddPartnerHandlerTests
         _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
         var command = new AddPartner
         {
             PartnerId = new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
             CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
-            JoinedAt = new DateOnly(2022, 1, 1),
+            JoinedAt = new DateTime(2022, 1, 1),
             QualificationId = 1
         };
 
         var handler = new AddPartnerHandler(
             companyRepository: _companyRepository,
+            partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
         );
 
@@ -147,18 +154,19 @@ public class AddPartnerHandlerTests
         _companyRepository.GetById(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _companyRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
         var command = new AddPartner
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
-            JoinedAt = new DateOnly(2022, 1, 1),
+            JoinedAt = new DateTime(2022, 1, 1),
             QualificationId = 1
         };
 
         var handler = new AddPartnerHandler(
             companyRepository: _companyRepository,
+            partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
         );
 

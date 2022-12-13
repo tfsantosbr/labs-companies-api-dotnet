@@ -144,6 +144,8 @@ public class Company
         if (phones == null || !phones.Any())
             return;
 
+        _phones.Clear();
+
         foreach (var phone in phones)
             _phones.Add(phone);
     }

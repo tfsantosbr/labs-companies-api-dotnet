@@ -11,7 +11,6 @@ public interface ICompanyRepository
     Task<bool> AnyById(Guid companyId);
     Task<Company?> GetById(Guid companyId);
     void Remove(Company company);
-    Task<bool> AnyPartnerById(Guid partnerId);
     Task<IPagedList<CompanyItem>> Find(CompanyParameters parameters);
     Task<IEnumerable<CompanyPartnerModel>> GetPartners(Guid companyId);
 }

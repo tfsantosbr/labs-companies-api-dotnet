@@ -4,9 +4,8 @@ namespace Companies.Domain.Features.Companies;
 
 public class CompanyPhone
 {
-    public CompanyPhone(Phone phone, Guid? id = null)
+    public CompanyPhone(Phone phone)
     {
-        Id = id ?? Guid.NewGuid();
         Phone = phone;
     }
 

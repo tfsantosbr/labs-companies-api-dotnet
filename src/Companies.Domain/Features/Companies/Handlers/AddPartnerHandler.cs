@@ -4,6 +4,7 @@ using Companies.Domain.Base.Persistence;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Commands.Validators;
 using Companies.Domain.Features.Companies.Repositories;
+using Companies.Domain.Features.Partners.Repositories;
 
 using MediatR;
 
@@ -14,14 +15,17 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
     // Fields
 
     private readonly ICompanyRepository _companyRepository;
+    private readonly IPartnerRepository _partnerRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     // Constructors
 
-    public AddPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
+    public AddPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork, 
+        IPartnerRepository partnerRepository)
     {
         _companyRepository = companyRepository;
         _unitOfWork = unitOfWork;
+        _partnerRepository = partnerRepository;
     }
 
     // Implementations
@@ -45,7 +49,7 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
         var partner = new CompanyPartner(
             partnerId: request.PartnerId,
             qualificationId: request.QualificationId,
-            joinedAt: request.JoinedAt
+            joinedAt: DateOnly.FromDateTime(request.JoinedAt)
         );
 
         company.AddPartner(partner);
@@ -76,6 +80,6 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
 
     private async Task<bool> PartnerNotFound(Guid partnerId)
     {
-        return !await _companyRepository.AnyPartnerById(partnerId);
+        return !await _partnerRepository.AnyPartnerById(partnerId);
     }
 }

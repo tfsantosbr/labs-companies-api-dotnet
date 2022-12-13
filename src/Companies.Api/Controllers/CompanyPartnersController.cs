@@ -29,7 +29,7 @@ public class CompanyPartnersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> FindCompanies(Guid companyId)
     {
-        if (await _companyRepository.AnyById(companyId))
+        if (!await _companyRepository.AnyById(companyId))
             return NotFound(new Notification("Company", "Company not found"));
 
         var partners = await _companyRepository.GetPartners(companyId);
@@ -40,10 +40,12 @@ public class CompanyPartnersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddPartner(Guid companyId, [FromBody] AddPartner request)
     {
+        request.CompanyId = companyId;
+
         var response = await _mediator.Send(request);
 
         if (response.HasNotifications)
-            return NotFound(response.Notifications);
+            return BadRequest(response.Notifications);
 
         var addedPartnerDetails = _mapper.Map<CompanyPartnerModel>(response.Data);
 
@@ -51,7 +53,7 @@ public class CompanyPartnersController : ControllerBase
     }
 
     [HttpDelete("{partnerId}")]
-    public async Task<IActionResult> RemoveCompany(Guid companyId, Guid partnerId)
+    public async Task<IActionResult> RemovePartner(Guid companyId, Guid partnerId)
     {
         var response = await _mediator.Send(new RemovePartner(companyId, partnerId));
 
