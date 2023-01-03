@@ -27,7 +27,7 @@ public class CompanyPartnersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> FindCompanies(Guid companyId)
+    public async Task<IActionResult> FindPartners(Guid companyId)
     {
         if (!await _companyRepository.AnyById(companyId))
             return NotFound(new Notification("Company", "Company not found"));

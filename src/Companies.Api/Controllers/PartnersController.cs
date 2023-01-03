@@ -1,10 +1,8 @@
 using Companies.Domain.Base.ValueObjects;
 using Companies.Domain.Features.Partners;
 using Companies.Domain.Features.Partners.Models;
-using Companies.Infrastructure.Contexts;
-
+using Companies.Domain.Features.Partners.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Companies.Api.Controllers;
 
@@ -12,25 +10,17 @@ namespace Companies.Api.Controllers;
 [Route("partners")]
 public class PartnersController : ControllerBase
 {
-    private CompaniesContext _context;
+    private readonly IPartnerRepository _partnerRepository;
 
-    public PartnersController(CompaniesContext context)
+    public PartnersController(IPartnerRepository partnerRepository)
     {
-        _context = context;
+        _partnerRepository = partnerRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var items = await _context.Set<Partner>()
-            .AsNoTracking()
-            .Select(u => new PartnerItem
-            {
-                Id = u.Id,
-                Name = u.CompleteName.ToString(),
-                Email = u.Email.ToString()
-            })
-            .ToListAsync();
+        var items = await _partnerRepository.List();
 
         return Ok(items);
     }
@@ -50,8 +40,7 @@ public class PartnersController : ControllerBase
             new Email(request.Email)
             );
 
-        await _context.AddAsync(partner);
-        await _context.SaveChangesAsync();
+        await _partnerRepository.Add(partner);
 
         var createdPartner = new PartnerItem
         {
@@ -66,15 +55,12 @@ public class PartnersController : ControllerBase
     [HttpDelete("{partnerId}")]
     public async Task<IActionResult> Delete(Guid partnerId)
     {
-        var partner = await _context.Set<Partner>()
-            .FirstOrDefaultAsync(p => p.Id == partnerId);
+        var partner = await _partnerRepository.GetById(partnerId);
 
         if (partner == null)
             return NotFound(new { Code = "Partner", Message = "Partner not found" });
 
-        _context.Set<Partner>().Remove(partner);
-
-        await _context.SaveChangesAsync();
+        await _partnerRepository.Remove(partner);
 
         return NoContent();
     }
@@ -83,9 +69,6 @@ public class PartnersController : ControllerBase
 
     private async Task<bool> IsDuplicatedEmail(string email)
     {
-        return await _context
-            .Set<Partner>()
-            .AsNoTracking()
-            .AnyAsync(p => p.Email.Address == email);
+        return await _partnerRepository.IsDuplicatedEmail(email);
     }
 }
