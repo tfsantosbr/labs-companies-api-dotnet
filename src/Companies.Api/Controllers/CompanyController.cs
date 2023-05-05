@@ -1,14 +1,10 @@
 using AutoMapper;
-
 using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
-
-using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;

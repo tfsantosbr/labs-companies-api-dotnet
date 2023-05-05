@@ -1,12 +1,11 @@
 using AutoMapper;
 
+using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
+using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
-
-using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;
@@ -16,14 +15,20 @@ namespace Companies.Api.Controllers;
 public class CompanyPartnersController : ControllerBase
 {
     private ICompanyRepository _companyRepository;
-    private IMediator _mediator;
     private IMapper _mapper;
+    private readonly IHandler<AddPartnerInCompany, Response<CompanyPartner>> _addPartnerInCompanyHandler;
+    private readonly IHandler<RemovePartnerFromCompany, Response> _removePartnerFromCompanyHandler;
 
-    public CompanyPartnersController(ICompanyRepository companyRepository, IMediator mediator, IMapper mapper)
+    public CompanyPartnersController(
+        ICompanyRepository companyRepository, 
+        IMapper mapper, 
+        IHandler<AddPartnerInCompany, Response<CompanyPartner>> addPartnerInCompanyHandler, 
+        IHandler<RemovePartnerFromCompany, Response> removePartnerFromCompanyHandler)
     {
         _companyRepository = companyRepository;
-        _mediator = mediator;
         _mapper = mapper;
+        _addPartnerInCompanyHandler = addPartnerInCompanyHandler;
+        _removePartnerFromCompanyHandler = removePartnerFromCompanyHandler;
     }
 
     [HttpGet]
@@ -38,11 +43,11 @@ public class CompanyPartnersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddPartner(Guid companyId, [FromBody] AddPartner request)
+    public async Task<IActionResult> AddPartnerInCompany(Guid companyId, [FromBody] AddPartnerInCompany request)
     {
         request.CompanyId = companyId;
 
-        var response = await _mediator.Send(request);
+        var response = await _addPartnerInCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);
@@ -53,9 +58,9 @@ public class CompanyPartnersController : ControllerBase
     }
 
     [HttpDelete("{partnerId}")]
-    public async Task<IActionResult> RemovePartner(Guid companyId, Guid partnerId)
+    public async Task<IActionResult> RemovePartnerFromCompany(Guid companyId, Guid partnerId)
     {
-        var response = await _mediator.Send(new RemovePartner(companyId, partnerId));
+        var response = await _removePartnerFromCompanyHandler.Handle(new RemovePartnerFromCompany(companyId, partnerId));
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);
