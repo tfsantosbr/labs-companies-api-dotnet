@@ -1,10 +1,6 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
-
 using Companies.Api.Extensions;
-using Companies.Domain.Features.Companies.Commands;
-
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -21,10 +17,7 @@ builder.Services.AddCors(setup =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddMediatR(typeof(CreateCompany));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
 builder.Services.AddHealthChecks(configuration);
 builder.Services.AddDatabaseContext(configuration);
 builder.Services.AddApplication();

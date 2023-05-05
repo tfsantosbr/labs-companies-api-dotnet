@@ -1,12 +1,10 @@
 using AutoMapper;
-
+using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
+using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
-
-using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;
@@ -15,15 +13,24 @@ namespace Companies.Api.Controllers;
 [Route("companies")]
 public class CompanyController : ControllerBase
 {
-    private ICompanyRepository _companyRepository;
-    private IMediator _mediator;
     private IMapper _mapper;
+    private ICompanyRepository _companyRepository;
+    private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
+    private readonly IHandler<UpdateCompany, Response> _updateCompanyHandler;
+    private readonly IHandler<RemoveCompany, Response> _removeCompanyHandler;
 
-    public CompanyController(ICompanyRepository companyRepository, IMediator mediator, IMapper mapper)
+    public CompanyController(
+        IMapper mapper,
+        ICompanyRepository companyRepository,
+        IHandler<CreateCompany, Response<Company>> createCompanyHandler,
+        IHandler<UpdateCompany, Response> updateCompanyHandler,
+        IHandler<RemoveCompany, Response> removeCompanyHandler)
     {
         _companyRepository = companyRepository;
-        _mediator = mediator;
         _mapper = mapper;
+        _createCompanyHandler = createCompanyHandler;
+        _updateCompanyHandler = updateCompanyHandler;
+        _removeCompanyHandler = removeCompanyHandler;
     }
 
     [HttpGet]
@@ -37,10 +44,10 @@ public class CompanyController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCompany([FromBody] CreateCompany request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _createCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
-            return NotFound(response.Notifications);
+            return BadRequest(response.Notifications);
 
         var createdCompanyDetails = _mapper.Map<CompanyDetails>(response.Data);
 
@@ -65,7 +72,7 @@ public class CompanyController : ControllerBase
     {
         request.CompanyId = companyId;
 
-        var response = await _mediator.Send(request);
+        var response = await _updateCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);
@@ -76,7 +83,7 @@ public class CompanyController : ControllerBase
     [HttpDelete("{companyId}")]
     public async Task<IActionResult> RemoveCompany(Guid companyId)
     {
-        var response = await _mediator.Send(new RemoveCompany(companyId));
+        var response = await _removeCompanyHandler.Handle(new RemoveCompany(companyId));
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);

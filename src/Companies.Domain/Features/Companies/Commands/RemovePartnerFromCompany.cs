@@ -1,12 +1,8 @@
-using Companies.Domain.Base.Models;
-
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class RemovePartner : IRequest<Response>
+public class RemovePartnerFromCompany
 {
-    public RemovePartner(Guid companyId, Guid partnerId)
+    public RemovePartnerFromCompany(Guid companyId, Guid partnerId)
     {
         CompanyId = companyId;
         PartnerId = partnerId;

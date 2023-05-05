@@ -1,12 +1,10 @@
-
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies.Enums;
 using Companies.Domain.Features.Companies.Models;
-using MediatR;
 
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class CreateCompany : IRequest<Response<Company>>
+public class CreateCompany
 {
     public string Cnpj { get; set; } = default!;
     public string Name { get; set; } = default!;

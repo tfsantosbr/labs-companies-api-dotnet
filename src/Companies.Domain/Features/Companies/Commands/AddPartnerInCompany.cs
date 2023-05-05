@@ -1,12 +1,8 @@
 using System.Text.Json.Serialization;
 
-using Companies.Domain.Base.Models;
-
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class AddPartner : IRequest<Response<CompanyPartner>>
+public class AddPartnerInCompany
 {
     [JsonIgnore]
     public Guid CompanyId { get; set; }

@@ -28,9 +28,9 @@ public class AddPartnerHandlerTests
     {
         // arrange
 
-        var command = new AddPartner();
+        var command = new AddPartnerInCompany();
 
-        var handler = new AddPartnerHandler(
+        var handler = new AddPartnerInCompanyHandler(
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -50,7 +50,7 @@ public class AddPartnerHandlerTests
     {
         // arrange
 
-        var command = new AddPartner
+        var command = new AddPartnerInCompany
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = Guid.NewGuid(),
@@ -58,7 +58,7 @@ public class AddPartnerHandlerTests
             QualificationId = 1
         };
 
-        var handler = new AddPartnerHandler(
+        var handler = new AddPartnerInCompanyHandler(
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -85,7 +85,7 @@ public class AddPartnerHandlerTests
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
 
-        var command = new AddPartner
+        var command = new AddPartnerInCompany
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = Guid.NewGuid(),
@@ -93,7 +93,7 @@ public class AddPartnerHandlerTests
             QualificationId = 1
         };
 
-        var handler = new AddPartnerHandler(
+        var handler = new AddPartnerInCompanyHandler(
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -120,7 +120,7 @@ public class AddPartnerHandlerTests
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
-        var command = new AddPartner
+        var command = new AddPartnerInCompany
         {
             PartnerId = new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
             CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
@@ -128,7 +128,7 @@ public class AddPartnerHandlerTests
             QualificationId = 1
         };
 
-        var handler = new AddPartnerHandler(
+        var handler = new AddPartnerInCompanyHandler(
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -156,7 +156,7 @@ public class AddPartnerHandlerTests
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
-        var command = new AddPartner
+        var command = new AddPartnerInCompany
         {
             PartnerId = Guid.NewGuid(),
             CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
@@ -164,7 +164,7 @@ public class AddPartnerHandlerTests
             QualificationId = 1
         };
 
-        var handler = new AddPartnerHandler(
+        var handler = new AddPartnerInCompanyHandler(
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork

@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Companies.Domain.Features.Companies.Commands.Validators;
 
-public class AddPartnerValidator : AbstractValidator<AddPartner>
+public class AddPartnerValidator : AbstractValidator<AddPartnerInCompany>
 {
     public AddPartnerValidator()
     {

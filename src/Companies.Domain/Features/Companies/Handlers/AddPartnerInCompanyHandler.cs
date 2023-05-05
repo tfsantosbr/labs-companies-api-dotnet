@@ -6,11 +6,9 @@ using Companies.Domain.Features.Companies.Commands.Validators;
 using Companies.Domain.Features.Companies.Repositories;
 using Companies.Domain.Features.Partners.Repositories;
 
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler<AddPartner, Response<CompanyPartner>>
+public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartner>, IHandler<AddPartnerInCompany, Response<CompanyPartner>>
 {
     // Fields
 
@@ -20,7 +18,7 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
 
     // Constructors
 
-    public AddPartnerHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork, 
+    public AddPartnerInCompanyHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork, 
         IPartnerRepository partnerRepository)
     {
         _companyRepository = companyRepository;
@@ -30,7 +28,7 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
 
     // Implementations
 
-    public async Task<Response<CompanyPartner>> Handle(AddPartner request, CancellationToken cancellationToken)
+    public async Task<Response<CompanyPartner>> Handle(AddPartnerInCompany request, CancellationToken cancellationToken)
     {
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
@@ -61,7 +59,7 @@ public class AddPartnerHandler : CommandHandler<CompanyPartner>, IRequestHandler
 
     // Private Methods
 
-    private bool IsInvalidRequest(AddPartner request, out IEnumerable<Notification> notifications)
+    private bool IsInvalidRequest(AddPartnerInCompany request, out IEnumerable<Notification> notifications)
     {
         var validator = new AddPartnerValidator();
         var result = validator.Validate(request);

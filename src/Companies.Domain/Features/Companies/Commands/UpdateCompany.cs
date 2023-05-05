@@ -3,11 +3,9 @@ using System.Text.Json.Serialization;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies.Enums;
 
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Commands;
 
-public class UpdateCompany : IRequest<Response>
+public class UpdateCompany
 {
     [JsonIgnore]
     public Guid CompanyId { get; set; }
