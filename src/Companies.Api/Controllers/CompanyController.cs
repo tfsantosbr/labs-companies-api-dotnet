@@ -1,6 +1,8 @@
 using AutoMapper;
 
+using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
+using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
@@ -19,11 +21,18 @@ public class CompanyController : ControllerBase
     private IMediator _mediator;
     private IMapper _mapper;
 
-    public CompanyController(ICompanyRepository companyRepository, IMediator mediator, IMapper mapper)
+    private IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
+
+    public CompanyController(
+        ICompanyRepository companyRepository, 
+        IMediator mediator, 
+        IMapper mapper, 
+        IHandler<CreateCompany, Response<Company>> createCompanyHandler)
     {
         _companyRepository = companyRepository;
         _mediator = mediator;
         _mapper = mapper;
+        _createCompanyHandler = createCompanyHandler;
     }
 
     [HttpGet]
@@ -37,7 +46,7 @@ public class CompanyController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCompany([FromBody] CreateCompany request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _createCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
             return NotFound(response.Notifications);

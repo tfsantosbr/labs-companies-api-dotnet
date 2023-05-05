@@ -6,11 +6,9 @@ using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Commands.Validators;
 using Companies.Domain.Features.Companies.Repositories;
 
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class CreateCompanyHandler : CommandHandler<Company>, IRequestHandler<CreateCompany, Response<Company>>
+public class CreateCompanyHandler : CommandHandler<Company>, IHandler<CreateCompany, Response<Company>>
 {
     // Fields
 
