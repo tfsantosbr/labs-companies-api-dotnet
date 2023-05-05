@@ -17,22 +17,24 @@ namespace Companies.Api.Controllers;
 [Route("companies")]
 public class CompanyController : ControllerBase
 {
-    private ICompanyRepository _companyRepository;
-    private IMediator _mediator;
     private IMapper _mapper;
-
-    private IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
+    private ICompanyRepository _companyRepository;
+    private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
+    private readonly IHandler<UpdateCompany, Response> _updateCompanyHandler;
+    private readonly IHandler<RemoveCompany, Response> _removeCompanyHandler;
 
     public CompanyController(
-        ICompanyRepository companyRepository, 
-        IMediator mediator, 
-        IMapper mapper, 
-        IHandler<CreateCompany, Response<Company>> createCompanyHandler)
+        IMapper mapper,
+        ICompanyRepository companyRepository,
+        IHandler<CreateCompany, Response<Company>> createCompanyHandler,
+        IHandler<UpdateCompany, Response> updateCompanyHandler,
+        IHandler<RemoveCompany, Response> removeCompanyHandler)
     {
         _companyRepository = companyRepository;
-        _mediator = mediator;
         _mapper = mapper;
         _createCompanyHandler = createCompanyHandler;
+        _updateCompanyHandler = updateCompanyHandler;
+        _removeCompanyHandler = removeCompanyHandler;
     }
 
     [HttpGet]
@@ -74,7 +76,7 @@ public class CompanyController : ControllerBase
     {
         request.CompanyId = companyId;
 
-        var response = await _mediator.Send(request);
+        var response = await _updateCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);
@@ -85,7 +87,7 @@ public class CompanyController : ControllerBase
     [HttpDelete("{companyId}")]
     public async Task<IActionResult> RemoveCompany(Guid companyId)
     {
-        var response = await _mediator.Send(new RemoveCompany(companyId));
+        var response = await _removeCompanyHandler.Handle(new RemoveCompany(companyId));
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);

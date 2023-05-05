@@ -16,6 +16,8 @@ public static class ApplicationExtensions
         // Companies
         
         services.AddTransient<IHandler<CreateCompany, Response<Company>>, CreateCompanyHandler>();
+        services.AddTransient<IHandler<UpdateCompany, Response>, UpdateCompanyHandler>();
+        services.AddTransient<IHandler<RemoveCompany, Response>, RemoveCompanyHandler>();
         services.AddTransient<ICompanyRepository, CompanyRepository>();
         
         // Partners

@@ -4,11 +4,9 @@ using Companies.Domain.Base.Persistence;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Repositories;
 
-using MediatR;
-
 namespace Companies.Domain.Features.Companies.Handlers;
 
-public class RemoveCompanyHandler : CommandHandler, IRequestHandler<RemoveCompany, Response>
+public class RemoveCompanyHandler : CommandHandler, IHandler<RemoveCompany, Response>
 {
     // Fields
 
