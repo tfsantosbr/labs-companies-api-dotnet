@@ -58,7 +58,7 @@ public class PartnersController : ControllerBase
         var partner = await _partnerRepository.GetById(partnerId);
 
         if (partner == null)
-            return NotFound(new { Code = "Partner", Message = "Partner not found" });
+            return NotFound(new { Code = "PARTNER_NOT_FOUND", Message = "Partner not found" });
 
         await _partnerRepository.Remove(partner);
 
