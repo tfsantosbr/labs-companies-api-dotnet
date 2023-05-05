@@ -47,7 +47,7 @@ public class CompanyController : ControllerBase
         var response = await _createCompanyHandler.Handle(request);
 
         if (response.HasNotifications)
-            return NotFound(response.Notifications);
+            return BadRequest(response.Notifications);
 
         var createdCompanyDetails = _mapper.Map<CompanyDetails>(response.Data);
 
