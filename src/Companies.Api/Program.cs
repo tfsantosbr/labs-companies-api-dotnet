@@ -2,37 +2,60 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Companies.Api.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+using Serilog;
+using Serilog.Formatting.Json;
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
+Log.Logger = ObservabilityExtensions.BuildLogger();
 
-builder.Services.AddCors(setup =>
-    setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+    var configuration = builder.Configuration;
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddHealthChecks(configuration);
-builder.Services.AddDatabaseContext(configuration);
-builder.Services.AddApplication();
+    builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
 
-var app = builder.Build();
+    builder.Services.AddCors(setup =>
+        setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
-if (app.Environment.IsDevelopment())
-    app.MigrateAndSeedData();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+    builder.Services.AddHealthChecks(configuration);
+    builder.Services.AddDatabaseContext(configuration);
+    builder.Services.AddApplication();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.UseCors();
-app.MapControllers();
-app.UseHealthChecks();
+    builder.Host.UseSerilog((context, services, configuration) => configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .WriteTo.File(new JsonFormatter(renderMessage: true), "log.json"));
 
-app.Run();
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+        app.MigrateAndSeedData();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.UseCors();
+    app.MapControllers();
+    app.UseHealthChecks();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

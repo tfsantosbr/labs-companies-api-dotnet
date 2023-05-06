@@ -1,10 +1,12 @@
 using AutoMapper;
+
 using Companies.Domain.Base.Handlers;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;
@@ -13,6 +15,7 @@ namespace Companies.Api.Controllers;
 [Route("companies")]
 public class CompanyController : ControllerBase
 {
+    private readonly ILogger<CompanyController> _logger;
     private IMapper _mapper;
     private ICompanyRepository _companyRepository;
     private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
@@ -24,13 +27,15 @@ public class CompanyController : ControllerBase
         ICompanyRepository companyRepository,
         IHandler<CreateCompany, Response<Company>> createCompanyHandler,
         IHandler<UpdateCompany, Response> updateCompanyHandler,
-        IHandler<RemoveCompany, Response> removeCompanyHandler)
+        IHandler<RemoveCompany, Response> removeCompanyHandler,
+        ILogger<CompanyController> logger)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
         _createCompanyHandler = createCompanyHandler;
         _updateCompanyHandler = updateCompanyHandler;
         _removeCompanyHandler = removeCompanyHandler;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -63,6 +68,8 @@ public class CompanyController : ControllerBase
             return NotFound(new Notification("Company", "Company not found"));
 
         var companyDetails = _mapper.Map<CompanyDetails>(company);
+
+        _logger.LogInformation("Requested company with Id: {@CompanyId} and Name: {@CompanyName}", companyId, company.Name);
 
         return Ok(companyDetails);
     }

@@ -43,3 +43,11 @@
 - [ ] Publicação
   - [ ] Dockerfile da API
   - [ ] Docker Compose com a API e Infraestrutura configurados
+
+---
+
+- [ ] Observabilidade
+  - [ ] Logs
+  - [ ] Metricas
+  - [ ] APM
+  - [ ] Uptime (healthcheck)
