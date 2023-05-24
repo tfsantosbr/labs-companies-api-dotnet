@@ -25,6 +25,7 @@ Run this commands to apply development certifications:
 dotnet dev-certs https --clean
 dotnet dev-certs https -ep $USERPROFILE/.aspnet/https/aspnetapp.pfx -p dev@123
 dotnet dev-certs https --trust
+
 ```
 
 ## Running Docker Infrastructure Dependencies
