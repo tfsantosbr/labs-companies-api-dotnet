@@ -16,8 +16,8 @@ namespace Companies.Api.Controllers;
 public class CompanyController : ControllerBase
 {
     private readonly ILogger<CompanyController> _logger;
-    private IMapper _mapper;
-    private ICompanyRepository _companyRepository;
+    private readonly IMapper _mapper;
+    private readonly ICompanyRepository _companyRepository;
     private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
     private readonly IHandler<UpdateCompany, Response> _updateCompanyHandler;
     private readonly IHandler<RemoveCompany, Response> _removeCompanyHandler;
