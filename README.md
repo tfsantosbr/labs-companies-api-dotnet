@@ -10,7 +10,7 @@
 
 - [Domain Driven Design](https://balta.io/cursos/modelando-dominios-ricos)
 - [Folder By Feature Structure](https://github.com/tfsantosbr/dotnet-folder-by-feature-structure)
-- [CQRS + Mediator](https://balta.io/blog/aspnet-core-cqrs-mediator)
+- [CQRS](https://balta.io/blog/aspnet-core-cqrs-mediator)
 - [Repository](https://learning.eximia.co/videos/repositorios/)
 
 ## Applying Development Certifications
