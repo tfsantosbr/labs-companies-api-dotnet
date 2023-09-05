@@ -19,6 +19,7 @@ public class CompanyController : ControllerBase
     private readonly IMapper _mapper;
     private readonly ICompanyRepository _companyRepository;
     private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
+    private readonly IHandler<ImportCompanies, Response> _importCompaniesHandler;
     private readonly IHandler<UpdateCompany, Response> _updateCompanyHandler;
     private readonly IHandler<RemoveCompany, Response> _removeCompanyHandler;
 
@@ -28,7 +29,8 @@ public class CompanyController : ControllerBase
         IHandler<CreateCompany, Response<Company>> createCompanyHandler,
         IHandler<UpdateCompany, Response> updateCompanyHandler,
         IHandler<RemoveCompany, Response> removeCompanyHandler,
-        ILogger<CompanyController> logger)
+        ILogger<CompanyController> logger,
+        IHandler<ImportCompanies, Response> importCompaniesHandler)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
@@ -36,6 +38,7 @@ public class CompanyController : ControllerBase
         _updateCompanyHandler = updateCompanyHandler;
         _removeCompanyHandler = removeCompanyHandler;
         _logger = logger;
+        _importCompaniesHandler = importCompaniesHandler;
     }
 
     [HttpGet]
@@ -57,6 +60,17 @@ public class CompanyController : ControllerBase
         var createdCompanyDetails = _mapper.Map<CompanyDetails>(response.Data);
 
         return Created($"companies/{createdCompanyDetails.Id}", createdCompanyDetails);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ImportCompanies([FromBody] ImportCompanies request)
+    {
+        var response = await _importCompaniesHandler.Handle(request);
+
+        if (response.HasNotifications)
+            return BadRequest(response.Notifications);
+
+        return Accepted();
     }
 
     [HttpGet("{companyId}")]

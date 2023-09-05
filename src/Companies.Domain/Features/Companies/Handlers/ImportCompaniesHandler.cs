@@ -1,4 +1,5 @@
 using Companies.Domain.Base.Handlers;
+using Companies.Domain.Base.Messaging;
 using Companies.Domain.Base.Models;
 using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Commands.Validators;
@@ -7,6 +8,17 @@ namespace Companies.Domain.Features.Companies.Handlers;
 
 public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, Response>
 {
+    //private fields
+
+    private readonly IMessageBroker _messageBroker;
+
+    // constructors
+
+    public ImportCompaniesHandler(IMessageBroker messageBroker)
+    {
+        _messageBroker = messageBroker;
+    }
+
     // Implementations
 
     public async Task<Response> Handle(ImportCompanies request, CancellationToken cancellationToken = default)
@@ -16,9 +28,7 @@ public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, 
 
         foreach (var company in request.CompaniesToBeImported)
         {
-            // create company message
-
-            // send to message broker
+            await _messageBroker.PostMessage(company);
         }
 
         return Response.Ok();
