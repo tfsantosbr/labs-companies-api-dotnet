@@ -6,7 +6,7 @@ namespace Companies.Domain.Features.Companies.Commands;
 
 public class ImportCompanies
 {
-    public IEnumerable<CompanyToBeImported> CompaniesToBeImported { get; set; } = null!;
+    public IEnumerable<CompanyToBeImported> Companies { get; set; } = null!;
 }
 
 public class CompanyToBeImported

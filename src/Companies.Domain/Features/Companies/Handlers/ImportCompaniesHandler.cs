@@ -26,7 +26,7 @@ public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, 
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
 
-        foreach (var company in request.CompaniesToBeImported)
+        foreach (var company in request.Companies)
         {
             await _messageBroker.PostMessage(company);
         }

@@ -62,7 +62,7 @@ public class CompanyController : ControllerBase
         return Created($"companies/{createdCompanyDetails.Id}", createdCompanyDetails);
     }
 
-    [HttpPost]
+    [HttpPost("import")]
     public async Task<IActionResult> ImportCompanies([FromBody] ImportCompanies request)
     {
         var response = await _importCompaniesHandler.Handle(request);

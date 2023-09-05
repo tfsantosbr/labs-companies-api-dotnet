@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Companies.Domain.Base.Persistence;
 using Companies.Infrastructure.Contexts;
 using Companies.Infrastructure.Contexts.Persistence;
+using Companies.Domain.Base.Messaging;
+using Companies.Infrastructure.Services.Messaging;
 
 namespace Companies.Api.Extensions;
 
@@ -20,6 +22,10 @@ public static class InfrastructureExtensions
         // add unit of work
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        // add message broker
+
+        services.AddScoped<IMessageBroker, MessageBroker>();
 
         return services;
     }

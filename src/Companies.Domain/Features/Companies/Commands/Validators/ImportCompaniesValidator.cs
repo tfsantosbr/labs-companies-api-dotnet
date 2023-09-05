@@ -6,6 +6,6 @@ public class ImportCompaniesValidator : AbstractValidator<ImportCompanies>
 {
     public ImportCompaniesValidator()
     {
-        RuleFor(p => p.CompaniesToBeImported).NotEmpty();
+        RuleFor(p => p.Companies).NotEmpty();
     }
 }
