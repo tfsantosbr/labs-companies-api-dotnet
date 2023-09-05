@@ -2,7 +2,13 @@
 using System.Text;
 using System.Text.Json;
 
+using Companies.Domain.Base.Handlers;
+using Companies.Domain.Base.Models;
+using Companies.Domain.Features.Companies;
 using Companies.Domain.Features.Companies.Commands;
+using Companies.Domain.Features.Companies.Handlers;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -15,10 +21,15 @@ public class ImportCompanyConsumer : BackgroundService
     private readonly ConnectionFactory _connectionFactory;
     private readonly string _querueName = "import-companies-queue";
     private readonly ILogger<ImportCompanyConsumer> _logger;
+    private readonly IServiceProvider _serviceProvider;
 
-    public ImportCompanyConsumer(ILogger<ImportCompanyConsumer> logger)
+
+    public ImportCompanyConsumer(
+        ILogger<ImportCompanyConsumer> logger,
+        IServiceProvider serviceProvider)
     {
         _logger = logger;
+        _serviceProvider = serviceProvider;
 
         _connectionFactory = new ConnectionFactory
         {
@@ -43,7 +54,7 @@ public class ImportCompanyConsumer : BackgroundService
 
         var consumer = new EventingBasicConsumer(channel);
 
-        consumer.Received += (sender, eventArgs) =>
+        consumer.Received += async (sender, eventArgs) =>
         {
             var contentArray = eventArgs.Body.ToArray();
             var contentString = Encoding.UTF8.GetString(contentArray);
@@ -53,9 +64,34 @@ public class ImportCompanyConsumer : BackgroundService
                 return;
 
             _logger.LogInformation(
-                "Received message: CreateCompany with CNPJ: {cnpj}", 
+                "Received message: CreateCompany with CNPJ: {cnpj}",
                 createCompany.Cnpj
                 );
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var createCompanyHandler = scope.ServiceProvider
+                    .GetRequiredService<IHandler<CreateCompany, Response<Company>>>();
+
+                var response = await createCompanyHandler.Handle(createCompany);
+
+                if (response.HasNotifications)
+                {
+                    _logger.LogWarning(
+                        "Error while create company with CNPJ {cnpj}: \n {errors}",
+                        createCompany.Cnpj,
+                        JsonSerializer.Serialize(response.Notifications)
+                        );
+                }
+                else
+                {
+                    _logger.LogInformation(
+                        "Company with CNPJ {cnpj} created with success. Id: {id}",
+                        createCompany.Cnpj,
+                        response.Data!.Id
+                        );
+                }
+            }
 
             channel.BasicAck(eventArgs.DeliveryTag, false);
         };
