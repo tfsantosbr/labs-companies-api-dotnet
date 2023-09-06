@@ -5,6 +5,8 @@ using System.Text.Json.Serialization;
 
 using Companies.Domain.Base.Messaging;
 
+using Microsoft.Extensions.Configuration;
+
 using RabbitMQ.Client;
 
 namespace Companies.Infrastructure.Services.Messaging;
@@ -14,13 +16,13 @@ public class MessageBroker : IMessageBroker
     private readonly ConnectionFactory _connectionFactory;
     private readonly string _querueName = "import-companies-queue";
 
-    public MessageBroker()
+    public MessageBroker(IConfiguration configuration)
     {
         _connectionFactory = new ConnectionFactory
         {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest"
+            HostName = configuration["RabbitMQ:Host"],
+            UserName = configuration["RabbitMQ:Username"],
+            Password = configuration["RabbitMQ:Password"]
         };
     }
 

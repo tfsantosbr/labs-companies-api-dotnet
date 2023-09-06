@@ -26,6 +26,7 @@ public class ImportCompanyConsumer : BackgroundService
 
     public ImportCompanyConsumer(
         ILogger<ImportCompanyConsumer> logger,
+        IConfiguration configuration,
         IServiceProvider serviceProvider)
     {
         _logger = logger;
@@ -33,9 +34,9 @@ public class ImportCompanyConsumer : BackgroundService
 
         _connectionFactory = new ConnectionFactory
         {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest"
+            HostName = configuration["RabbitMQ:Host"],
+            UserName = configuration["RabbitMQ:Username"],
+            Password = configuration["RabbitMQ:Password"]
         };
     }
 

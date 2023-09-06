@@ -33,8 +33,7 @@ try
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
         .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .WriteTo.File(new JsonFormatter(renderMessage: true), "log.json"));
+        .WriteTo.Console());
 
     var app = builder.Build();
 

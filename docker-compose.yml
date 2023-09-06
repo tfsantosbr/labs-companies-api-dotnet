@@ -1,6 +1,6 @@
 version: '3'
 services:
-  webapi:
+  api:
     container_name: labs-companies-api
     image: companies-api
     build:
@@ -15,11 +15,30 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=dev@123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - CONNECTIONSTRINGS__POSTGRES=Host=host.docker.internal;Database=Companies;Username=postgres;Password=postgres
+      - RABBITMQ__HOST=host.docker.internal
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
       - ~/.aspnet/https:/https:ro
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  import-worker:
+    container_name: labs-companies-import-worker
+    image: companies-import-worker
+    build:
+      context: .
+      dockerfile: src/Companies.Import.Worker/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CONNECTIONSTRINGS__POSTGRES=Host=host.docker.internal;Database=Companies;Username=postgres;Password=postgres
+      - RABBITMQ__HOST=host.docker.internal
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
 
   postgres:
@@ -45,3 +64,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
