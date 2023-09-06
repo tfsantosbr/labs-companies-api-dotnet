@@ -7,12 +7,14 @@ using Companies.Domain.Features.Companies.Commands;
 using Companies.Domain.Features.Companies.Models;
 using Companies.Domain.Features.Companies.Repositories;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;
 
 [ApiController]
 [Route("companies")]
+[Authorize]
 public class CompanyController : ControllerBase
 {
     private readonly ILogger<CompanyController> _logger;

@@ -1,9 +1,6 @@
-using System.Reflection;
-using System.Text.Json.Serialization;
 using Companies.Api.Extensions;
 
 using Serilog;
-using Serilog.Formatting.Json;
 
 Log.Logger = ObservabilityExtensions.BuildLogger();
 
@@ -12,19 +9,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
     var configuration = builder.Configuration;
 
-    builder.Services.AddControllers()
-        .AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        });
-
-    builder.Services.AddCors(setup =>
-        setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
-
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+    builder.Services.AddApiServices(configuration);
     builder.Services.AddHealthChecks(configuration);
     builder.Services.AddDatabaseContext(configuration);
     builder.Services.AddApplication();
@@ -39,6 +24,9 @@ try
 
     if (app.Environment.IsDevelopment())
         app.MigrateAndSeedData();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.UseSwagger();
     app.UseSwaggerUI();
