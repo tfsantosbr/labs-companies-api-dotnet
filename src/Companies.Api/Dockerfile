@@ -1,13 +1,13 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /build
-COPY ["src/Companies.Api/Companies.Api.csproj", "src/Companies.Api/"]
-COPY ["src/Companies.Domain/Companies.Domain.csproj", "src/Companies.Domain/"]
-COPY ["src/Companies.Infrastructure/Companies.Infrastructure.csproj", "src/Companies.Infrastructure/"]
+COPY src/Companies.Api/Companies.Api.csproj src/Companies.Api/
+COPY src/Companies.Domain/Companies.Domain.csproj src/Companies.Domain/
+COPY src/Companies.Infrastructure/Companies.Infrastructure.csproj src/Companies.Infrastructure/
 RUN dotnet restore "src/Companies.Api/Companies.Api.csproj"
 COPY . .
 WORKDIR "/build/src/Companies.Api"
