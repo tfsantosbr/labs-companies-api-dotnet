@@ -12,6 +12,8 @@
 - [Folder By Feature Structure](https://github.com/tfsantosbr/dotnet-folder-by-feature-structure)
 - [CQRS](https://balta.io/blog/aspnet-core-cqrs-mediator)
 - [Repository](https://learning.eximia.co/videos/repositorios/)
+- [Notification](https://balta.io/blog/exception-vs-domain-notification)
+- [Unit Of Work](https://balta.io/blog/dapper-unit-of-work-repository-pattern)
 
 ## Applying Development Certifications
 
