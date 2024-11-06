@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Companies.Domain.Features.Partners;
+using Companies.Application.Features.Partners;
 
 namespace Companies.Infrastructure.Contexts.Configurations;
 

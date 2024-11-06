@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using Companies.Domain.Base.Messaging;
+using Companies.Application.Base.Messaging;
 
 using Microsoft.Extensions.Configuration;
 

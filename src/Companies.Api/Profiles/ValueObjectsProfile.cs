@@ -1,7 +1,7 @@
 using AutoMapper;
 
-using Companies.Domain.Base.Models;
-using Companies.Domain.Base.ValueObjects;
+using Companies.Application.Base.Models;
+using Companies.Application.Base.ValueObjects;
 
 namespace Companies.Api.Profiles;
 
@@ -11,6 +11,6 @@ public class ValueObjectsProfile : Profile
     {
         CreateMap<Address, AddressModel>();
         CreateMap<Phone, PhoneModel>();
-        
+
     }
 }

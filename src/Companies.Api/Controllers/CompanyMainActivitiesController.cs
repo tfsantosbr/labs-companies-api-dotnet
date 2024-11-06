@@ -1,4 +1,4 @@
-using Companies.Domain.Features.CompanyMainActivities;
+using Companies.Application.Features.CompanyMainActivities;
 using Companies.Infrastructure.Contexts;
 
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace Companies.Api.Controllers;
 public class CompanyMainActivitiesController : ControllerBase
 {
     private DbSet<CompanyMainActivity> _companyMainActivities;
-    
+
     public CompanyMainActivitiesController(CompaniesContext context)
     {
         _companyMainActivities = context.Set<CompanyMainActivity>();

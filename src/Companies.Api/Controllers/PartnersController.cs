@@ -1,7 +1,8 @@
-using Companies.Domain.Base.ValueObjects;
-using Companies.Domain.Features.Partners;
-using Companies.Domain.Features.Partners.Models;
-using Companies.Domain.Features.Partners.Repositories;
+using Companies.Application.Base.ValueObjects;
+using Companies.Application.Features.Partners;
+using Companies.Application.Features.Partners.Models;
+using Companies.Application.Features.Partners.Repositories;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;

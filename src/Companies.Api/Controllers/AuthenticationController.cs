@@ -1,6 +1,7 @@
 using Companies.Api.Models.Authentication;
 using Companies.Api.Services.Interfaces;
-using Companies.Domain.Base.Models;
+using Companies.Application.Base.Models;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;

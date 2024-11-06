@@ -1,9 +1,9 @@
-using Companies.Domain.Base.ValueObjects;
-using Companies.Domain.Features.Companies;
-using Companies.Domain.Features.Companies.Enums;
-using Companies.Domain.Features.CompanyMainActivities;
-using Companies.Domain.Features.CompanyPartnerQualifications;
-using Companies.Domain.Features.Partners;
+using Companies.Application.Base.ValueObjects;
+using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Enums;
+using Companies.Application.Features.CompanyMainActivities;
+using Companies.Application.Features.CompanyPartnerQualifications;
+using Companies.Application.Features.Partners;
 
 namespace Companies.Infrastructure.Contexts;
 

@@ -1,7 +1,7 @@
-using Companies.Domain.Base.Pagination;
-using Companies.Domain.Features.Companies;
-using Companies.Domain.Features.Companies.Models;
-using Companies.Domain.Features.Companies.Repositories;
+using Companies.Application.Base.Pagination;
+using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Models;
+using Companies.Application.Features.Companies.Repositories;
 using Companies.Infrastructure.Contexts;
 
 using Microsoft.EntityFrameworkCore;

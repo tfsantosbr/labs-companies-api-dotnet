@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Companies.Domain.Base.Persistence;
+using Companies.Application.Base.Persistence;
 using Companies.Infrastructure.Contexts;
 using Companies.Infrastructure.Contexts.Persistence;
-using Companies.Domain.Base.Messaging;
+using Companies.Application.Base.Messaging;
 using Companies.Infrastructure.Services.Messaging;
 
 namespace Companies.Api.Extensions;

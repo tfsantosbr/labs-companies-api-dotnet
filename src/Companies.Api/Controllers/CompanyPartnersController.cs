@@ -1,11 +1,12 @@
 using AutoMapper;
 
-using Companies.Domain.Base.Handlers;
-using Companies.Domain.Base.Models;
-using Companies.Domain.Features.Companies;
-using Companies.Domain.Features.Companies.Commands;
-using Companies.Domain.Features.Companies.Models;
-using Companies.Domain.Features.Companies.Repositories;
+using Companies.Application.Base.Handlers;
+using Companies.Application.Base.Models;
+using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Commands;
+using Companies.Application.Features.Companies.Models;
+using Companies.Application.Features.Companies.Repositories;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Controllers;
@@ -20,9 +21,9 @@ public class CompanyPartnersController : ControllerBase
     private readonly IHandler<RemovePartnerFromCompany, Response> _removePartnerFromCompanyHandler;
 
     public CompanyPartnersController(
-        ICompanyRepository companyRepository, 
-        IMapper mapper, 
-        IHandler<AddPartnerInCompany, Response<CompanyPartner>> addPartnerInCompanyHandler, 
+        ICompanyRepository companyRepository,
+        IMapper mapper,
+        IHandler<AddPartnerInCompany, Response<CompanyPartner>> addPartnerInCompanyHandler,
         IHandler<RemovePartnerFromCompany, Response> removePartnerFromCompanyHandler)
     {
         _companyRepository = companyRepository;

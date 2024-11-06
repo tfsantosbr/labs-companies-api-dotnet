@@ -1,4 +1,4 @@
-using Companies.Domain.Features.CompanyPartnerQualifications;
+using Companies.Application.Features.CompanyPartnerQualifications;
 using Companies.Infrastructure.Contexts;
 
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace Companies.Api.Controllers;
 public class CompanyPartnerQualificationsController : ControllerBase
 {
     private DbSet<CompanyPartnerQualification> _companyPartnerQualifications;
-    
+
     public CompanyPartnerQualificationsController(CompaniesContext context)
     {
         _companyPartnerQualifications = context.Set<CompanyPartnerQualification>();

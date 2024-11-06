@@ -1,9 +1,9 @@
 using AutoMapper;
 
-using Companies.Domain.Base.Models;
-using Companies.Domain.Base.ValueObjects;
-using Companies.Domain.Features.Companies;
-using Companies.Domain.Features.Companies.Models;
+using Companies.Application.Base.Models;
+using Companies.Application.Base.ValueObjects;
+using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Models;
 
 namespace Companies.Api.Profiles;
 

@@ -1,6 +1,6 @@
-using Companies.Domain.Features.Partners;
-using Companies.Domain.Features.Partners.Models;
-using Companies.Domain.Features.Partners.Repositories;
+using Companies.Application.Features.Partners;
+using Companies.Application.Features.Partners.Models;
+using Companies.Application.Features.Partners.Repositories;
 using Companies.Infrastructure.Contexts;
 
 using Microsoft.EntityFrameworkCore;

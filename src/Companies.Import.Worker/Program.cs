@@ -1,10 +1,10 @@
-using Companies.Domain.Base.Handlers;
-using Companies.Domain.Base.Models;
-using Companies.Domain.Base.Persistence;
-using Companies.Domain.Features.Companies;
-using Companies.Domain.Features.Companies.Commands;
-using Companies.Domain.Features.Companies.Handlers;
-using Companies.Domain.Features.Companies.Repositories;
+using Companies.Application.Base.Handlers;
+using Companies.Application.Base.Models;
+using Companies.Application.Base.Persistence;
+using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Commands;
+using Companies.Application.Features.Companies.Handlers;
+using Companies.Application.Features.Companies.Repositories;
 using Companies.Import.Worker.Consumers;
 using Companies.Infrastructure.Contexts;
 using Companies.Infrastructure.Contexts.Persistence;
@@ -18,7 +18,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         var configuration = hostContext.Configuration;
 
         // application
-        
+
         services.AddHostedService<ImportCompanyConsumer>();
 
         services.AddScoped<IHandler<CreateCompany, Response<Company>>, CreateCompanyHandler>();

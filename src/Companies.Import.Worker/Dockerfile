@@ -4,7 +4,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /build
 COPY src/Companies.Import.Worker/Companies.Import.Worker.csproj src/Companies.Import.Worker/
-COPY src/Companies.Domain/Companies.Domain.csproj src/Companies.Domain/
+COPY src/Companies.Application/Companies.Application.csproj src/Companies.Application/
 COPY src/Companies.Infrastructure/Companies.Infrastructure.csproj src/Companies.Infrastructure/
 RUN dotnet restore "src/Companies.Import.Worker/Companies.Import.Worker.csproj"
 COPY . .
