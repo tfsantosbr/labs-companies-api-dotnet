@@ -1,10 +1,9 @@
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
-using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Repositories;
 
-namespace Companies.Application.Features.Companies.Handlers;
+namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
 public class RemoveCompanyHandler : CommandHandler, IHandler<RemoveCompany, Response>
 {

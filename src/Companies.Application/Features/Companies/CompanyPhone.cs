@@ -4,14 +4,20 @@ namespace Companies.Application.Features.Companies;
 
 public class CompanyPhone
 {
-    public CompanyPhone(Phone phone)
+    // Constructors
+
+    public CompanyPhone(Guid companyId, Phone phone, Guid id)
     {
+        Id = id;
+        CompanyId = companyId;
         Phone = phone;
     }
 
     private CompanyPhone()
     {
     }
+
+    // Properties
 
     public Guid Id { get; private set; }
     public Guid CompanyId { get; private set; }

@@ -3,7 +3,8 @@ using AutoMapper;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
-using Companies.Application.Features.Companies.Commands;
+using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
+using Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
 using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Repositories;
 

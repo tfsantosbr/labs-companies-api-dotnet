@@ -40,7 +40,7 @@ public class Response<T> : Response where T : class
 
 public class Response
 {
-    public List<Notification> Notifications { get; set; } = new List<Notification>();
+    public List<Notification> Notifications { get; set; } = [];
     public bool HasNotifications => Notifications?.Any() == true;
 
     public static Response Error(Notification notification)

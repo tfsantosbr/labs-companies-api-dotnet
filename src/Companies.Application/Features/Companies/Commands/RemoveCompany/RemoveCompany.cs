@@ -1,4 +1,4 @@
-namespace Companies.Application.Features.Companies.Commands;
+namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
 public class RemoveCompany
 {

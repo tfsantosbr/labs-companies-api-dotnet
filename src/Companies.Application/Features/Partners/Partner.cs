@@ -5,7 +5,7 @@ namespace Companies.Application.Features.Partners;
 
 public class Partner
 {
-    private readonly List<CompanyPartner> _companies = new List<CompanyPartner>();
+    private readonly List<CompanyPartner> _companies = [];
 
     public Partner(CompleteName completeName, Email email, Guid? id = null)
     {

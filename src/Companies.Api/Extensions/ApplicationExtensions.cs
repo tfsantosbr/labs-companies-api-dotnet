@@ -1,8 +1,12 @@
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
-using Companies.Application.Features.Companies.Commands;
-using Companies.Application.Features.Companies.Handlers;
+using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
+using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Commands.ImportCompanies;
+using Companies.Application.Features.Companies.Commands.RemoveCompany;
+using Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
+using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 using Companies.Infrastructure.Repositories;

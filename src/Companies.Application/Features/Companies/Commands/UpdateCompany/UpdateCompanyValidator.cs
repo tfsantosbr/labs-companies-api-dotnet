@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Companies.Application.Features.Companies.Commands.Validators;
+namespace Companies.Application.Features.Companies.Commands.UpdateCompany;
 
 public class UpdateCompanyValidator : AbstractValidator<UpdateCompany>
 {

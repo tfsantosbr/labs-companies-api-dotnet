@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace Companies.Application.Features.Companies.Commands.Validators;
+namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
-public class AddPartnerValidator : AbstractValidator<AddPartnerInCompany>
+public class AddPartnerInCompanyValidator : AbstractValidator<AddPartnerInCompany>
 {
-    public AddPartnerValidator()
+    public AddPartnerInCompanyValidator()
     {
         RuleFor(cp => cp.CompanyId).NotEmpty();
         RuleFor(cp => cp.PartnerId).NotEmpty();

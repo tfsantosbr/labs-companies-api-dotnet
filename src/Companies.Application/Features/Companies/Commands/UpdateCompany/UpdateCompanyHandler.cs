@@ -3,11 +3,10 @@ using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Base.ValueObjects;
-using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Commands.Validators;
 using Companies.Application.Features.Companies.Repositories;
 
-namespace Companies.Application.Features.Companies.Handlers;
+namespace Companies.Application.Features.Companies.Commands.UpdateCompany;
 
 public class UpdateCompanyHandler : CommandHandler, IHandler<UpdateCompany, Response>
 {

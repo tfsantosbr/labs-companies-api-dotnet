@@ -1,10 +1,9 @@
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
-using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Repositories;
 
-namespace Companies.Application.Features.Companies.Handlers;
+namespace Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
 
 public class RemovePartnerFromCompanyHandler : CommandHandler, IHandler<RemovePartnerFromCompany, Response>
 {
@@ -30,7 +29,7 @@ public class RemovePartnerFromCompanyHandler : CommandHandler, IHandler<RemovePa
         if (company == null)
             return ErrorResponse("CompanyPartner", "Company not found");
 
-        var partner = company.GetPartner(request.PartnerId);
+        var partner = company.Partners.FirstOrDefault(p => p.PartnerId == request.PartnerId);
 
         if (partner == null)
             return ErrorResponse("CompanyPartner", "Partner not found");

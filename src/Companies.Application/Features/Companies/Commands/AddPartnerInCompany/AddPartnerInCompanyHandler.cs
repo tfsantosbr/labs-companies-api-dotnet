@@ -2,12 +2,11 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Abstractions.Results;
-using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Commands.Validators;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 
-namespace Companies.Application.Features.Companies.Handlers;
+namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
 public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartner>, IHandler<AddPartnerInCompany, Response<CompanyPartner>>
 {
@@ -62,7 +61,7 @@ public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartner>, IHandl
 
     private bool IsInvalidRequest(AddPartnerInCompany request, out IEnumerable<Notification> notifications)
     {
-        var validator = new AddPartnerValidator();
+        var validator = new AddPartnerInCompanyValidator();
         var result = validator.Validate(request);
 
         notifications = result.Errors.Select(e =>

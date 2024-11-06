@@ -2,10 +2,9 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Messaging;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Results;
-using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Commands.Validators;
 
-namespace Companies.Application.Features.Companies.Handlers;
+namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
 public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, Response>
 {

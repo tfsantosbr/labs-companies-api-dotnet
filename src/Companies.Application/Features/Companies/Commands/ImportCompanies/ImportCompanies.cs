@@ -2,7 +2,7 @@ using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 
-namespace Companies.Application.Features.Companies.Commands;
+namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
 public class ImportCompanies
 {

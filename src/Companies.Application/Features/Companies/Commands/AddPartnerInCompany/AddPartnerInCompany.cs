@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Companies.Application.Features.Companies.Commands;
+namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
 public class AddPartnerInCompany
 {

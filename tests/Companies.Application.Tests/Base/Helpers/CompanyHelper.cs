@@ -1,7 +1,8 @@
 using Companies.Application.Base.Models;
 using Companies.Application.Base.ValueObjects;
 using Companies.Application.Features.Companies;
-using Companies.Application.Features.Companies.Commands;
+using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 
