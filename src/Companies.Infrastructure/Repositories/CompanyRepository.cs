@@ -1,3 +1,4 @@
+using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Base.Pagination;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Models;

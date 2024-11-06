@@ -1,4 +1,4 @@
-using Companies.Application.Base.Pagination;
+using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Features.Companies.Models;
 
 namespace Companies.Application.Features.Companies.Repositories;

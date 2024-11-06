@@ -1,4 +1,6 @@
-namespace Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Results;
+
+namespace Companies.Application.Abstractions.Models;
 
 public class Response<T> : Response where T : class
 {

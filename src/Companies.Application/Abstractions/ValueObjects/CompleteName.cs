@@ -1,4 +1,4 @@
-namespace Companies.Application.Base.ValueObjects;
+namespace Companies.Application.Abstractions.ValueObjects;
 
 public class CompleteName
 {

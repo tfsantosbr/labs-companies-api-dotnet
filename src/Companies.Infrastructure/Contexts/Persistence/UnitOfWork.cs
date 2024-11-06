@@ -1,4 +1,4 @@
-using Companies.Application.Base.Persistence;
+using Companies.Application.Abstractions.Persistence;
 
 namespace Companies.Infrastructure.Contexts.Persistence;
 

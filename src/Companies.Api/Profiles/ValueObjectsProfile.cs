@@ -1,7 +1,7 @@
 using AutoMapper;
 
-using Companies.Application.Base.Models;
-using Companies.Application.Base.ValueObjects;
+using Companies.Application.Abstractions.Models;
+using Companies.Application.Abstractions.ValueObjects;
 
 namespace Companies.Api.Profiles;
 

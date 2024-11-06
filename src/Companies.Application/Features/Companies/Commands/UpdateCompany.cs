@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-using Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
 
 namespace Companies.Application.Features.Companies.Commands;

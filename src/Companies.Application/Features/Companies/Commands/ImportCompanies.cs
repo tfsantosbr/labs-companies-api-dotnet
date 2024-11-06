@@ -1,4 +1,4 @@
-using Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 

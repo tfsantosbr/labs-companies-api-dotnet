@@ -1,4 +1,4 @@
-using Companies.Application.Base.ValueObjects;
+using Companies.Application.Abstractions.ValueObjects;
 
 namespace Companies.Application.Features.Companies;
 

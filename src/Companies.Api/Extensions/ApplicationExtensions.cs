@@ -1,5 +1,5 @@
-using Companies.Application.Base.Handlers;
-using Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Handlers;
+using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands;
 using Companies.Application.Features.Companies.Handlers;

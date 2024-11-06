@@ -1,4 +1,4 @@
-namespace Companies.Application.Base.Pagination;
+namespace Companies.Application.Abstractions.Pagination;
 
 public class PagedList<T> : IPagedList<T> where T : new()
 {

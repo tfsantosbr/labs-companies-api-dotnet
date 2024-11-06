@@ -1,6 +1,7 @@
-using Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Models;
+using Companies.Application.Abstractions.Results;
 
-namespace Companies.Application.Base.Handlers;
+namespace Companies.Application.Abstractions.Handlers;
 
 public abstract class CommandHandler
 {

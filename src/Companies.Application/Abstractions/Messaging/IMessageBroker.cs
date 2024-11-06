@@ -1,4 +1,4 @@
-namespace Companies.Application.Base.Messaging;
+namespace Companies.Application.Abstractions.Messaging;
 
 public interface IMessageBroker
 {

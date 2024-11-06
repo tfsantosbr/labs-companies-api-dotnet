@@ -1,4 +1,4 @@
-namespace Companies.Application.Base.Models;
+namespace Companies.Application.Abstractions.Models;
 
 public abstract class Parameters
 {

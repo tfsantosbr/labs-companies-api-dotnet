@@ -1,4 +1,4 @@
-using Companies.Application.Base.Models;
+using Companies.Application.Abstractions.Models;
 
 namespace Companies.Application.Features.Companies.Models;
 
