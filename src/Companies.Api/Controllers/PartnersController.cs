@@ -1,4 +1,3 @@
-using Companies.Application.Base.ValueObjects;
 using Companies.Application.Features.Partners;
 using Companies.Application.Features.Partners.Models;
 using Companies.Application.Features.Partners.Repositories;

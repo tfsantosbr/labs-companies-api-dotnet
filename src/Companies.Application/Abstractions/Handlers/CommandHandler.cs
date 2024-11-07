@@ -1,22 +1,27 @@
-using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Results;
 
 namespace Companies.Application.Abstractions.Handlers;
 
 public abstract class CommandHandler
 {
-    protected Response RequestErrorsResponse(IEnumerable<Notification> notifications) =>
-        Response.Error(notifications);
+    protected static Result SuccessResult() =>
+        Result.Success();
 
-    protected Response ErrorResponse(string code, string errorMessage) =>
-        Response.Error(new Notification(code, errorMessage));
+    protected static Result ErrorResult(Notification[] notifications) =>
+        Result.Error(notifications);
+
+    protected static Result ErrorResult(Notification notification) =>
+        Result.Error(notification);
 }
 
 public abstract class CommandHandler<T> where T : class
 {
-    protected Response<T> ErrorResponse(string code, string errorMessage) =>
-        Response<T>.Error(new Notification(code, errorMessage));
+    protected Result<T> SuccessResult(T data) =>
+        Result<T>.Success(data);
 
-    protected Response<T> RequestErrorsResponse(IEnumerable<Notification> notifications) =>
-        Response<T>.Error(notifications);
+    protected Result<T> ErrorResult(Notification[] notifications) =>
+        Result<T>.Error(notifications);
+
+    protected Result<T> ErrorResult(Notification notification) =>
+        Result<T>.Error(notification);
 }

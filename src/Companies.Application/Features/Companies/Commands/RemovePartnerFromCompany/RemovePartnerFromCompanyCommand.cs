@@ -1,8 +1,8 @@
 namespace Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
 
-public class RemovePartnerFromCompany
+public class RemovePartnerFromCompanyCommand
 {
-    public RemovePartnerFromCompany(Guid companyId, Guid partnerId)
+    public RemovePartnerFromCompanyCommand(Guid companyId, Guid partnerId)
     {
         CompanyId = companyId;
         PartnerId = partnerId;

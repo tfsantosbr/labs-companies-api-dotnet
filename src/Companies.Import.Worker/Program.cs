@@ -1,4 +1,3 @@
-using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Features.Companies;
@@ -20,7 +19,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<ImportCompanyConsumer>();
 
-        services.AddScoped<IHandler<CreateCompany, Response<Company>>, CreateCompanyHandler>();
+        services.AddScoped<IHandler<CreateCompanyCommand, Response<Company>>, CreateCompanyCommandHandler>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         // contexts

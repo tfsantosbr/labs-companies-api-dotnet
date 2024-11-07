@@ -1,7 +1,8 @@
+using Companies.Application.Abstractions.ValueObjects;
+
 namespace Companies.Application.Abstractions.Models;
 
-public class PhoneModel
+public record PhoneModel(string CountryCode, string Number)
 {
-    public string CountryCode { get; set; } = default!;
-    public string Number { get; set; } = default!;
+    public static PhoneModel FromPhone(Phone phone) => new(phone.CountryCode, phone.Number);
 }

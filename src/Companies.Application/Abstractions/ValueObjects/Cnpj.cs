@@ -1,6 +1,6 @@
 namespace Companies.Application.Abstractions.ValueObjects;
 
-public class Cnpj
+public record Cnpj
 {
     public Cnpj(string number)
     {

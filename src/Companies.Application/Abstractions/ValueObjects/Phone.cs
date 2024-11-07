@@ -1,6 +1,6 @@
 namespace Companies.Application.Abstractions.ValueObjects;
 
-public class Phone
+public record Phone
 {
     public Phone(string countryCode, string number)
     {

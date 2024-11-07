@@ -1,6 +1,4 @@
 using Companies.Application.Abstractions.Persistence;
-using Companies.Application.Features.Companies.Commands;
-using Companies.Application.Features.Companies.Handlers;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Tests.Base.Helpers;
 

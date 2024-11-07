@@ -1,6 +1,6 @@
 namespace Companies.Application.Abstractions.ValueObjects;
 
-public class Address
+public record Address
 {
     public Address(string postalCode, string street, string number, string? complement, string neighborhood,
         string city, string state, string country)

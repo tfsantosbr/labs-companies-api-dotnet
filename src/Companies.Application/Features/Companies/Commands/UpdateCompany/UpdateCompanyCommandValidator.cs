@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace Companies.Application.Features.Companies.Commands.CreateCompany;
+namespace Companies.Application.Features.Companies.Commands.UpdateCompany;
 
-public class CreateCompanyValidator : AbstractValidator<CreateCompany>
+public class UpdateCompanyCommandValidator : AbstractValidator<UpdateCompanyCommand>
 {
-    public CreateCompanyValidator()
+    public UpdateCompanyCommandValidator()
     {
-        RuleFor(p => p.Cnpj).NotEmpty().MaximumLength(14);
         RuleFor(p => p.Name).NotEmpty().MaximumLength(500);
         RuleFor(p => p.LegalNature).NotEmpty().IsInEnum();
         RuleFor(p => p.MainActivityId).NotEmpty();
@@ -23,16 +22,6 @@ public class CreateCompanyValidator : AbstractValidator<CreateCompany>
             RuleFor(p => p.Address.State).NotEmpty().MaximumLength(3);
             RuleFor(p => p.Address.Country).NotEmpty().MaximumLength(60);
         });
-
-        RuleFor(p => p.Partners)
-            .NotEmpty()
-            .WithMessage("The company must be created with at least one partner")
-            .Must(partners =>
-                partners == null ||
-                !partners.GroupBy(p => p.PartnerId).Any(g => g.Count() > 1)
-            )
-            .WithMessage("There are duplicate partners in the company")
-            ;
 
         RuleFor(p => p.Phones)
             .Must(phones =>

@@ -1,6 +1,5 @@
 using Companies.Api.Models.Authentication;
 using Companies.Api.Services.Interfaces;
-using Companies.Application.Base.Models;
 
 using Microsoft.AspNetCore.Mvc;
 

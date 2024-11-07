@@ -1,4 +1,3 @@
-using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
@@ -19,12 +18,12 @@ public static class ApplicationExtensions
     {
         // Companies
 
-        services.AddTransient<IHandler<CreateCompany, Response<Company>>, CreateCompanyHandler>();
-        services.AddTransient<IHandler<UpdateCompany, Response>, UpdateCompanyHandler>();
-        services.AddTransient<IHandler<RemoveCompany, Response>, RemoveCompanyHandler>();
+        services.AddTransient<IHandler<CreateCompanyCommand, Response<Company>>, CreateCompanyCommandHandler>();
+        services.AddTransient<IHandler<UpdateCompanyCommand, Response>, UpdateCompanyCommandHandler>();
+        services.AddTransient<IHandler<RemoveCompanyCommand, Response>, RemoveCompanyCommandHandler>();
         services.AddTransient<IHandler<AddPartnerInCompany, Response<CompanyPartner>>, AddPartnerInCompanyHandler>();
-        services.AddTransient<IHandler<RemovePartnerFromCompany, Response>, RemovePartnerFromCompanyHandler>();
-        services.AddTransient<IHandler<ImportCompanies, Response>, ImportCompaniesHandler>();
+        services.AddTransient<IHandler<RemovePartnerFromCompanyCommand, Response>, RemovePartnerFromCompanyCommandHandler>();
+        services.AddTransient<IHandler<ImportCompaniesCommand, Response>, ImportCompaniesCommandHandler>();
         services.AddTransient<ICompanyRepository, CompanyRepository>();
 
         // Partners

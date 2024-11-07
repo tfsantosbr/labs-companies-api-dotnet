@@ -1,8 +1,8 @@
 namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
-public class RemoveCompany
+public class RemoveCompanyCommand
 {
-    public RemoveCompany(Guid companyId)
+    public RemoveCompanyCommand(Guid companyId)
     {
         CompanyId = companyId;
     }

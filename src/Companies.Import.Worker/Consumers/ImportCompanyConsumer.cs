@@ -2,17 +2,12 @@
 using System.Text;
 using System.Text.Json;
 
-using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
-using Companies.Application.Features.Companies.Handlers;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RabbitMQ.Client.Exceptions;
 
 namespace Companies.Import.Worker.Consumers;
 
@@ -59,20 +54,20 @@ public class ImportCompanyConsumer : BackgroundService
         {
             var contentArray = eventArgs.Body.ToArray();
             var contentString = Encoding.UTF8.GetString(contentArray);
-            var createCompany = JsonSerializer.Deserialize<CreateCompany>(contentString);
+            var createCompany = JsonSerializer.Deserialize<CreateCompanyCommand>(contentString);
 
             if (createCompany is null)
                 return;
 
             _logger.LogInformation(
-                "Received message: CreateCompany with CNPJ: {cnpj}",
+                "Received message: CreateCompanyCommand with CNPJ: {cnpj}",
                 createCompany.Cnpj
                 );
 
             using (var scope = _serviceProvider.CreateScope())
             {
                 var createCompanyHandler = scope.ServiceProvider
-                    .GetRequiredService<IHandler<CreateCompany, Response<Company>>>();
+                    .GetRequiredService<IHandler<CreateCompanyCommand, Response<Company>>>();
 
                 var response = await createCompanyHandler.Handle(createCompany);
 

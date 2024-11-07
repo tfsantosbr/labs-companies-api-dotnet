@@ -2,5 +2,5 @@ namespace Companies.Application.Abstractions.Persistence;
 
 public interface IUnitOfWork
 {
-    Task CommitAsync();
+    Task CommitAsync(CancellationToken cancellationToken = default);
 }

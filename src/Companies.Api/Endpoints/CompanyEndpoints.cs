@@ -1,0 +1,122 @@
+﻿using Companies.Api.Extensions;
+using Companies.Api.Extensions.Endpoints;
+using Companies.Api.Models.Companies;
+using Companies.Application.Abstractions.Handlers;
+using Companies.Application.Abstractions.Pagination;
+using Companies.Application.Abstractions.Results;
+using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Commands.RemoveCompany;
+using Companies.Application.Features.Companies.Commands.UpdateCompany;
+using Companies.Application.Features.Companies.Models;
+using Companies.Application.Features.Companies.Queries;
+
+namespace Companies.Api.Endpoints;
+
+public class CompanyEndpoints : IEndpointBuilder
+{
+    public void MapEndpoints(IEndpointRouteBuilder builder)
+    {
+        var group = builder.MapGroup("companies").WithTags("Companies");
+
+        group.MapGet("/", FindCompanies)
+            .Produces<IPagedList<CompanyItem>>();
+
+        group.MapPost("/", CreateCompany)
+            .Produces<CompanyDetails>(StatusCodes.Status201Created)
+            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{companyId}", GetCompany)
+            .Produces<CompanyDetails>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{companyId}", UpdateCompany)
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+
+        group.MapDelete("/{companyId}", RemoveCompany)
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound);
+    }
+
+    public static async Task<IResult> FindCompanies(
+        [AsParameters] FindCompaniesRequest request,
+        IQueryHandler<FindCompaniesQuery, IPagedList<CompanyItem>> handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new FindCompaniesQuery(
+            request.Name,
+            request.Cnpj,
+            request.Page,
+            request.PageSize,
+            request.OrderBy);
+
+        var result = await handler.Handle(query, cancellationToken);
+
+        return result.Ok();
+    }
+
+    public static async Task<IResult> CreateCompany(
+        CreateCompanyRequest request,
+        ICommandHandler<CreateCompanyCommand, CompanyDetails> handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new CreateCompanyCommand(
+            request.Cnpj,
+            request.Name,
+            request.LegalNature,
+            request.MainActivityId,
+            request.Address,
+            request.Partners,
+            request.Phones
+            );
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        return result.Created($"companies/{result.Data!.Id}");
+    }
+
+    public static async Task<IResult> GetCompanyDetails(
+        Guid companyId,
+        IQueryHandler<GetCompanyDetailsQuery, CompanyDetails> handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetCompanyDetailsQuery(companyId);
+
+        var result = await handler.Handle(query, cancellationToken);
+
+        return result.Ok();
+    }
+
+    public static async Task<IResult> UpdateCompany(
+        Guid companyId,
+        UpdateCompanyRequest request,
+        ICommandHandler<UpdateCompanyCommand> handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateCompanyCommand(
+            companyId,
+            request.Name,
+            request.LegalNature,
+            request.MainActivityId,
+            request.Address,
+            request.Phones
+            );
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        return result.NoContent();
+    }
+
+    public static async Task<IResult> RemoveCompany(
+        Guid companyId,
+        ICommandHandler<RemoveCompanyCommand> handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new RemoveCompanyCommand(companyId);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        return result.NoContent();
+    }
+}

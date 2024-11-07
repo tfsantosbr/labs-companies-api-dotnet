@@ -2,17 +2,10 @@ using Companies.Application.Abstractions.Persistence;
 
 namespace Companies.Infrastructure.Contexts.Persistence;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(CompaniesContext context) : IUnitOfWork
 {
-    private readonly CompaniesContext _context;
-
-    public UnitOfWork(CompaniesContext context)
+    public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
-        _context = context;
-    }
-
-    public async Task CommitAsync()
-    {
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 }

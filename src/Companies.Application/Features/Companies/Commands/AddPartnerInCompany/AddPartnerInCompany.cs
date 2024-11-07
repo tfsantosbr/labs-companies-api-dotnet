@@ -1,12 +1,7 @@
-using System.Text.Json.Serialization;
+using Companies.Application.Abstractions.Handlers;
+using Companies.Application.Features.Companies.Models;
 
 namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
-public class AddPartnerInCompany
-{
-    [JsonIgnore]
-    public Guid CompanyId { get; set; }
-    public Guid PartnerId { get; set; }
-    public int QualificationId { get; set; }
-    public DateTime JoinedAt { get; set; }
-}
+public record AddPartnerInCompany(Guid CompanyId, Guid PartnerId, int QualificationId, DateTime JoinedAt) 
+    : ICommand<CompanyPartnerModel>;

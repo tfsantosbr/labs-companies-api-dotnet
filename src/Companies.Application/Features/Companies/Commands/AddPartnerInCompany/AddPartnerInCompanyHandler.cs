@@ -2,13 +2,13 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Abstractions.Results;
-using Companies.Application.Features.Companies.Commands.Validators;
+using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 
 namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
-public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartner>, IHandler<AddPartnerInCompany, Response<CompanyPartner>>
+public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompany, CompanyPartnerModel>
 {
     // Fields
 

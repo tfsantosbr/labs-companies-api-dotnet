@@ -1,7 +1,5 @@
 using AutoMapper;
 
-using Companies.Application.Base.Models;
-using Companies.Application.Base.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Models;
 

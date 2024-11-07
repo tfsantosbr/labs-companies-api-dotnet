@@ -1,5 +1,3 @@
-using Companies.Application.Abstractions.Pagination;
-using Companies.Application.Base.Pagination;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Repositories;
@@ -26,37 +24,45 @@ public class CompanyRepository : ICompanyRepository
 
     // Implementations
 
-    public async Task Add(Company company)
+    public async Task AddAsync(Company company, CancellationToken cancellationToken = default)
     {
-        await _companies.AddAsync(company);
+        await _companies.AddAsync(company, cancellationToken);
     }
 
-    public async Task<bool> AnyByCnpj(string cnpj, Guid? ignoredId = null)
+    public async Task<bool> AnyByCnpjAsync(string cnpj, Guid? ignoredId = null, CancellationToken cancellationToken = default)
     {
         return await _companies
             .AsNoTracking()
             .AnyAsync(company =>
                 company.Cnpj.Number == cnpj &&
-                (ignoredId == null || company.Id == ignoredId)
-            );
+                (ignoredId == null || company.Id == ignoredId), 
+                cancellationToken);
     }
 
-    public async Task<bool> AnyByName(string name, Guid? ignoredId = null)
+    public async Task<bool> AnyByNameAsync(string name, Guid? ignoredId = null, CancellationToken cancellationToken = default)
     {
         return await _companies
             .AsNoTracking()
             .AnyAsync(company =>
                 company.Name == name &&
-                (ignoredId == null || company.Id == ignoredId)
-            );
+                (ignoredId == null || company.Id == ignoredId), 
+                cancellationToken);
     }
 
-    public async Task<Company?> GetById(Guid companyId)
+    public async Task<bool> AnyByIdAsync(Guid companyId, CancellationToken cancellationToken = default)
+    {
+        return await _companies
+            .AsNoTracking()
+            .AnyAsync(company => company.Id == companyId, cancellationToken);
+    }
+
+    public async Task<Company?> GetByIdAsync(Guid companyId, CancellationToken cancellationToken = default)
     {
         return await _companies
             .Include(p => p.Phones)
             .Include(p => p.Partners)
-            .FirstOrDefaultAsync(c => c.Id == companyId);
+            .FirstOrDefaultAsync(c => c.Id == companyId, 
+                cancellationToken);
     }
 
     public void Remove(Company company)
@@ -64,77 +70,15 @@ public class CompanyRepository : ICompanyRepository
         _companies.Remove(company);
     }
 
-    public async Task<IPagedList<CompanyItem>> Find(CompanyParameters parameters)
-    {
-        var query = _companies.AsNoTracking();
-
-        query = Filter(parameters, query);
-
-        query = Order(parameters, query);
-
-        var total = await query.CountAsync();
-
-        var items = await query
-            .Skip((parameters.Page - 1) * parameters.PageSize)
-            .Take(parameters.PageSize)
-            .Select(c => new CompanyItem
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Cnpj = c.Cnpj.Number
-            })
-            .ToListAsync();
-
-        return new PagedList<CompanyItem>(items, total, parameters.Page, parameters.PageSize);
-    }
-
-    public async Task<bool> AnyById(Guid companyId)
-    {
-        return await _companies
-            .AsNoTracking()
-            .AnyAsync(company => company.Id == companyId);
-    }
-
+    
     public async Task<IEnumerable<CompanyPartnerModel>> GetPartners(Guid companyId)
     {
         return await _companyPartners
             .AsNoTracking()
             .Where(cp => cp.CompanyId == companyId)
-            .Select(cp => new CompanyPartnerModel
-            {
-                PartnerId = cp.PartnerId,
-                QualificationId = cp.QualificationId,
-                JoinedAt = cp.JoinedAt.ToDateTime(TimeOnly.MinValue)
-            })
+            .Select(cp => new CompanyPartnerModel(cp.PartnerId, cp.QualificationId, cp.JoinedAt.ToDateTime(TimeOnly.MinValue)))
             .ToListAsync();
     }
 
-    // Private Methods
-
-    private static IQueryable<Company> Order(
-        CompanyParameters parameters, IQueryable<Company> query)
-    {
-        query = parameters.OrderBy switch
-        {
-            "name-asc" => query.OrderBy(u => u.Name),
-            "name-desc" => query.OrderByDescending(u => u.Name),
-
-            _ => query.OrderBy(u => u.Name),
-        };
-        return query;
-    }
-
-    private static IQueryable<Company> Filter(
-        CompanyParameters parameters, IQueryable<Company> query)
-    {
-        if (parameters.Query is not null)
-        {
-            query = query.Where(p =>
-                p.Name.StartsWith(parameters.Query) ||
-                p.Cnpj.Number.StartsWith(parameters.Query)
-            );
-        }
-
-        return query;
-    }
+    
 }

@@ -1,6 +1,6 @@
 namespace Companies.Application.Abstractions.ValueObjects;
 
-public class CompleteName
+public record CompleteName
 {
     public CompleteName(string firstName, string lastname)
     {

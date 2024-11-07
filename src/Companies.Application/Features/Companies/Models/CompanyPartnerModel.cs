@@ -1,8 +1,7 @@
 namespace Companies.Application.Features.Companies.Models;
 
-public class CompanyPartnerModel
+public record CompanyPartnerModel(Guid PartnerId, int QualificationId, DateTime JoinedAt)
 {
-    public Guid PartnerId { get; set; }
-    public int QualificationId { get; set; }
-    public DateTime JoinedAt { get; set; }
+    public static CompanyPartnerModel FromCompanyPartner(CompanyPartner companyPartner) =>
+        new(companyPartner.PartnerId, companyPartner.QualificationId, companyPartner.JoinedAt.ToDateTime(TimeOnly.MinValue));
 }

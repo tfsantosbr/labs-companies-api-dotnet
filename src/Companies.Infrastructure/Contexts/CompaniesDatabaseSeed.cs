@@ -1,4 +1,3 @@
-using Companies.Application.Base.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.CompanyMainActivities;

@@ -1,6 +1,5 @@
 using AutoMapper;
 
-using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
@@ -19,13 +18,13 @@ public class CompanyPartnersController : ControllerBase
     private ICompanyRepository _companyRepository;
     private IMapper _mapper;
     private readonly IHandler<AddPartnerInCompany, Response<CompanyPartner>> _addPartnerInCompanyHandler;
-    private readonly IHandler<RemovePartnerFromCompany, Response> _removePartnerFromCompanyHandler;
+    private readonly IHandler<RemovePartnerFromCompanyCommand, Response> _removePartnerFromCompanyHandler;
 
     public CompanyPartnersController(
         ICompanyRepository companyRepository,
         IMapper mapper,
         IHandler<AddPartnerInCompany, Response<CompanyPartner>> addPartnerInCompanyHandler,
-        IHandler<RemovePartnerFromCompany, Response> removePartnerFromCompanyHandler)
+        IHandler<RemovePartnerFromCompanyCommand, Response> removePartnerFromCompanyHandler)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
@@ -62,7 +61,7 @@ public class CompanyPartnersController : ControllerBase
     [HttpDelete("{partnerId}")]
     public async Task<IActionResult> RemovePartnerFromCompany(Guid companyId, Guid partnerId)
     {
-        var response = await _removePartnerFromCompanyHandler.Handle(new RemovePartnerFromCompany(companyId, partnerId));
+        var response = await _removePartnerFromCompanyHandler.Handle(new RemovePartnerFromCompanyCommand(companyId, partnerId));
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);

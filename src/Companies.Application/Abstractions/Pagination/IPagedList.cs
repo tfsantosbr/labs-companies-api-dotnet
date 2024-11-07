@@ -1,10 +1,12 @@
-namespace Companies.Application.Abstractions.Pagination;
+﻿namespace Companies.Application.Abstractions.Pagination;
 
-public interface IPagedList<T> where T : new()
+public interface IPagedList<out TItem>
+    where TItem : class
 {
     int PageNumber { get; }
     int PageSize { get; }
     long TotalPages { get; }
     long TotalRecords { get; }
-    IEnumerable<T> Data { get; }
+    IEnumerable<TItem>? Items { get; }
 }
+

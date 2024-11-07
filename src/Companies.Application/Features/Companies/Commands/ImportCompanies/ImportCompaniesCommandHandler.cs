@@ -2,11 +2,10 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Messaging;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Results;
-using Companies.Application.Features.Companies.Commands.Validators;
 
 namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
-public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, Response>
+public class ImportCompaniesCommandHandler : CommandHandler, IHandler<ImportCompaniesCommand, Response>
 {
     //private fields
 
@@ -14,14 +13,14 @@ public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, 
 
     // constructors
 
-    public ImportCompaniesHandler(IMessageBroker messageBroker)
+    public ImportCompaniesCommandHandler(IMessageBroker messageBroker)
     {
         _messageBroker = messageBroker;
     }
 
     // Implementations
 
-    public async Task<Response> Handle(ImportCompanies request, CancellationToken cancellationToken = default)
+    public async Task<Response> Handle(ImportCompaniesCommand request, CancellationToken cancellationToken = default)
     {
         if (IsInvalidRequest(request, out var notifications))
             return RequestErrorsResponse(notifications);
@@ -36,9 +35,9 @@ public class ImportCompaniesHandler : CommandHandler, IHandler<ImportCompanies, 
 
     // Private Methods
 
-    private bool IsInvalidRequest(ImportCompanies request, out IEnumerable<Notification> notifications)
+    private bool IsInvalidRequest(ImportCompaniesCommand request, out IEnumerable<Notification> notifications)
     {
-        var validator = new ImportCompaniesValidator();
+        var validator = new ImportCompaniesCommandValidator();
         var result = validator.Validate(request);
 
         notifications = result.Errors.Select(e =>

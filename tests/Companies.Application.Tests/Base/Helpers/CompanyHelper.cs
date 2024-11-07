@@ -1,5 +1,3 @@
-using Companies.Application.Base.Models;
-using Companies.Application.Base.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Commands.UpdateCompany;
@@ -49,9 +47,9 @@ public class CompanyHelper
         return company;
     }
 
-    public static CreateCompany GenerateValidCreateCompanyCommand()
+    public static CreateCompanyCommand GenerateValidCreateCompanyCommand()
     {
-        return new CreateCompany
+        return new CreateCompanyCommand(default, default, default, default, default, default, default)
         {
             Cnpj = "00000000000001",
             Name = "Company Test",
@@ -70,8 +68,7 @@ public class CompanyHelper
             },
             Partners = new[]
             {
-                new CompanyPartnerModel
-                {
+                new CompanyPartnerModel(default, default, default) {
                     PartnerId = Guid.NewGuid(),
                     QualificationId = 1,
                     JoinedAt = new DateTime(2022,1,1)
@@ -88,9 +85,9 @@ public class CompanyHelper
         };
     }
 
-    public static UpdateCompany GenerateValidUpdateCompanyCommand()
+    public static UpdateCompanyCommand GenerateValidUpdateCompanyCommand()
     {
-        return new UpdateCompany
+        return new UpdateCompanyCommand(default, default, default, default, default, default)
         {
             CompanyId = Guid.NewGuid(),
             Name = "Company Test",

@@ -1,13 +1,18 @@
+using Companies.Application.Abstractions.ValueObjects;
+
 namespace Companies.Application.Abstractions.Models;
 
-public class AddressModel
+public record AddressModel(string PostalCode, string Street, string Number, 
+    string? Complement, string Neighborhood, string City, string State, string Country)
 {
-    public string PostalCode { get; set; } = default!;
-    public string Street { get; set; } = default!;
-    public string Number { get; set; } = default!;
-    public string? Complement { get; set; }
-    public string Neighborhood { get; set; } = default!;
-    public string City { get; set; } = default!;
-    public string State { get; set; } = default!;
-    public string Country { get; set; } = default!;
+    public static AddressModel FromAddress(Address address) => new(
+        address.PostalCode,
+        address.Street,
+        address.Number,
+        address.Complement,
+        address.Neighborhood,
+        address.City,
+        address.State,
+        address.Country
+    );
 }

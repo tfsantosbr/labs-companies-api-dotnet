@@ -5,7 +5,7 @@ using Companies.Application.Features.Companies.Repositories;
 
 namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
-public class RemoveCompanyHandler : CommandHandler, IHandler<RemoveCompany, Response>
+public class RemoveCompanyCommandHandler : CommandHandler, IHandler<RemoveCompanyCommand, Response>
 {
     // Fields
 
@@ -14,7 +14,7 @@ public class RemoveCompanyHandler : CommandHandler, IHandler<RemoveCompany, Resp
 
     // Constructors
 
-    public RemoveCompanyHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
+    public RemoveCompanyCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
     {
         _companyRepository = companyRepository;
         _unitOfWork = unitOfWork;
@@ -22,7 +22,7 @@ public class RemoveCompanyHandler : CommandHandler, IHandler<RemoveCompany, Resp
 
     // Implementations
 
-    public async Task<Response> Handle(RemoveCompany request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(RemoveCompanyCommand request, CancellationToken cancellationToken)
     {
         var company = await _companyRepository.GetById(request.CompanyId);
 

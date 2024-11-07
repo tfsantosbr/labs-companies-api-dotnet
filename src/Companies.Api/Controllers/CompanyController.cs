@@ -1,6 +1,5 @@
 using AutoMapper;
 
-using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
@@ -23,19 +22,19 @@ public class CompanyController : ControllerBase
     private readonly ILogger<CompanyController> _logger;
     private readonly IMapper _mapper;
     private readonly ICompanyRepository _companyRepository;
-    private readonly IHandler<CreateCompany, Response<Company>> _createCompanyHandler;
-    private readonly IHandler<ImportCompanies, Response> _importCompaniesHandler;
-    private readonly IHandler<UpdateCompany, Response> _updateCompanyHandler;
-    private readonly IHandler<RemoveCompany, Response> _removeCompanyHandler;
+    private readonly IHandler<CreateCompanyCommand, Response<Company>> _createCompanyHandler;
+    private readonly IHandler<ImportCompaniesCommand, Response> _importCompaniesHandler;
+    private readonly IHandler<UpdateCompanyCommand, Response> _updateCompanyHandler;
+    private readonly IHandler<RemoveCompanyCommand, Response> _removeCompanyHandler;
 
     public CompanyController(
         IMapper mapper,
         ICompanyRepository companyRepository,
-        IHandler<CreateCompany, Response<Company>> createCompanyHandler,
-        IHandler<UpdateCompany, Response> updateCompanyHandler,
-        IHandler<RemoveCompany, Response> removeCompanyHandler,
+        IHandler<CreateCompanyCommand, Response<Company>> createCompanyHandler,
+        IHandler<UpdateCompanyCommand, Response> updateCompanyHandler,
+        IHandler<RemoveCompanyCommand, Response> removeCompanyHandler,
         ILogger<CompanyController> logger,
-        IHandler<ImportCompanies, Response> importCompaniesHandler)
+        IHandler<ImportCompaniesCommand, Response> importCompaniesHandler)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
@@ -55,7 +54,7 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCompany([FromBody] CreateCompany request)
+    public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyCommand request)
     {
         var response = await _createCompanyHandler.Handle(request);
 
@@ -68,7 +67,7 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost("import")]
-    public async Task<IActionResult> ImportCompanies([FromBody] ImportCompanies request)
+    public async Task<IActionResult> ImportCompanies([FromBody] ImportCompaniesCommand request)
     {
         var response = await _importCompaniesHandler.Handle(request);
 
@@ -94,7 +93,7 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPut("{companyId}")]
-    public async Task<IActionResult> UpdateCompany(Guid companyId, [FromBody] UpdateCompany request)
+    public async Task<IActionResult> UpdateCompany(Guid companyId, [FromBody] UpdateCompanyCommand request)
     {
         request.CompanyId = companyId;
 
@@ -109,7 +108,7 @@ public class CompanyController : ControllerBase
     [HttpDelete("{companyId}")]
     public async Task<IActionResult> RemoveCompany(Guid companyId)
     {
-        var response = await _removeCompanyHandler.Handle(new RemoveCompany(companyId));
+        var response = await _removeCompanyHandler.Handle(new RemoveCompanyCommand(companyId));
 
         if (response.HasNotifications)
             return BadRequest(response.Notifications);

@@ -2,8 +2,8 @@ using Companies.Application.Abstractions.Models;
 
 namespace Companies.Application.Features.Companies.Models;
 
-public class CompanyPhoneModel
+public record CompanyPhoneModel(Guid Id, PhoneModel Phone)
 {
-    public Guid Id { get; private set; }
-    public PhoneModel Phone { get; private set; } = default!;
+    public static CompanyPhoneModel FromCompanyPhone(CompanyPhone companyPhone) => 
+        new(companyPhone.Id, PhoneModel.FromPhone(companyPhone.Phone));
 }

@@ -1,19 +1,23 @@
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
-using Companies.Application.Features.Companies.Models;
 
 namespace Companies.Application.Features.Companies.Models;
 
-public class CompanyDetails
+public record CompanyDetails(
+    Guid Id, string Cnpj, string Name, CompanyLegalNatureType LegalNature, int MainActivityId, 
+    AddressModel Address, DateTime CreatedAt, DateTime UpdatedAt, 
+    IEnumerable<CompanyPartnerModel> Partners, IEnumerable<CompanyPhoneModel> Phones)
 {
-    public Guid Id { get; set; }
-    public string Cnpj { get; private set; } = default!;
-    public string Name { get; private set; } = default!;
-    public CompanyLegalNatureType LegalNature { get; private set; }
-    public int MainActivityId { get; private set; }
-    public AddressModel Address { get; private set; } = default!;
-    public DateTime CreatedAt { get; private set; }
-    public DateTime UpdatedAt { get; private set; }
-    public IEnumerable<CompanyPartnerModel> Partners { get; set; } = default!;
-    public IEnumerable<CompanyPhoneModel> Phones { get; set; } = default!;
+    public static CompanyDetails FromCompany(Company company) => new(
+        company.Id,
+        company.Cnpj.Number,
+        company.Name,
+        company.LegalNature,
+        company.MainActivityId,
+        AddressModel.FromAddress(company.Address),
+        company.CreatedAt,
+        company.UpdatedAt,
+        company.Partners.Select(CompanyPartnerModel.FromCompanyPartner),
+        company.Phones.Select(CompanyPhoneModel.FromCompanyPhone)
+        );
 }

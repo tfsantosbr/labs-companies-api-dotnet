@@ -2,9 +2,14 @@ using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 
-namespace Companies.Application.Features.Companies.Commands.CreateCompany;
+namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
-public class CreateCompany
+public class ImportCompaniesCommand
+{
+    public IEnumerable<CompanyToBeImported> Companies { get; set; } = null!;
+}
+
+public class CompanyToBeImported
 {
     public string Cnpj { get; set; } = default!;
     public string Name { get; set; } = default!;
