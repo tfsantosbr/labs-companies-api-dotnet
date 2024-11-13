@@ -8,7 +8,8 @@ using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Commands.RemoveCompany;
 using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Models;
-using Companies.Application.Features.Companies.Queries;
+using Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
+using Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuery;
 
 namespace Companies.Api.Endpoints;
 
@@ -25,7 +26,7 @@ public class CompanyEndpoints : IEndpointBuilder
             .Produces<CompanyDetails>(StatusCodes.Status201Created)
             .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
 
-        group.MapGet("/{companyId}", GetCompany)
+        group.MapGet("/{companyId}", GetCompanyDetails)
             .Produces<CompanyDetails>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 

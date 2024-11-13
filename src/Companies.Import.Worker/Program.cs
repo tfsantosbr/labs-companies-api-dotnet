@@ -1,7 +1,11 @@
+using System.Windows.Input;
+
+using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Import.Worker.Consumers;
 using Companies.Infrastructure.Contexts;
@@ -19,7 +23,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<ImportCompanyConsumer>();
 
-        services.AddScoped<IHandler<CreateCompanyCommand, Response<Company>>, CreateCompanyCommandHandler>();
+        services.AddScoped<ICommandHandler<CreateCompanyCommand, CompanyDetails>, CreateCompanyCommandHandler>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         // contexts

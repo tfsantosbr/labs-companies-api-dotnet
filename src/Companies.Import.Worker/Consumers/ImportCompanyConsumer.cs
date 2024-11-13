@@ -2,9 +2,11 @@
 using System.Text;
 using System.Text.Json;
 
+using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Models;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -67,16 +69,16 @@ public class ImportCompanyConsumer : BackgroundService
             using (var scope = _serviceProvider.CreateScope())
             {
                 var createCompanyHandler = scope.ServiceProvider
-                    .GetRequiredService<IHandler<CreateCompanyCommand, Response<Company>>>();
+                    .GetRequiredService<ICommandHandler<CreateCompanyCommand, CompanyDetails>>();
 
-                var response = await createCompanyHandler.Handle(createCompany);
+                var result = await createCompanyHandler.Handle(createCompany);
 
-                if (response.HasNotifications)
+                if (result.IsFailure)
                 {
                     _logger.LogWarning(
                         "Error while create company with CNPJ {cnpj}: \n {errors}",
                         createCompany.Cnpj,
-                        JsonSerializer.Serialize(response.Notifications)
+                        JsonSerializer.Serialize(result.Notifications)
                         );
                 }
                 else
@@ -84,7 +86,7 @@ public class ImportCompanyConsumer : BackgroundService
                     _logger.LogInformation(
                         "Company with CNPJ {cnpj} created with success. Id: {id}",
                         createCompany.Cnpj,
-                        response.Data!.Id
+                        result.Data!.Id
                         );
                 }
             }

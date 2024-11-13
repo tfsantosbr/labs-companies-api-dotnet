@@ -3,9 +3,10 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Features.Companies.Models;
+
 using Microsoft.EntityFrameworkCore;
 
-namespace Companies.Application.Features.Companies.Queries;
+namespace Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 
 public class FindCompaniesQueryHandler(ICompaniesContext context) : IQueryHandler<FindCompaniesQuery, IPagedList<CompanyItem>>
 {

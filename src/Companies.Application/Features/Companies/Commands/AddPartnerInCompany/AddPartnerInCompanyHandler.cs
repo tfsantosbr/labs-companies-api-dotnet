@@ -1,83 +1,51 @@
 using Companies.Application.Abstractions.Handlers;
-using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Abstractions.Results;
+using Companies.Application.Abstractions.Validations;
+using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 
 namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
-public class AddPartnerInCompanyHandler : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompany, CompanyPartnerModel>
+public class AddPartnerInCompanyHandler(
+    ICommandValidator<AddPartnerInCompany> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork,
+    IPartnerRepository partnerRepository)
+    : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompany, CompanyPartnerModel>
 {
-    // Fields
-
-    private readonly ICompanyRepository _companyRepository;
-    private readonly IPartnerRepository _partnerRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    // Constructors
-
-    public AddPartnerInCompanyHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork,
-        IPartnerRepository partnerRepository)
+    public async Task<Result<CompanyPartnerModel>> Handle(AddPartnerInCompany command, CancellationToken cancellationToken)
     {
-        _companyRepository = companyRepository;
-        _unitOfWork = unitOfWork;
-        _partnerRepository = partnerRepository;
-    }
+        var validationResult = validator.Validate(command);
 
-    // Implementations
+        if (validationResult.IsFailure)
+            return ErrorResult(validationResult.Notifications);
 
-    public async Task<Response<CompanyPartner>> Handle(AddPartnerInCompany request, CancellationToken cancellationToken)
-    {
-        if (IsInvalidRequest(request, out var notifications))
-            return RequestErrorsResponse(notifications);
+        var company = await companyRepository.GetByIdAsync(command.CompanyId, cancellationToken);
 
-        var company = await _companyRepository.GetById(request.CompanyId);
+        if (company is null)
+            return ErrorResult(CompanyErrors.CompanyNotFound(command.CompanyId));
 
-        if (company == null)
-            return ErrorResponse("CompanyPartner", "Company not found");
+        if (await PartnerNotFound(command.PartnerId))
+            return ErrorResult(CompanyErrors.ParnterNotFound(command.PartnerId));
 
-        if (await PartnerNotFound(request.PartnerId))
-            return ErrorResponse("CompanyPartner", "Partner not found");
+        var addPartnerResult = company.AddPartner(
+            command.PartnerId, command.QualificationId, DateOnly.FromDateTime(command.JoinedAt));
 
-        if (IsPartnerAlreadyLinkedInCompany(company.Partners, request.PartnerId))
-            return ErrorResponse("CompanyPartner", "This partner is already linked with this company");
+        if (addPartnerResult.IsFailure)
+            return ErrorResult(addPartnerResult.Notifications);
 
-        var partner = new CompanyPartner(
-            partnerId: request.PartnerId,
-            qualificationId: request.QualificationId,
-            joinedAt: DateOnly.FromDateTime(request.JoinedAt)
-        );
+        await unitOfWork.CommitAsync(cancellationToken);
 
-        company.AddPartner(partner);
+        var companyPartnerModel = CompanyPartnerModel.FromCompanyPartner(addPartnerResult.Data!);
 
-        await _unitOfWork.CommitAsync();
-
-        return Response<CompanyPartner>.Ok(partner);
+        return SuccessResult(companyPartnerModel);
     }
 
     // Private Methods
 
-    private bool IsInvalidRequest(AddPartnerInCompany request, out IEnumerable<Notification> notifications)
-    {
-        var validator = new AddPartnerInCompanyValidator();
-        var result = validator.Validate(request);
-
-        notifications = result.Errors.Select(e =>
-            new Notification(e.PropertyName, e.ErrorMessage)
-        );
-
-        return !result.IsValid;
-    }
-
-    private bool IsPartnerAlreadyLinkedInCompany(IReadOnlyCollection<CompanyPartner> partners, Guid partnerId)
-    {
-        return partners.Any(p => p.PartnerId == partnerId);
-    }
-
     private async Task<bool> PartnerNotFound(Guid partnerId)
     {
-        return !await _partnerRepository.AnyPartnerById(partnerId);
+        return !await partnerRepository.AnyPartnerById(partnerId);
     }
 }

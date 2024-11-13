@@ -35,5 +35,10 @@ namespace Companies.Application.Features.Companies.Constants
         {
             throw new NotImplementedException();
         }
+
+        internal static Notification[] ParnterNotFound(Guid partnerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

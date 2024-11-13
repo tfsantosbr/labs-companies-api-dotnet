@@ -1,5 +1,5 @@
 using Companies.Api.Extensions;
-
+using Companies.Api.Extensions.Endpoints;
 using Serilog;
 
 Log.Logger = ObservabilityExtensions.BuildLogger();
@@ -9,9 +9,10 @@ try
     var builder = WebApplication.CreateBuilder(args);
     var configuration = builder.Configuration;
 
+    builder.Services.AddEndpoints(typeof(Program).Assembly);
     builder.Services.AddApiServices(configuration);
     builder.Services.AddHealthChecks(configuration);
-    builder.Services.AddDatabaseContext(configuration);
+    builder.Services.AddInfrastructure(configuration);
     builder.Services.AddApplication();
 
     builder.Host.UseSerilog((context, services, configuration) => configuration
@@ -25,6 +26,7 @@ try
     if (app.Environment.IsDevelopment())
         app.MigrateAndSeedData();
 
+    app.MapEndpoints();
     app.UseAuthentication();
     app.UseAuthorization();
 

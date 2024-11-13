@@ -24,7 +24,7 @@ public class MessageBroker : IMessageBroker
         };
     }
 
-    public Task PostMessage<TMessage>(TMessage message)
+    public Task PostMessageAsync<TMessage>(TMessage message)
     {
         using var connection = _connectionFactory.CreateConnection();
         using var channel = connection.CreateModel();

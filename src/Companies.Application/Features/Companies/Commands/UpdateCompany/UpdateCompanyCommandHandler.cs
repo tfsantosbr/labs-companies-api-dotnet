@@ -29,7 +29,10 @@ public class UpdateCompanyCommandHandler(
         if (company == null)
             return ErrorResult(CompanyErrors.CompanyNotFound(command.CompanyId));
 
-        UpdateCompanyFromRequest(command, company);
+        var updateCompanyResult = UpdateCompany(command, company);
+
+        if (updateCompanyResult.IsFailure)
+            return ErrorResult(updateCompanyResult.Notifications);
 
         await unitOfWork.CommitAsync(cancellationToken);
 
@@ -38,7 +41,7 @@ public class UpdateCompanyCommandHandler(
 
     // Private Methods
 
-    private static Result<Company> UpdateCompanyFromRequest(UpdateCompanyCommand command, Company company)
+    private static Result<Company> UpdateCompany(UpdateCompanyCommand command, Company company)
     {
         company.Update(
             name: command.Name,

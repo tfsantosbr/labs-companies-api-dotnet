@@ -1,11 +1,5 @@
+using Companies.Application.Abstractions.Handlers;
+
 namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
-public class RemoveCompanyCommand
-{
-    public RemoveCompanyCommand(Guid companyId)
-    {
-        CompanyId = companyId;
-    }
-
-    public Guid CompanyId { get; set; }
-}
+public record RemoveCompanyCommand(Guid CompanyId) : ICommand;

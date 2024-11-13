@@ -4,20 +4,22 @@ using Companies.Infrastructure.Contexts.Persistence;
 using Companies.Infrastructure.Services.Messaging;
 using Companies.Application.Abstractions.Messaging;
 using Companies.Application.Abstractions.Persistence;
+using Companies.Application.Features.Companies.Repositories;
+using Companies.Application.Features.Partners.Repositories;
+using Companies.Infrastructure.Repositories;
+using Companies.Application.Abstractions.Database;
 
 namespace Companies.Api.Extensions;
 
 public static class InfrastructureExtensions
 {
-    public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         // contexts
 
-        services.AddDbContext<CompaniesContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Postgres"), builder =>
-                {
-                    builder.MigrationsAssembly("Companies.Infrastructure");
-                }));
+        services.AddDbContext<ICompaniesContext, CompaniesContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("Postgres"), 
+                builder => builder.MigrationsAssembly("Companies.Infrastructure")));
 
         // add unit of work
 
@@ -27,20 +29,23 @@ public static class InfrastructureExtensions
 
         services.AddScoped<IMessageBroker, MessageBroker>();
 
+        // Repositories
+
+        services.AddTransient<ICompanyRepository, CompanyRepository>();
+        services.AddTransient<IPartnerRepository, PartnerRepository>();
+
         return services;
     }
 
     public static void MigrateAndSeedData(this WebApplication app)
     {
-        using (var scope = app.Services.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<CompaniesContext>();
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<CompaniesContext>();
 
-            context.Database.Migrate();
+        context.Database.Migrate();
 
-            var databaseSeed = new CompaniesDatabaseSeed(context);
+        var databaseSeed = new CompaniesDatabaseSeed(context);
 
-            databaseSeed.SeedData();
-        }
+        databaseSeed.SeedData();
     }
 }

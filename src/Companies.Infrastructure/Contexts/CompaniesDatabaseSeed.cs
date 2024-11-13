@@ -1,3 +1,4 @@
+using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.CompanyMainActivities;
@@ -6,15 +7,8 @@ using Companies.Application.Features.Partners;
 
 namespace Companies.Infrastructure.Contexts;
 
-public class CompaniesDatabaseSeed
+public class CompaniesDatabaseSeed(CompaniesContext context)
 {
-    private readonly CompaniesContext _context;
-
-    public CompaniesDatabaseSeed(CompaniesContext context)
-    {
-        _context = context;
-    }
-
     public void SeedData()
     {
         SeedCompanyMainActivities();
@@ -27,7 +21,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanyMainActivities()
     {
-        if (!_context.Set<CompanyMainActivity>().Any())
+        if (!context.Set<CompanyMainActivity>().Any())
         {
             var companyMainActivity1 = new CompanyMainActivity(4781400,
                 "Comércio varejista de artigos do vestuário e acessórios");
@@ -60,7 +54,7 @@ public class CompaniesDatabaseSeed
                 "Comércio varejista de artigos de óptica");
 
 
-            _context.Set<CompanyMainActivity>().AddRange(
+            context.Set<CompanyMainActivity>().AddRange(
                 companyMainActivity1,
                 companyMainActivity2,
                 companyMainActivity3,
@@ -73,7 +67,7 @@ public class CompaniesDatabaseSeed
                 companyMainActivity10
                 );
 
-            _context.SaveChanges();
+            context.SaveChanges();
         }
     }
 
@@ -83,7 +77,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanyPartnerQualifications()
     {
-        if (!_context.Set<CompanyPartnerQualification>().Any())
+        if (!context.Set<CompanyPartnerQualification>().Any())
         {
             var companyPartnerQualification1 = new CompanyPartnerQualification(5, "Administrador");
             var companyPartnerQualification2 = new CompanyPartnerQualification(10, "Diretor");
@@ -91,7 +85,7 @@ public class CompaniesDatabaseSeed
             var companyPartnerQualification4 = new CompanyPartnerQualification(22, "Sócio");
             var companyPartnerQualification5 = new CompanyPartnerQualification(54, "Fundador");
 
-            _context.Set<CompanyPartnerQualification>().AddRange(
+            context.Set<CompanyPartnerQualification>().AddRange(
                 companyPartnerQualification1,
                 companyPartnerQualification2,
                 companyPartnerQualification3,
@@ -99,7 +93,7 @@ public class CompaniesDatabaseSeed
                 companyPartnerQualification5
                 );
 
-            _context.SaveChanges();
+            context.SaveChanges();
         }
     }
 
@@ -109,7 +103,7 @@ public class CompaniesDatabaseSeed
 
     private void SeedPartners()
     {
-        if (!_context.Set<Partner>().Any())
+        if (!context.Set<Partner>().Any())
         {
             var partner1 = new Partner(
                 new CompleteName("Tiago", "Santos"),
@@ -161,7 +155,7 @@ public class CompaniesDatabaseSeed
                 new Email("carol@email.com"),
                 id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891"));
 
-            _context.Set<Partner>().AddRange(
+            context.Set<Partner>().AddRange(
                 partner1,
                 partner2,
                 partner3,
@@ -174,7 +168,7 @@ public class CompaniesDatabaseSeed
                 partner10
                 );
 
-            _context.SaveChanges();
+            context.SaveChanges();
         }
     }
 
@@ -184,21 +178,9 @@ public class CompaniesDatabaseSeed
 
     private void SeedCompanies()
     {
-        if (!_context.Set<Company>().Any())
+        if (!context.Set<Company>().Any())
         {
-            var parners = new[]
-            {
-                new CompanyPartner(new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"), 54, new DateOnly(2022, 1, 1))
-            };
-
-            var phones = new[]
-            {
-                new CompanyPhone(new Phone("11","999999999")),
-                new CompanyPhone(new Phone("11","988888888")),
-                new CompanyPhone(new Phone("11","977777777")),
-            };
-
-            var company1 = new Company(
+            var company1 = Company.Create(
                 id: new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
                 cnpj: new Cnpj("01244660000180"),
                 name: "TF Santos Informática",
@@ -213,14 +195,17 @@ public class CompaniesDatabaseSeed
                     city: "Campo Grande",
                     state: "MS",
                     country: "Brasil"
-                ),
-                partners: parners,
-                phones: phones
-            );
+                )
+            ).Data!;
 
-            _context.Set<Company>().AddRange(company1);
+            company1.AddPartner(new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"), 54, new DateOnly(2022, 1, 1));
+            company1.AddPhone(new Phone("11", "999999999"));
+            company1.AddPhone(new Phone("11", "988888888"));
+            company1.AddPhone(new Phone("11", "977777777"));
 
-            _context.SaveChanges();
+            context.Set<Company>().AddRange(company1);
+
+            context.SaveChanges();
         }
     }
 

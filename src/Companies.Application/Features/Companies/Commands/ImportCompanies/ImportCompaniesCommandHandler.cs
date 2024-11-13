@@ -1,49 +1,23 @@
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Messaging;
-using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Results;
+using Companies.Application.Abstractions.Validations;
 
 namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
-public class ImportCompaniesCommandHandler : CommandHandler, IHandler<ImportCompaniesCommand, Response>
+public class ImportCompaniesCommandHandler(IMessageBroker messageBroker, ICommandValidator<ImportCompaniesCommand> validator) 
+    : CommandHandler, ICommandHandler<ImportCompaniesCommand>
 {
-    //private fields
-
-    private readonly IMessageBroker _messageBroker;
-
-    // constructors
-
-    public ImportCompaniesCommandHandler(IMessageBroker messageBroker)
+    public async Task<Result> Handle(ImportCompaniesCommand command, CancellationToken cancellationToken = default)
     {
-        _messageBroker = messageBroker;
-    }
+        var validationResult = validator.Validate(command);
 
-    // Implementations
+        if (validationResult.IsFailure)
+            return validationResult;
 
-    public async Task<Response> Handle(ImportCompaniesCommand request, CancellationToken cancellationToken = default)
-    {
-        if (IsInvalidRequest(request, out var notifications))
-            return RequestErrorsResponse(notifications);
+        foreach (var company in command.Companies)
+            await messageBroker.PostMessageAsync(company);
 
-        foreach (var company in request.Companies)
-        {
-            await _messageBroker.PostMessage(company);
-        }
-
-        return Response.Ok();
-    }
-
-    // Private Methods
-
-    private bool IsInvalidRequest(ImportCompaniesCommand request, out IEnumerable<Notification> notifications)
-    {
-        var validator = new ImportCompaniesCommandValidator();
-        var result = validator.Validate(request);
-
-        notifications = result.Errors.Select(e =>
-            new Notification(e.PropertyName, e.ErrorMessage)
-        );
-
-        return !result.IsValid;
+        return Result.Success();
     }
 }

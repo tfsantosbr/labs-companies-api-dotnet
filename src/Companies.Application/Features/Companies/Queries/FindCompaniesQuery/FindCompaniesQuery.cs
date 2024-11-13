@@ -2,7 +2,7 @@
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Features.Companies.Models;
 
-namespace Companies.Application.Features.Companies.Queries;
+namespace Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 
 public record FindCompaniesQuery : SearchQuery, IQuery<IPagedList<CompanyItem>>
 {

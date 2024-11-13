@@ -3,9 +3,10 @@ using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Models;
+
 using Microsoft.EntityFrameworkCore;
 
-namespace Companies.Application.Features.Companies.Queries;
+namespace Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuery;
 
 public class GetCompanyDetailsQueryHandler(ICompaniesContext context) : IQueryHandler<GetCompanyDetailsQuery, CompanyDetails>
 {

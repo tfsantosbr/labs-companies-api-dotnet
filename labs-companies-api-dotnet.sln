@@ -5,25 +5,27 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32CA8A17-BBDC-4ADB-8E8E-0877EFDBD951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Companies.Api", "src\Companies.Api\Companies.Api.csproj", "{4A8127BA-71F9-46B7-B6BE-FA4F0B1E75B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Companies.Api", "src\Companies.Api\Companies.Api.csproj", "{4A8127BA-71F9-46B7-B6BE-FA4F0B1E75B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Companies.Application", "src\Companies.Application\Companies.Application.csproj", "{DDC8960C-823B-435C-8103-A3F1C8A73273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Companies.Application", "src\Companies.Application\Companies.Application.csproj", "{DDC8960C-823B-435C-8103-A3F1C8A73273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Companies.Infrastructure", "src\Companies.Infrastructure\Companies.Infrastructure.csproj", "{46F7F19B-2929-499C-A012-EA58F73BAF4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Companies.Infrastructure", "src\Companies.Infrastructure\Companies.Infrastructure.csproj", "{46F7F19B-2929-499C-A012-EA58F73BAF4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EE1A73F5-1831-4A0C-8268-880C862DD3C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Companies.Application.Tests", "tests\Companies.Application.Tests\Companies.Application.Tests.csproj", "{D13645AD-AE33-4484-9E75-0598F65F982B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Companies.Import.Worker", "src\Companies.Import.Worker\Companies.Import.Worker.csproj", "{7667C406-2739-4B9D-A352-25539A738496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Companies.Import.Worker", "src\Companies.Import.Worker\Companies.Import.Worker.csproj", "{7667C406-2739-4B9D-A352-25539A738496}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{096D02D8-EBA1-424D-BF4C-A2C48034DC8C}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4A8127BA-71F9-46B7-B6BE-FA4F0B1E75B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,6 +48,9 @@ Global
 		{7667C406-2739-4B9D-A352-25539A738496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7667C406-2739-4B9D-A352-25539A738496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7667C406-2739-4B9D-A352-25539A738496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4A8127BA-71F9-46B7-B6BE-FA4F0B1E75B0} = {32CA8A17-BBDC-4ADB-8E8E-0877EFDBD951}

@@ -1,3 +1,4 @@
+using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Commands.UpdateCompany;
