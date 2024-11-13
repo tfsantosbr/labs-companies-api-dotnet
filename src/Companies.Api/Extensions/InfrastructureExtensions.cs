@@ -8,6 +8,7 @@ using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 using Companies.Infrastructure.Repositories;
 using Companies.Application.Abstractions.Database;
+using Companies.Infrastructure.Database;
 
 namespace Companies.Api.Extensions;
 
@@ -20,6 +21,10 @@ public static class InfrastructureExtensions
         services.AddDbContext<ICompaniesContext, CompaniesContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("Postgres"), 
                 builder => builder.MigrationsAssembly("Companies.Infrastructure")));
+
+        // Dapper factory
+
+        services.AddSingleton<IDapperFactory, DapperFactory>();
 
         // add unit of work
 
@@ -43,7 +48,7 @@ public static class InfrastructureExtensions
         var context = scope.ServiceProvider.GetRequiredService<CompaniesContext>();
 
         context.Database.Migrate();
-
+        
         var databaseSeed = new CompaniesDatabaseSeed(context);
 
         databaseSeed.SeedData();

@@ -1,6 +1,8 @@
 using Companies.Application.Abstractions.Validations;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
 
+using FluentValidation;
+
 namespace Companies.Api.Extensions;
 
 public static class ApplicationExtensions
@@ -9,6 +11,7 @@ public static class ApplicationExtensions
     {
         // Add Validators
 
+        services.AddValidatorsFromAssemblyContaining<CreateCompanyCommandValidator>();
         services.AddTransient(typeof(ICommandValidator<>), typeof(CommandValidator<>));
 
         // Add Handlers

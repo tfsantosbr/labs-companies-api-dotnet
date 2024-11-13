@@ -1,5 +1,6 @@
 using Companies.Api.Extensions;
 using Companies.Api.Extensions.Endpoints;
+
 using Serilog;
 
 Log.Logger = ObservabilityExtensions.BuildLogger();
