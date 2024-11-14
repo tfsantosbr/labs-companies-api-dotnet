@@ -1,33 +1,15 @@
-using System.Reflection;
-using System.Text;
-using System.Text.Json.Serialization;
-
+﻿using Companies.Api.Services.Interfaces;
 using Companies.Api.Services;
-using Companies.Api.Services.Interfaces;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Companies.Api.Extensions;
 
-public static class ApiExtensions
+public static class AuthenticationExtensions
 {
-    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddBearerAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            });
-
-        services.AddCors(setup =>
-            setup.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
-
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
         var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:Secret"]!);
 
         services.AddAuthentication(options =>

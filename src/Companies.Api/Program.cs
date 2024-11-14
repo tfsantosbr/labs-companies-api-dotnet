@@ -1,51 +1,32 @@
 using Companies.Api.Extensions;
-using Companies.Api.Extensions.Endpoints;
-
 using Serilog;
 
-Log.Logger = ObservabilityExtensions.BuildLogger();
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var environment = builder.Environment;
 
-try
-{
-    var builder = WebApplication.CreateBuilder(args);
-    var configuration = builder.Configuration;
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.ConfigureApiVersioning();
+builder.Services.ConfigureJsonOptions();
+builder.Services.AddCorrelation();
+builder.Services.ConfigureExceptionHandlers(environment);
+builder.Services.AddHealthChecks(configuration);
+builder.Services.AddSerilog(configuration);
+builder.Services.AddBearerAuthentication(configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructure(configuration);
 
-    builder.Services.AddEndpoints(typeof(Program).Assembly);
-    builder.Services.AddApiServices(configuration);
-    builder.Services.AddHealthChecks(configuration);
-    builder.Services.AddInfrastructure(configuration);
-    builder.Services.AddApplication();
+var app = builder.Build();
 
-    builder.Host.UseSerilog((context, services, configuration) => configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .WriteTo.Console());
+app.UseHealthChecks();
+app.MapVersionedEndpoints();
 
-    var app = builder.Build();
+app.UseDevelopmentSettings(environment);
+app.UseProductionSettings(environment);
 
-    if (app.Environment.IsDevelopment())
-        app.MigrateAndSeedData();
+app.UseCorrelationContext();
+app.UseSerilogRequestLogging();
+app.UseAuthentication();
 
-    app.MapEndpoints();
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseHttpsRedirection();
-    app.UseAuthorization();
-    app.UseCors();
-    app.MapControllers();
-    app.UseHealthChecks();
-
-    app.Run();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly");
-}
-finally
-{
-    Log.CloseAndFlush();
-}
+app.Run();

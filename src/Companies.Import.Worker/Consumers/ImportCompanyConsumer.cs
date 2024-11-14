@@ -3,8 +3,6 @@ using System.Text;
 using System.Text.Json;
 
 using Companies.Application.Abstractions.Handlers;
-using Companies.Application.Abstractions.Models;
-using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Models;
 

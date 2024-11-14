@@ -1,18 +1,38 @@
+﻿using Companies.Api.Extensions;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 namespace Companies.Api.Extensions;
 
 public static class HealthCheckExtensions
 {
-    public static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    public static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks();
+        var postgresConnectionString = configuration.GetConnectionString("Postgres") ?? 
+            throw new NullReferenceException("Postgres");
 
-        return services;
+        services.AddHealthChecks()
+            .AddNpgSql(postgresConnectionString, tags: ["ready"]);
     }
 
-    public static WebApplication UseHealthChecks(this WebApplication app)
+    public static void UseHealthChecks(this WebApplication app)
     {
-        app.MapHealthChecks("/healthz");
+        app.MapHealthChecks("/health");
 
-        return app;
+        app.MapHealthChecks("/health/ready", new HealthCheckOptions
+        {
+            Predicate = healthCheck => healthCheck.Tags.Contains("ready")
+        });
+
+        app.MapHealthChecks("/health/live", new HealthCheckOptions
+        {
+            Predicate = _ => false
+        });
+
+        app.MapHealthChecks("/health/details", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+
     }
 }

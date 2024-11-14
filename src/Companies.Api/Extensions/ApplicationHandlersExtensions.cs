@@ -2,9 +2,9 @@
 
 namespace Companies.Api.Extensions;
 
-public static class HandlersExtensions
+public static class ApplicationHandlersExtensions
 {
-    public static IServiceCollection AddHandlersFromAssemblyContaining<T>(this IServiceCollection services)
+    public static IServiceCollection AddApplicationHandlersFromAssemblyContaining<T>(this IServiceCollection services)
         where T : class
     {
         var assembly = typeof(T).Assembly;

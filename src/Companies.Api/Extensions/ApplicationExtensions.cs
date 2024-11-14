@@ -7,7 +7,7 @@ namespace Companies.Api.Extensions;
 
 public static class ApplicationExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         // Add Validators
 
@@ -16,7 +16,7 @@ public static class ApplicationExtensions
 
         // Add Handlers
 
-        services.AddHandlersFromAssemblyContaining<CreateCompanyCommandHandler>();
+        services.AddApplicationHandlersFromAssemblyContaining<CreateCompanyCommandHandler>();
 
         return services;
     }

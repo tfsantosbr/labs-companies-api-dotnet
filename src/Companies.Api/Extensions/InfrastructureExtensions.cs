@@ -41,16 +41,4 @@ public static class InfrastructureExtensions
 
         return services;
     }
-
-    public static void MigrateAndSeedData(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<CompaniesContext>();
-
-        context.Database.Migrate();
-        
-        var databaseSeed = new CompaniesDatabaseSeed(context);
-
-        databaseSeed.SeedData();
-    }
 }

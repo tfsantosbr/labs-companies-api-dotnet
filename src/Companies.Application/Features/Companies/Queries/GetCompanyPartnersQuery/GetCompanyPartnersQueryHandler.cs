@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-using Companies.Application.Abstractions.Database;
+﻿using Companies.Application.Abstractions.Database;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Features.Companies.Models;
