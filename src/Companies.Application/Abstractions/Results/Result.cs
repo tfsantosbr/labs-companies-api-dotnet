@@ -20,6 +20,7 @@ public record Result
     public static ErrorResult Error(Notification[] notifications) => new(notifications);
     public static NotFoundResult NotFound(Notification notification) => new(notification);
     public static Result Success() => new();
+    public static Result<TData> Success<TData>(TData data) => new(data);
 }
 
 public record Result<TData> : Result

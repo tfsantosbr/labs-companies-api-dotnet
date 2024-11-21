@@ -1,3 +1,4 @@
+using Companies.Application.Abstractions.Results;
 using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies;
 
@@ -7,13 +8,6 @@ public class Partner
 {
     private readonly List<CompanyPartner> _companies = [];
 
-    public Partner(CompleteName completeName, Email email, Guid? id = null)
-    {
-        Id = id ?? Guid.NewGuid();
-        CompleteName = completeName;
-        Email = email;
-    }
-
     private Partner()
     {
     }
@@ -22,4 +16,16 @@ public class Partner
     public CompleteName CompleteName { get; private set; } = default!;
     public Email Email { get; private set; } = default!;
     public IReadOnlyCollection<CompanyPartner> Companies => _companies.AsReadOnly();
+
+    public static Result<Partner> Create(CompleteName completeName, Email email, Guid? id = null)
+    {
+        var partner = new Partner
+        {
+            Id = id ?? Guid.NewGuid(),
+            CompleteName = completeName,
+            Email = email
+        };
+
+        return Result.Success(partner);
+    }
 }

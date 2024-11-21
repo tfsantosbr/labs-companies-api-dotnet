@@ -53,12 +53,7 @@ public class PartnerRepository : IPartnerRepository
     {
         return await _context.Set<Partner>()
             .AsNoTracking()
-            .Select(u => new PartnerItem
-            {
-                Id = u.Id,
-                Name = u.CompleteName.ToString(),
-                Email = u.Email.ToString()
-            })
+            .Select(u => new PartnerItem(u.Id, u.CompleteName.ToString(), u.Email.ToString()))
             .ToListAsync();
     }
 

@@ -23,35 +23,35 @@ public class CompaniesDatabaseSeed(CompaniesContext context)
     {
         if (!context.Set<CompanyMainActivity>().Any())
         {
-            var companyMainActivity1 = new CompanyMainActivity(4781400,
-                "Comércio varejista de artigos do vestuário e acessórios");
+            var companyMainActivity1 = CompanyMainActivity.Create(4781400,
+                "Comércio varejista de artigos do vestuário e acessórios").Data!;
 
-            var companyMainActivity2 = new CompanyMainActivity(9492800,
-                "Atividades de organizações políticas");
+            var companyMainActivity2 = CompanyMainActivity.Create(9492800,
+                "Atividades de organizações políticas").Data!;
 
-            var companyMainActivity3 = new CompanyMainActivity(5611203,
-                "Lanchonetes casas de chá de sucos e similares");
+            var companyMainActivity3 = CompanyMainActivity.Create(5611203,
+                "Lanchonetes casas de chá de sucos e similares").Data!;
 
-            var companyMainActivity4 = new CompanyMainActivity(5611201,
-                "Restaurantes e similares");
+            var companyMainActivity4 = CompanyMainActivity.Create(5611201,
+                "Restaurantes e similares").Data!;
 
-            var companyMainActivity5 = new CompanyMainActivity(9602501,
-                "Cabeleireiros manicure e pedicure");
+            var companyMainActivity5 = CompanyMainActivity.Create(9602501,
+                "Cabeleireiros manicure e pedicure").Data!;
 
-            var companyMainActivity6 = new CompanyMainActivity(4399103,
-                "Obras de alvenaria");
+            var companyMainActivity6 = CompanyMainActivity.Create(4399103,
+                "Obras de alvenaria").Data!;
 
-            var companyMainActivity7 = new CompanyMainActivity(9430800,
-                "Atividades de associações de defesa de direitos sociais");
+            var companyMainActivity7 = CompanyMainActivity.Create(9430800,
+                "Atividades de associações de defesa de direitos sociais").Data!;
 
-            var companyMainActivity8 = new CompanyMainActivity(7319002,
-                "Promoção de vendas");
+            var companyMainActivity8 = CompanyMainActivity.Create(7319002,
+                "Promoção de vendas").Data!;
 
-            var companyMainActivity9 = new CompanyMainActivity(4723700,
-                "Comércio varejista de bebidas");
+            var companyMainActivity9 = CompanyMainActivity.Create(4723700,
+                "Comércio varejista de bebidas").Data!;
 
-            var companyMainActivity10 = new CompanyMainActivity(4774100,
-                "Comércio varejista de artigos de óptica");
+            var companyMainActivity10 = CompanyMainActivity.Create(4774100,
+                "Comércio varejista de artigos de óptica").Data!;
 
 
             context.Set<CompanyMainActivity>().AddRange(
@@ -79,11 +79,11 @@ public class CompaniesDatabaseSeed(CompaniesContext context)
     {
         if (!context.Set<CompanyPartnerQualification>().Any())
         {
-            var companyPartnerQualification1 = new CompanyPartnerQualification(5, "Administrador");
-            var companyPartnerQualification2 = new CompanyPartnerQualification(10, "Diretor");
-            var companyPartnerQualification3 = new CompanyPartnerQualification(16, "Presidente");
-            var companyPartnerQualification4 = new CompanyPartnerQualification(22, "Sócio");
-            var companyPartnerQualification5 = new CompanyPartnerQualification(54, "Fundador");
+            var companyPartnerQualification1 = CompanyPartnerQualification.Create(5, "Administrador").Data!;
+            var companyPartnerQualification2 = CompanyPartnerQualification.Create(10, "Diretor").Data!;
+            var companyPartnerQualification3 = CompanyPartnerQualification.Create(16, "Presidente").Data!;
+            var companyPartnerQualification4 = CompanyPartnerQualification.Create(22, "Sócio").Data!;
+            var companyPartnerQualification5 = CompanyPartnerQualification.Create(54, "Fundador").Data!;
 
             context.Set<CompanyPartnerQualification>().AddRange(
                 companyPartnerQualification1,
@@ -105,55 +105,55 @@ public class CompaniesDatabaseSeed(CompaniesContext context)
     {
         if (!context.Set<Partner>().Any())
         {
-            var partner1 = new Partner(
+            var partner1 = Partner.Create(
                 new CompleteName("Tiago", "Santos"),
                 new Email("tiago@email.com"),
-                id: new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"));
+                id: new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e")).Data!;
 
-            var partner2 = new Partner(
+            var partner2 = Partner.Create(
                 new CompleteName("Iran", "Nunes"),
                 new Email("iran@email.com"),
-                id: new Guid("9132b269-ff90-402d-88d0-2f9e7fdb312f"));
+                id: new Guid("9132b269-ff90-402d-88d0-2f9e7fdb312f")).Data!;
 
-            var partner3 = new Partner(
+            var partner3 = Partner.Create(
                 new CompleteName("Bruna", "Oliveira"),
                 new Email("bruna@email.com"),
-                id: new Guid("bcb63995-49c2-49d2-82ae-8c06183bfd2e"));
+                id: new Guid("bcb63995-49c2-49d2-82ae-8c06183bfd2e")).Data!;
 
-            var partner4 = new Partner(
+            var partner4 = Partner.Create(
                 new CompleteName("Maria", "Gorete"),
                 new Email("maria@email.com"),
-                id: new Guid("012af8a2-8de0-45b7-b9c7-dcfdb3b491b3"));
+                id: new Guid("012af8a2-8de0-45b7-b9c7-dcfdb3b491b3")).Data!;
 
-            var partner5 = new Partner(
+            var partner5 = Partner.Create(
                 new CompleteName("Natalia", "Lourenço"),
                 new Email("natalia@email.com"),
-                id: new Guid("fd532165-d7fd-44bb-b19b-f8e2a1c2073f"));
+                id: new Guid("fd532165-d7fd-44bb-b19b-f8e2a1c2073f")).Data!;
 
-            var partner6 = new Partner(
+            var partner6 = Partner.Create(
                 new CompleteName("Roberto", "Justus"),
                 new Email("roberto@email.com"),
-                id: new Guid("650e25ab-9b3b-4aaa-9b9a-45edb4527129"));
+                id: new Guid("650e25ab-9b3b-4aaa-9b9a-45edb4527129")).Data!;
 
-            var partner7 = new Partner(
+            var partner7 = Partner.Create(
                 new CompleteName("Kim", "Katagiri"),
                 new Email("kim@email.com"),
-                id: new Guid("a2f7cb01-6e1e-4831-ad0e-c62e77286e88"));
+                id: new Guid("a2f7cb01-6e1e-4831-ad0e-c62e77286e88")).Data!;
 
-            var partner8 = new Partner(
+            var partner8 = Partner.Create(
                 new CompleteName("Renan", "Oliveira"),
                 new Email("renan@email.com"),
-                id: new Guid("f0a4ffdb-543b-4f38-9a3d-94e973789b74"));
+                id: new Guid("f0a4ffdb-543b-4f38-9a3d-94e973789b74")).Data!;
 
-            var partner9 = new Partner(
+            var partner9 = Partner.Create(
                 new CompleteName("Will", "Toshio"),
                 new Email("will@email.com"),
-                id: new Guid("c7baa255-6bfb-4d67-91da-fc1d858fdf00"));
+                id: new Guid("c7baa255-6bfb-4d67-91da-fc1d858fdf00")).Data!;
 
-            var partner10 = new Partner(
+            var partner10 = Partner.Create(
                 new CompleteName("Carol", "Castro"),
                 new Email("carol@email.com"),
-                id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891"));
+                id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891")).Data!;
 
             context.Set<Partner>().AddRange(
                 partner1,

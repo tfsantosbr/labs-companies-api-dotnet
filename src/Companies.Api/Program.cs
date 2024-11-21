@@ -7,15 +7,15 @@ var environment = builder.Environment;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.ConfigureApiVersioning();
-builder.Services.ConfigureJsonOptions();
 builder.Services.AddCorrelation();
-builder.Services.ConfigureExceptionHandlers(environment);
 builder.Services.AddHealthChecks(configuration);
 builder.Services.AddSerilog(configuration);
 builder.Services.AddBearerAuthentication(configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(configuration);
+builder.Services.ConfigureApiVersioning();
+builder.Services.ConfigureJsonOptions();
+builder.Services.ConfigureExceptionHandlers(environment);
 
 var app = builder.Build();
 
