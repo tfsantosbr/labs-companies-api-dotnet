@@ -28,7 +28,7 @@ public class AddPartnerTests
     }
 
     [Fact]
-    public void ShouldAddWithSuccessWhenProvidedAValidPartner()
+    public void ShouldReturnSuccessWhenAddAValidPartner()
     {
         // arrange
 

@@ -1,5 +1,8 @@
 using Companies.Application.Abstractions.Persistence;
+using Companies.Application.Abstractions.Validations;
 using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
+using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
 using Companies.Application.Tests.Base.Helpers;
@@ -13,12 +16,14 @@ public class AddPartnerHandlerTests
     private readonly ICompanyRepository _companyRepository;
     private readonly IPartnerRepository _partnerRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICommandValidator<AddPartnerInCompanyCommand> _validator;
 
     public AddPartnerHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _partnerRepository = Substitute.For<IPartnerRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
+        _validator = new CommandValidator<AddPartnerInCompanyCommand>(new AddPartnerInCompanyCommandValidator());
     }
 
     [Fact]
@@ -26,9 +31,10 @@ public class AddPartnerHandlerTests
     {
         // arrange
 
-        var command = new AddPartnerInCompany();
+        var command = new AddPartnerInCompanyCommand(Guid.Empty, Guid.Empty, default, default);
 
-        var handler = new AddPartnerInCompanyHandler(
+        var handler = new AddPartnerInCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -36,11 +42,11 @@ public class AddPartnerHandlerTests
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.True(response.HasNotifications);
+        Assert.True(result.IsFailure);
     }
 
     [Fact]
@@ -48,15 +54,15 @@ public class AddPartnerHandlerTests
     {
         // arrange
 
-        var command = new AddPartnerInCompany
-        {
-            PartnerId = Guid.NewGuid(),
-            CompanyId = Guid.NewGuid(),
-            JoinedAt = new DateTime(2022, 1, 1),
-            QualificationId = 1
-        };
+        var command = new AddPartnerInCompanyCommand(
+            PartnerId: Guid.NewGuid(),
+            CompanyId: Guid.NewGuid(),
+            JoinedAt: new DateTime(2022, 1, 1),
+            QualificationId: 1
+        );
 
-        var handler = new AddPartnerInCompanyHandler(
+        var handler = new AddPartnerInCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -64,11 +70,11 @@ public class AddPartnerHandlerTests
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.Contains(response.Notifications, notification => notification.Message == "Company not found");
+        Assert.Contains(CompanyErrors.CompanyNotFound(command.CompanyId), result.Notifications);
     }
 
     [Fact]
@@ -78,20 +84,20 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetById(Arg.Any<Guid>())
+        _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
 
-        var command = new AddPartnerInCompany
-        {
-            PartnerId = Guid.NewGuid(),
-            CompanyId = Guid.NewGuid(),
-            JoinedAt = new DateTime(2022, 1, 1),
-            QualificationId = 1
-        };
+        var command = new AddPartnerInCompanyCommand(
+            PartnerId: Guid.NewGuid(),
+            CompanyId: Guid.NewGuid(),
+            JoinedAt: new DateTime(2022, 1, 1),
+            QualificationId: 1
+        );
 
-        var handler = new AddPartnerInCompanyHandler(
+        var handler = new AddPartnerInCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -99,11 +105,11 @@ public class AddPartnerHandlerTests
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.Contains(response.Notifications, notification => notification.Message == "Partner not found");
+        Assert.Contains(CompanyErrors.ParnterNotFound(command.PartnerId), result.Notifications);
     }
 
     [Fact]
@@ -113,20 +119,20 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetById(Arg.Any<Guid>())
+        _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
-        var command = new AddPartnerInCompany
-        {
-            PartnerId = new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
-            CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
-            JoinedAt = new DateTime(2022, 1, 1),
-            QualificationId = 1
-        };
+        var command = new AddPartnerInCompanyCommand(
+            PartnerId: new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
+            CompanyId: new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
+            JoinedAt: new DateTime(2022, 1, 1),
+            QualificationId: 1
+        );
 
-        var handler = new AddPartnerInCompanyHandler(
+        var handler = new AddPartnerInCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -134,12 +140,11 @@ public class AddPartnerHandlerTests
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.Contains(response.Notifications, notification =>
-            notification.Message == "This partner is already linked with this company");
+        Assert.Contains(CompanyErrors.PartnerAlreadyLinkedWithCompany(), result.Notifications);
     }
 
     [Fact]
@@ -149,20 +154,20 @@ public class AddPartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetById(Arg.Any<Guid>())
+        _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
         _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
-        var command = new AddPartnerInCompany
-        {
-            PartnerId = Guid.NewGuid(),
-            CompanyId = new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
-            JoinedAt = new DateTime(2022, 1, 1),
-            QualificationId = 1
-        };
+        var command = new AddPartnerInCompanyCommand(
+            PartnerId: Guid.NewGuid(),
+            CompanyId: company.Id,
+            JoinedAt: new DateTime(2022, 1, 1),
+            QualificationId: 1
+        );
 
-        var handler = new AddPartnerInCompanyHandler(
+        var handler = new AddPartnerInCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             partnerRepository: _partnerRepository,
             unitOfWork: _unitOfWork
@@ -170,10 +175,10 @@ public class AddPartnerHandlerTests
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.False(response.HasNotifications);
+        Assert.False(result.IsSuccess);
     }
 }

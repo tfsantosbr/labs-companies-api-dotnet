@@ -1,4 +1,5 @@
 using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Tests.Base.Helpers;
 
 namespace Companies.Application.Tests.Features.Companies;
@@ -11,17 +12,14 @@ public class RemovePartnerTests
         // arrange
 
         var company = CompanyHelper.GenerateValidCompany();
-        var nonExistingPartner = new CompanyPartner(
-            new Guid("030068f4-d7bf-484f-8fd0-7b001ed8831a"), 54, new DateOnly(2022, 1, 1)
-        );
-
+        
         // act
 
-        var exception = Record.Exception(() => company.RemovePartner(nonExistingPartner));
+        var result = company.RemovePartner(new Guid("030068f4-d7bf-484f-8fd0-7b001ed8831a"));
 
         // assert
 
-        Assert.Contains(exception.Message, "This partner not exists in this company");
+        Assert.Contains(CompanyErrors.CompanysPartnerNotExists(), result.Notifications);
     }
 
     [Fact]
@@ -30,16 +28,14 @@ public class RemovePartnerTests
         // arrange
 
         var company = CompanyHelper.GenerateValidCompany();
-        var existingPartner = new CompanyPartner(
-            new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"), 54, new DateOnly(2022, 1, 1)
-        );
+        company.AddPartner(new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658a"), 54, new DateOnly(2022, 1, 1));
 
         // act
 
-        var exception = Record.Exception(() => company.RemovePartner(existingPartner));
+        var result = company.RemovePartner(new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658a"));
 
         // assert
 
-        Assert.Null(exception);
+        Assert.True(result.IsSuccess);
     }
 }

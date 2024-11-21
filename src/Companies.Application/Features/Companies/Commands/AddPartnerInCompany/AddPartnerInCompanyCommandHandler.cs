@@ -9,12 +9,12 @@ using Companies.Application.Features.Partners.Repositories;
 
 namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 
-public class AddPartnerInCompanyHandler(
-    ICommandValidator<AddPartnerInCompany> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork,
+public class AddPartnerInCompanyCommandHandler(
+    ICommandValidator<AddPartnerInCompanyCommand> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork,
     IPartnerRepository partnerRepository)
-    : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompany, CompanyPartnerModel>
+    : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompanyCommand, CompanyPartnerModel>
 {
-    public async Task<Result<CompanyPartnerModel>> Handle(AddPartnerInCompany command, CancellationToken cancellationToken)
+    public async Task<Result<CompanyPartnerModel>> Handle(AddPartnerInCompanyCommand command, CancellationToken cancellationToken)
     {
         var validationResult = validator.Validate(command);
 

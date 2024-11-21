@@ -1,4 +1,6 @@
-﻿using Companies.Application.Abstractions.Results;
+﻿using System.Numerics;
+using System.Xml.Linq;
+using Companies.Application.Abstractions.Results;
 using Companies.Application.Abstractions.ValueObjects;
 
 namespace Companies.Application.Features.Companies.Constants
@@ -26,19 +28,13 @@ namespace Companies.Application.Features.Companies.Constants
         public static Notification CompanyNameAlreadyExists(string name) =>
             new(nameof(CompanyNameAlreadyExists), $"Company with name '{name}' already exists");
 
-        internal static Notification CompanyPhoneAlreadyExists(Phone phone)
-        {
-            throw new NotImplementedException();
-        }
+        public static Notification CompanyPhoneAlreadyExists(Phone phone)
+            => new(nameof(CompanyPhoneAlreadyExists), $"The phone '{phone}' already exists");
 
-        internal static Notification CompanyNotFound(Guid companyId)
-        {
-            throw new NotImplementedException();
-        }
+        public static Notification CompanyNotFound(Guid companyId)
+            => new(nameof(CompanyNotFound), $"The company with id '{companyId}' was not found");
 
-        internal static Notification[] ParnterNotFound(Guid partnerId)
-        {
-            throw new NotImplementedException();
-        }
+        public static Notification ParnterNotFound(Guid partnerId)
+            => new(nameof(ParnterNotFound), $"The partner with id '{partnerId}' was not found");
     }
 }

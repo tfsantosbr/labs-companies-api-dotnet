@@ -1,4 +1,5 @@
 using Companies.Application.Abstractions.Persistence;
+using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Tests.Base.Helpers;
 
@@ -22,7 +23,7 @@ public class CreateCompanyHandlerTests
     {
         // arrange
 
-        var command = new CreateCompany();
+        var command = new CreateCompanyCommand();
 
         var handler = new CreateCompanyHandler(
             companyRepository: _companyRepository,

@@ -13,11 +13,6 @@ public class Company
     private readonly List<CompanyPartner> _partners = [];
     private readonly List<CompanyPhone> _phones = [];
 
-    // Contants
-
-    private bool HasAtLeatOnePartner = _partners.Count > 0;
-    private bool HasAtLeatOnePhone = _partners.Count > 0;
-
     // Constructors
 
     private Company()
@@ -35,7 +30,7 @@ public class Company
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     public CompanyMainActivity MainActivity { get; private set; } = default!;
-    public bool IsOperational => HasAtLeatOnePartner && HasAtLeatOnePhone;
+    public bool IsOperational => IsCompanyOperational();
     public IReadOnlyCollection<CompanyPartner> Partners => _partners.AsReadOnly();
     public IReadOnlyCollection<CompanyPhone> Phones => _phones.AsReadOnly();
 
@@ -117,4 +112,12 @@ public class Company
     private bool IsDuplicatedPartner(Guid partnerId) => _partners.Any(p => p.PartnerId == partnerId);
 
     private bool IsDuplicatedPhone(Phone phone) => _phones.Any(p => p.Phone == phone);
+    
+    private bool IsCompanyOperational()
+    {
+        bool hasAtLeatOnePartner = _partners.Count > 0;
+        bool hasAtLeatOnePhone = _phones.Count > 0;
+
+        return hasAtLeatOnePartner && hasAtLeatOnePhone;
+    }
 }
