@@ -13,6 +13,11 @@ public class Company
     private readonly List<CompanyPartner> _partners = [];
     private readonly List<CompanyPhone> _phones = [];
 
+    // Contants
+
+    private bool HasAtLeatOnePartner = _partners.Count > 0;
+    private bool HasAtLeatOnePhone = _partners.Count > 0;
+
     // Constructors
 
     private Company()
@@ -30,6 +35,7 @@ public class Company
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     public CompanyMainActivity MainActivity { get; private set; } = default!;
+    public bool IsOperational => HasAtLeatOnePartner && HasAtLeatOnePhone;
     public IReadOnlyCollection<CompanyPartner> Partners => _partners.AsReadOnly();
     public IReadOnlyCollection<CompanyPhone> Phones => _phones.AsReadOnly();
 
