@@ -27,7 +27,7 @@ public class AddPartnerInCompanyCommandHandler(
             return ErrorResult(CompanyErrors.CompanyNotFound(command.CompanyId));
 
         if (await PartnerNotFound(command.PartnerId))
-            return ErrorResult(CompanyErrors.ParnterNotFound(command.PartnerId));
+            return ErrorResult(CompanyErrors.PartnerNotFound(command.PartnerId));
 
         var addPartnerResult = company.AddPartner(
             command.PartnerId, command.QualificationId, DateOnly.FromDateTime(command.JoinedAt));

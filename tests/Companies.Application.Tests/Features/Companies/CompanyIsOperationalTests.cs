@@ -68,7 +68,7 @@ public class CompanyIsOperationalTests
 
         // act
 
-        var isCompanyInoperational = company.IsOperational!;
+        var isCompanyInoperational = !company.IsOperational;
 
         // assert
 

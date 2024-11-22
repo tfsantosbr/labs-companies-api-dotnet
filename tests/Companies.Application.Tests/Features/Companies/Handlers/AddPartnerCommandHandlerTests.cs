@@ -11,14 +11,14 @@ using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
 
-public class AddPartnerHandlerTests
+public class AddPartnerCommandHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IPartnerRepository _partnerRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICommandValidator<AddPartnerInCompanyCommand> _validator;
 
-    public AddPartnerHandlerTests()
+    public AddPartnerCommandHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _partnerRepository = Substitute.For<IPartnerRepository>();
@@ -109,7 +109,7 @@ public class AddPartnerHandlerTests
 
         // assert
 
-        Assert.Contains(CompanyErrors.ParnterNotFound(command.PartnerId), result.Notifications);
+        Assert.Contains(CompanyErrors.PartnerNotFound(command.PartnerId), result.Notifications);
     }
 
     [Fact]
@@ -179,6 +179,6 @@ public class AddPartnerHandlerTests
 
         // assert
 
-        Assert.False(result.IsSuccess);
+        Assert.True(result.IsSuccess);
     }
 }

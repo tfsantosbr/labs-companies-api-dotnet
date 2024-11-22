@@ -34,7 +34,7 @@ namespace Companies.Application.Features.Companies.Constants
         public static Notification CompanyNotFound(Guid companyId)
             => new(nameof(CompanyNotFound), $"The company with id '{companyId}' was not found");
 
-        public static Notification ParnterNotFound(Guid partnerId)
-            => new(nameof(ParnterNotFound), $"The partner with id '{partnerId}' was not found");
+        public static Notification PartnerNotFound(Guid partnerId)
+            => new(nameof(PartnerNotFound), $"The partner with id '{partnerId}' was not found");
     }
 }

@@ -1,5 +1,7 @@
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Features.Companies;
+using Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
+using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Tests.Base.Helpers;
 
@@ -7,12 +9,12 @@ using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
 
-public class RemovePartnerHandlerTests
+public class RemovePartnerFromCompanyCommandHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemovePartnerHandlerTests()
+    public RemovePartnerFromCompanyCommandHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
@@ -23,20 +25,20 @@ public class RemovePartnerHandlerTests
     {
         // arrange
 
-        var command = new RemovePartnerFromCompany(Guid.NewGuid(), Guid.NewGuid());
+        var command = new RemovePartnerFromCompanyCommand(Guid.NewGuid(), Guid.NewGuid());
 
-        var handler = new RemovePartnerFromCompanyHandler(
+        var handler = new RemovePartnerFromCompanyCommandHandler(
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.Contains(response.Notifications, notification => notification.Message == "Company not found");
+        Assert.Contains(CompanyErrors.CompanyNotFound(command.CompanyId), result.Notifications);
     }
 
     [Fact]
@@ -46,23 +48,23 @@ public class RemovePartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetById(Arg.Any<Guid>())
+        _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        var command = new RemovePartnerFromCompany(Guid.NewGuid(), Guid.NewGuid());
+        var command = new RemovePartnerFromCompanyCommand(Guid.NewGuid(), Guid.NewGuid());
 
-        var handler = new RemovePartnerFromCompanyHandler(
+        var handler = new RemovePartnerFromCompanyCommandHandler(
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.Contains(response.Notifications, notification => notification.Message == "Partner not found");
+        Assert.Contains(CompanyErrors.CompanysPartnerNotExists(), result.Notifications);
     }
 
     [Fact]
@@ -72,25 +74,25 @@ public class RemovePartnerHandlerTests
 
         var company = CompanyHelper.GenerateValidCompany();
 
-        _companyRepository.GetById(Arg.Any<Guid>())
+        _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        var command = new RemovePartnerFromCompany(
-           companyId: new Guid("b9ffc898-c3e4-4dfb-b1c6-86778f383f73"),
-           partnerId: new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d")
+        var command = new RemovePartnerFromCompanyCommand(
+           CompanyId: company.Id,
+           PartnerId: company.Partners.First().PartnerId
         );
 
-        var handler = new RemovePartnerFromCompanyHandler(
+        var handler = new RemovePartnerFromCompanyCommandHandler(
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.False(response.HasNotifications);
+        Assert.True(result.IsSuccess);
     }
 }
