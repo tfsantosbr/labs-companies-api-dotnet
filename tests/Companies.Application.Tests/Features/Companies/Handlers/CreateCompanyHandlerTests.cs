@@ -1,5 +1,8 @@
+using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
+using Companies.Application.Abstractions.Validations;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Tests.Base.Helpers;
 
@@ -7,15 +10,17 @@ using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
 
-public class CreateCompanyHandlerTests
+public class CreateCompanyCommandHandlerTests
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICommandValidator<CreateCompanyCommand> _validator;
 
-    public CreateCompanyHandlerTests()
+    public CreateCompanyCommandHandlerTests()
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
+        _validator = new CommandValidator<CreateCompanyCommand>(new CreateCompanyCommandValidator());
     }
 
     [Fact]
@@ -23,20 +28,37 @@ public class CreateCompanyHandlerTests
     {
         // arrange
 
-        var command = new CreateCompanyCommand();
+        var command = new CreateCompanyCommand(
+            string.Empty,
+            string.Empty,
+            default,
+            default,
+            new AddressModel(
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty),
+            [],
+            []
+            );
 
-        var handler = new CreateCompanyHandler(
+        var handler = new CreateCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.True(response.HasNotifications);
+        Assert.True(result.IsFailure);
     }
 
     [Fact]
@@ -44,26 +66,25 @@ public class CreateCompanyHandlerTests
     {
         // arrange
 
-        _companyRepository.AnyByCnpj(Arg.Any<string>()).ReturnsForAnyArgs(Task.FromResult(true));
+        _companyRepository.AnyByCnpjAsync(Arg.Any<string>()).ReturnsForAnyArgs(Task.FromResult(true));
 
         var command = CompanyHelper.GenerateValidCreateCompanyCommand();
 
-        var handler = new CreateCompanyHandler(
+        var handler = new CreateCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.True(response.HasNotifications);
-        Assert.Contains(response.Notifications, notification =>
-            notification.Message.Contains("cnpj") &&
-            notification.Message.Contains("already exists")
-            );
+        Assert.True(result.IsFailure);
+
+        Assert.Contains(CompanyErrors.CompanyCnpjAlreadyExists(command.Cnpj), result.Notifications);
     }
 
     [Fact]
@@ -71,26 +92,24 @@ public class CreateCompanyHandlerTests
     {
         // arrange
 
-        _companyRepository.AnyByName(Arg.Any<string>()).ReturnsForAnyArgs(Task.FromResult(true));
+        _companyRepository.AnyByNameAsync(Arg.Any<string>()).ReturnsForAnyArgs(Task.FromResult(true));
 
         var command = CompanyHelper.GenerateValidCreateCompanyCommand();
 
-        var handler = new CreateCompanyHandler(
+        var handler = new CreateCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.True(response.HasNotifications);
-        Assert.Contains(response.Notifications, notification =>
-            notification.Message.Contains("name") &&
-            notification.Message.Contains("already exists")
-            );
+        Assert.True(result.IsFailure);
+        Assert.Contains(CompanyErrors.CompanyNameAlreadyExists(command.Name), result.Notifications);
     }
 
     [Fact]
@@ -100,17 +119,18 @@ public class CreateCompanyHandlerTests
 
         var command = CompanyHelper.GenerateValidCreateCompanyCommand();
 
-        var handler = new CreateCompanyHandler(
+        var handler = new CreateCompanyCommandHandler(
+            validator: _validator,
             companyRepository: _companyRepository,
             unitOfWork: _unitOfWork
         );
 
         // act
 
-        var response = await handler.Handle(command, new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         // assert
 
-        Assert.False(response.HasNotifications);
+        Assert.False(result.IsSuccess);
     }
 }
