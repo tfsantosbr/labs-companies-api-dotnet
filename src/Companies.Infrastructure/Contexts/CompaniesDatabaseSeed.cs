@@ -108,52 +108,52 @@ public class CompaniesDatabaseSeed(CompaniesContext context)
             var partner1 = Partner.Create(
                 new CompleteName("Tiago", "Santos"),
                 new Email("tiago@email.com"),
-                id: new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e")).Data!;
+                id: new Guid("1a0592e2-71f0-48cc-8267-0f8d75fe0a5e"));
 
             var partner2 = Partner.Create(
                 new CompleteName("Iran", "Nunes"),
                 new Email("iran@email.com"),
-                id: new Guid("9132b269-ff90-402d-88d0-2f9e7fdb312f")).Data!;
+                id: new Guid("9132b269-ff90-402d-88d0-2f9e7fdb312f"));
 
             var partner3 = Partner.Create(
                 new CompleteName("Bruna", "Oliveira"),
                 new Email("bruna@email.com"),
-                id: new Guid("bcb63995-49c2-49d2-82ae-8c06183bfd2e")).Data!;
+                id: new Guid("bcb63995-49c2-49d2-82ae-8c06183bfd2e"));
 
             var partner4 = Partner.Create(
                 new CompleteName("Maria", "Gorete"),
                 new Email("maria@email.com"),
-                id: new Guid("012af8a2-8de0-45b7-b9c7-dcfdb3b491b3")).Data!;
+                id: new Guid("012af8a2-8de0-45b7-b9c7-dcfdb3b491b3"));
 
             var partner5 = Partner.Create(
                 new CompleteName("Natalia", "Lourenço"),
                 new Email("natalia@email.com"),
-                id: new Guid("fd532165-d7fd-44bb-b19b-f8e2a1c2073f")).Data!;
+                id: new Guid("fd532165-d7fd-44bb-b19b-f8e2a1c2073f"));
 
             var partner6 = Partner.Create(
                 new CompleteName("Roberto", "Justus"),
                 new Email("roberto@email.com"),
-                id: new Guid("650e25ab-9b3b-4aaa-9b9a-45edb4527129")).Data!;
+                id: new Guid("650e25ab-9b3b-4aaa-9b9a-45edb4527129"));
 
             var partner7 = Partner.Create(
                 new CompleteName("Kim", "Katagiri"),
                 new Email("kim@email.com"),
-                id: new Guid("a2f7cb01-6e1e-4831-ad0e-c62e77286e88")).Data!;
+                id: new Guid("a2f7cb01-6e1e-4831-ad0e-c62e77286e88"));
 
             var partner8 = Partner.Create(
                 new CompleteName("Renan", "Oliveira"),
                 new Email("renan@email.com"),
-                id: new Guid("f0a4ffdb-543b-4f38-9a3d-94e973789b74")).Data!;
+                id: new Guid("f0a4ffdb-543b-4f38-9a3d-94e973789b74"));
 
             var partner9 = Partner.Create(
                 new CompleteName("Will", "Toshio"),
                 new Email("will@email.com"),
-                id: new Guid("c7baa255-6bfb-4d67-91da-fc1d858fdf00")).Data!;
+                id: new Guid("c7baa255-6bfb-4d67-91da-fc1d858fdf00"));
 
             var partner10 = Partner.Create(
                 new CompleteName("Carol", "Castro"),
                 new Email("carol@email.com"),
-                id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891")).Data!;
+                id: new Guid("cfc6daaa-f9cd-4545-bd69-fd64bf83f891"));
 
             context.Set<Partner>().AddRange(
                 partner1,

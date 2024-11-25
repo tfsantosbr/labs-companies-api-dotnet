@@ -1,10 +1,7 @@
 using System.Text;
 using System.Text.Json;
-
 using Companies.Application.Abstractions.Messaging;
-
 using Microsoft.Extensions.Configuration;
-
 using RabbitMQ.Client;
 
 namespace Companies.Infrastructure.Services.Messaging;

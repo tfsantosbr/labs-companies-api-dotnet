@@ -4,8 +4,7 @@ using Companies.Application.Abstractions.Validations;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
-using Companies.Application.Tests.Base.Helpers;
-
+using Companies.Application.Tests.Features.Companies.Helpers;
 using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
@@ -54,7 +53,7 @@ public class CreateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -78,7 +77,7 @@ public class CreateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -104,7 +103,7 @@ public class CreateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -127,7 +126,7 @@ public class CreateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 

@@ -5,8 +5,7 @@ using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
-using Companies.Application.Tests.Base.Helpers;
-
+using Companies.Application.Tests.Features.Companies.Helpers;
 using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
@@ -42,7 +41,7 @@ public class AddPartnerCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -70,7 +69,7 @@ public class AddPartnerCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -87,7 +86,7 @@ public class AddPartnerCommandHandlerTests
         _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(false));
+        _partnerRepository.AnyPartnerByIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(false));
 
         var command = new AddPartnerInCompanyCommand(
             PartnerId: Guid.NewGuid(),
@@ -105,7 +104,7 @@ public class AddPartnerCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -122,7 +121,7 @@ public class AddPartnerCommandHandlerTests
         _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+        _partnerRepository.AnyPartnerByIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
         var command = new AddPartnerInCompanyCommand(
             PartnerId: new Guid("6c65317c-24bf-49b0-9d80-6ccf1c06658d"),
@@ -140,7 +139,7 @@ public class AddPartnerCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -157,7 +156,7 @@ public class AddPartnerCommandHandlerTests
         _companyRepository.GetByIdAsync(Arg.Any<Guid>())
             .Returns(Task.FromResult<Company?>(company));
 
-        _partnerRepository.AnyPartnerById(Arg.Any<Guid>()).Returns(Task.FromResult(true));
+        _partnerRepository.AnyPartnerByIdAsync(Arg.Any<Guid>()).Returns(Task.FromResult(true));
 
         var command = new AddPartnerInCompanyCommand(
             PartnerId: Guid.NewGuid(),
@@ -175,7 +174,7 @@ public class AddPartnerCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 

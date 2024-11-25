@@ -1,5 +1,4 @@
 using Companies.Application.Features.Partners;
-using Companies.Application.Features.Partners.Models;
 using Companies.Application.Features.Partners.Repositories;
 using Companies.Infrastructure.Contexts;
 
@@ -7,59 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Companies.Infrastructure.Repositories;
 
-public class PartnerRepository : IPartnerRepository
+public class PartnerRepository(CompaniesContext context) : IPartnerRepository
 {
-    // Fields
-
-    private readonly CompaniesContext _context;
-
-    // Constructors
-
-    public PartnerRepository(CompaniesContext context)
+    public async Task AddAsync(Partner partner, CancellationToken cancellationToken = default)
     {
-        _context = context;
+        await context.Partners.AddAsync(partner, cancellationToken);
     }
 
-    // Implementations
-
-    public async Task Add(Partner partner)
+    public async Task<bool> AnyPartnerByIdAsync(Guid partnerId, CancellationToken cancellationToken = default)
     {
-        await _context.Set<Partner>().AddAsync(partner);
-        await _context.SaveChangesAsync();
+        return await context.Partners.AsNoTracking()
+            .AnyAsync(p => p.Id == partnerId, cancellationToken);
     }
 
-    public async Task<bool> AnyPartnerById(Guid partnerId)
+    public async Task<Partner?> GetByIdAsync(Guid partnerId, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<Partner>()
-            .AsNoTracking()
-            .AnyAsync(p => p.Id == partnerId);
+        return await context.Partners
+            .FirstOrDefaultAsync(p => p.Id == partnerId, cancellationToken);
     }
 
-    public async Task<Partner?> GetById(Guid partnerId)
+    public async Task<bool> IsDuplicatedEmailAsync(string email, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<Partner>()
-            .FirstOrDefaultAsync(p => p.Id == partnerId);
+        return await context.Partners.AsNoTracking()
+            .AnyAsync(p => p.Email.Address == email, cancellationToken: cancellationToken);
     }
 
-    public async Task<bool> IsDuplicatedEmail(string email)
+    public void Remove(Partner partner)
     {
-        return await _context
-            .Set<Partner>()
-            .AsNoTracking()
-            .AnyAsync(p => p.Email.Address == email);
-    }
-
-    public async Task<IEnumerable<PartnerItem>> List()
-    {
-        return await _context.Set<Partner>()
-            .AsNoTracking()
-            .Select(u => new PartnerItem(u.Id, u.CompleteName.ToString(), u.Email.ToString()))
-            .ToListAsync();
-    }
-
-    public async Task Remove(Partner partner)
-    {
-        _context.Set<Partner>().Remove(partner);
-        await _context.SaveChangesAsync();
+        context.Partners.Remove(partner);
     }
 }

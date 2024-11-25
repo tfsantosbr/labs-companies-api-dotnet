@@ -7,8 +7,7 @@ using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Repositories;
-using Companies.Application.Tests.Base.Helpers;
-
+using Companies.Application.Tests.Features.Companies.Helpers;
 using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
@@ -57,7 +56,7 @@ public class UpdateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -79,7 +78,7 @@ public class UpdateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -103,7 +102,7 @@ public class UpdateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -130,7 +129,7 @@ public class UpdateCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 

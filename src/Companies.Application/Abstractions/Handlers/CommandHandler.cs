@@ -14,14 +14,14 @@ public abstract class CommandHandler
         Result.Error(notification);
 }
 
-public abstract class CommandHandler<T> where T : class
+public abstract class CommandHandler<TData> where TData : class
 {
-    protected Result<T> SuccessResult(T data) =>
-        Result<T>.Success(data);
+    protected Result<TData> SuccessResult(TData data) =>
+        Result<TData>.Success(data);
 
-    protected Result<T> ErrorResult(Notification[] notifications) =>
-        Result<T>.Error(notifications);
+    protected Result<TData> ErrorResult(Notification[] notifications) =>
+        Result<TData>.Error(notifications);
 
-    protected Result<T> ErrorResult(Notification notification) =>
-        Result<T>.Error(notification);
+    protected Result<TData> ErrorResult(Notification notification) =>
+        Result<TData>.Error(notification);
 }

@@ -9,7 +9,7 @@ namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 public class RemoveCompanyCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork) 
     : CommandHandler, ICommandHandler<RemoveCompanyCommand>
 {
-    public async Task<Result> Handle(RemoveCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<Result> HandleAsync(RemoveCompanyCommand request, CancellationToken cancellationToken)
     {
         var company = await companyRepository.GetByIdAsync(request.CompanyId, cancellationToken);
 
@@ -18,7 +18,7 @@ public class RemoveCompanyCommandHandler(ICompanyRepository companyRepository, I
 
         companyRepository.Remove(company);
 
-        await unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

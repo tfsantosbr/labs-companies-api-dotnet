@@ -3,8 +3,7 @@ using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Commands.RemoveCompany;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Repositories;
-using Companies.Application.Tests.Base.Helpers;
-
+using Companies.Application.Tests.Features.Companies.Helpers;
 using NSubstitute;
 
 namespace Companies.Application.Tests.Features.Companies.Handlers;
@@ -34,7 +33,7 @@ public class RemoveCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 
@@ -59,7 +58,7 @@ public class RemoveCompanyCommandHandlerTests
 
         // act
 
-        var result = await handler.Handle(command, new CancellationToken());
+        var result = await handler.HandleAsync(command, new CancellationToken());
 
         // assert
 

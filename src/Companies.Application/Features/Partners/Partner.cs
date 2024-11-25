@@ -17,7 +17,7 @@ public class Partner
     public Email Email { get; private set; } = default!;
     public IReadOnlyCollection<CompanyPartner> Companies => _companies.AsReadOnly();
 
-    public static Result<Partner> Create(CompleteName completeName, Email email, Guid? id = null)
+    public static Partner Create(CompleteName completeName, Email email, Guid? id = null)
     {
         var partner = new Partner
         {
@@ -26,6 +26,6 @@ public class Partner
             Email = email
         };
 
-        return Result.Success(partner);
+        return partner;
     }
 }

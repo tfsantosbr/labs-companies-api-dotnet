@@ -1,7 +1,6 @@
 using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Enums;
-using Companies.Application.Tests.Base.Helpers;
 
 namespace Companies.Application.Tests.Features.Companies;
 

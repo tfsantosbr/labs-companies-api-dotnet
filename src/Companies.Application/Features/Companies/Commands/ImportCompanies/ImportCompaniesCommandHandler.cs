@@ -8,7 +8,7 @@ namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 public class ImportCompaniesCommandHandler(IMessageBroker messageBroker, ICommandValidator<ImportCompaniesCommand> validator) 
     : CommandHandler, ICommandHandler<ImportCompaniesCommand>
 {
-    public async Task<Result> Handle(ImportCompaniesCommand command, CancellationToken cancellationToken = default)
+    public async Task<Result> HandleAsync(ImportCompaniesCommand command, CancellationToken cancellationToken = default)
     {
         var validationResult = validator.Validate(command);
 

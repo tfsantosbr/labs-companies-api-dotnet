@@ -14,7 +14,7 @@ public class AddPartnerInCompanyCommandHandler(
     IPartnerRepository partnerRepository)
     : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompanyCommand, CompanyPartnerModel>
 {
-    public async Task<Result<CompanyPartnerModel>> Handle(AddPartnerInCompanyCommand command, CancellationToken cancellationToken)
+    public async Task<Result<CompanyPartnerModel>> HandleAsync(AddPartnerInCompanyCommand command, CancellationToken cancellationToken)
     {
         var validationResult = validator.Validate(command);
 
@@ -35,7 +35,7 @@ public class AddPartnerInCompanyCommandHandler(
         if (addPartnerResult.IsFailure)
             return ErrorResult(addPartnerResult.Notifications);
 
-        await unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         var companyPartnerModel = CompanyPartnerModel.FromCompanyPartner(addPartnerResult.Data!);
 
@@ -46,6 +46,6 @@ public class AddPartnerInCompanyCommandHandler(
 
     private async Task<bool> PartnerNotFound(Guid partnerId)
     {
-        return !await partnerRepository.AnyPartnerById(partnerId);
+        return !await partnerRepository.AnyPartnerByIdAsync(partnerId);
     }
 }

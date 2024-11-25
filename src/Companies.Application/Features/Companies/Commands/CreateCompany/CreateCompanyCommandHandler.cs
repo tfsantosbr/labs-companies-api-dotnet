@@ -17,7 +17,7 @@ public class CreateCompanyCommandHandler(
 {
     // Implementations
 
-    public async Task<Result<CompanyDetails>> Handle(CreateCompanyCommand command, CancellationToken cancellationToken)
+    public async Task<Result<CompanyDetails>> HandleAsync(CreateCompanyCommand command, CancellationToken cancellationToken)
     {
         var result = validator.Validate(command);
 
@@ -39,7 +39,7 @@ public class CreateCompanyCommandHandler(
 
         await companyRepository.AddAsync(company, cancellationToken);
 
-        await unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return SuccessResult(CompanyDetails.FromCompany(company));
     }

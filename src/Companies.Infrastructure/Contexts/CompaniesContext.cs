@@ -11,7 +11,6 @@ public class CompaniesContext(DbContextOptions<CompaniesContext> options)
 {
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<CompanyPartner> CompanyPartners => Set<CompanyPartner>();
-
     public DbSet<Partner> Partners => Set<Partner>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

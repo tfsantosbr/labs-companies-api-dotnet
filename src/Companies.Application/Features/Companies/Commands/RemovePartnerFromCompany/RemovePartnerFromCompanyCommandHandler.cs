@@ -9,7 +9,7 @@ namespace Companies.Application.Features.Companies.Commands.RemovePartnerFromCom
 public class RemovePartnerFromCompanyCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
         : CommandHandler, ICommandHandler<RemovePartnerFromCompanyCommand>
 {
-    public async Task<Result> Handle(RemovePartnerFromCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<Result> HandleAsync(RemovePartnerFromCompanyCommand request, CancellationToken cancellationToken)
     {
         var company = await companyRepository.GetByIdAsync(request.CompanyId, cancellationToken);
 
@@ -21,7 +21,7 @@ public class RemovePartnerFromCompanyCommandHandler(ICompanyRepository companyRe
         if (removePartnerResult.IsFailure)
             return ErrorResult(removePartnerResult.Notifications);
 
-        await unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

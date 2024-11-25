@@ -11,7 +11,7 @@ namespace Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 
 public class FindCompaniesQueryHandler(ICompaniesContext context) : IQueryHandler<FindCompaniesQuery, IPagedList<CompanyItem>>
 {
-    public async Task<Result<IPagedList<CompanyItem>>> Handle(
+    public async Task<Result<IPagedList<CompanyItem>>> HandleAsync(
         FindCompaniesQuery query, CancellationToken cancellationToken = default)
     {
         var companies = context.Companies.AsNoTracking();

@@ -69,7 +69,7 @@ public class ImportCompanyConsumer : BackgroundService
                 var createCompanyHandler = scope.ServiceProvider
                     .GetRequiredService<ICommandHandler<CreateCompanyCommand, CompanyDetails>>();
 
-                var result = await createCompanyHandler.Handle(createCompany);
+                var result = await createCompanyHandler.HandleAsync(createCompany);
 
                 if (result.IsFailure)
                 {

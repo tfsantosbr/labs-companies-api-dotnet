@@ -1,6 +1,6 @@
 using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Constants;
-using Companies.Application.Tests.Base.Helpers;
+using Companies.Application.Tests.Features.Companies.Helpers;
 
 namespace Companies.Application.Tests.Features.Companies;
 

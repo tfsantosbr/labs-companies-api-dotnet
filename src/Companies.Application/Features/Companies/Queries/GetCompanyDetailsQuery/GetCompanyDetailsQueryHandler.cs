@@ -10,7 +10,7 @@ namespace Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuer
 
 public class GetCompanyDetailsQueryHandler(ICompaniesContext context) : IQueryHandler<GetCompanyDetailsQuery, CompanyDetails>
 {
-    public async Task<Result<CompanyDetails>> Handle(GetCompanyDetailsQuery query, CancellationToken cancellationToken = default)
+    public async Task<Result<CompanyDetails>> HandleAsync(GetCompanyDetailsQuery query, CancellationToken cancellationToken = default)
     {
         var companyDetails = await context.Companies.AsNoTracking()
             .Where(company => company.Id == query.CompanyId)

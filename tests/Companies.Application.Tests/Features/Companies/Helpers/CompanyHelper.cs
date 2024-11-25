@@ -6,7 +6,7 @@ using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 
-namespace Companies.Application.Tests.Base.Helpers;
+namespace Companies.Application.Tests.Features.Companies.Helpers;
 
 public class CompanyHelper
 {
@@ -88,7 +88,7 @@ public class CompanyHelper
             ),
             Phones:
             [
-                new PhoneModel(                
+                new PhoneModel(
                     CountryCode: "11",
                     Number: "999999999"
                 )

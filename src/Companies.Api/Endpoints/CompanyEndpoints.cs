@@ -52,7 +52,7 @@ public class CompanyEndpoints : IEndpointBuilder
             request.PageSize,
             request.OrderBy);
 
-        var result = await handler.Handle(query, cancellationToken);
+        var result = await handler.HandleAsync(query, cancellationToken);
 
         return result.Ok();
     }
@@ -72,7 +72,7 @@ public class CompanyEndpoints : IEndpointBuilder
             request.Phones
             );
 
-        var result = await handler.Handle(command, cancellationToken);
+        var result = await handler.HandleAsync(command, cancellationToken);
 
         return result.Created($"companies/{result.Data!.Id}");
     }
@@ -84,7 +84,7 @@ public class CompanyEndpoints : IEndpointBuilder
     {
         var query = new GetCompanyDetailsQuery(companyId);
 
-        var result = await handler.Handle(query, cancellationToken);
+        var result = await handler.HandleAsync(query, cancellationToken);
 
         return result.Ok();
     }
@@ -104,7 +104,7 @@ public class CompanyEndpoints : IEndpointBuilder
             request.Phones
             );
 
-        var result = await handler.Handle(command, cancellationToken);
+        var result = await handler.HandleAsync(command, cancellationToken);
 
         return result.NoContent();
     }
@@ -116,7 +116,7 @@ public class CompanyEndpoints : IEndpointBuilder
     {
         var command = new RemoveCompanyCommand(companyId);
 
-        var result = await handler.Handle(command, cancellationToken);
+        var result = await handler.HandleAsync(command, cancellationToken);
 
         return result.NoContent();
     }

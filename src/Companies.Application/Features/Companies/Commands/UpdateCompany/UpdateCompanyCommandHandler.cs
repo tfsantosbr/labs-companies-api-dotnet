@@ -14,7 +14,7 @@ public class UpdateCompanyCommandHandler(
 {
     // Implementations
 
-    public async Task<Result> Handle(UpdateCompanyCommand command, CancellationToken cancellationToken)
+    public async Task<Result> HandleAsync(UpdateCompanyCommand command, CancellationToken cancellationToken)
     {
         var validationResult = validator.Validate(command);
 
@@ -34,7 +34,7 @@ public class UpdateCompanyCommandHandler(
         if (updateCompanyResult.IsFailure)
             return ErrorResult(updateCompanyResult.Notifications);
 
-        await unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

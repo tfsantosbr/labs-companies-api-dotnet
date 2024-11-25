@@ -10,7 +10,7 @@ namespace Companies.Application.Features.Companies.Queries.GetCompanyPartnersQue
 public class GetCompanyPartnersQueryHandler(IDapperFactory dapperFactory)
     : IQueryHandler<GetCompanyPartnersQuery, IEnumerable<CompanyPartnerModel>>
 {
-    public async Task<Result<IEnumerable<CompanyPartnerModel>>> Handle(
+    public async Task<Result<IEnumerable<CompanyPartnerModel>>> HandleAsync(
         GetCompanyPartnersQuery query, CancellationToken cancellationToken = default)
     {
         using var dbConnection = dapperFactory.CreateConnection();
