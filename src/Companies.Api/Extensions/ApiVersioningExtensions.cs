@@ -9,7 +9,7 @@ public static class ApiVersioningExtensions
     {
         services.AddApiVersioning(options =>
         {
-            options.DefaultApiVersion = new ApiVersion(2);
+            options.DefaultApiVersion = new ApiVersion(1);
             options.ReportApiVersions = true;
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.ApiVersionReader = ApiVersionReader.Combine(

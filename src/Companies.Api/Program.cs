@@ -7,6 +7,7 @@ var environment = builder.Environment;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddCorrelation();
 builder.Services.AddHealthChecks(configuration);
 builder.Services.AddSerilog(configuration);
@@ -16,6 +17,7 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureJsonOptions();
 builder.Services.ConfigureExceptionHandlers(environment);
+builder.Services.AddEndpoints(typeof(Program).Assembly);
 
 var app = builder.Build();
 

@@ -19,8 +19,8 @@ public class ConfigureSwaggerGenOptions(IApiVersionDescriptionProvider provider)
         {
             var openApiInfo = new OpenApiInfo
             {
-                Title = $"Companies API",
-                Version = description.GroupName
+                Title = $"Companies API v{description.ApiVersion}",
+                Version = description.ApiVersion.ToString()
             };
 
             options.SwaggerDoc(description.GroupName, openApiInfo);
