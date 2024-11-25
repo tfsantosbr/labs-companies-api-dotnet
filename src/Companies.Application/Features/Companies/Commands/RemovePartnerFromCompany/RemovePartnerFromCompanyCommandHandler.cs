@@ -7,7 +7,7 @@ using Companies.Application.Features.Companies.Repositories;
 namespace Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
 
 public class RemovePartnerFromCompanyCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
-        : CommandHandler, ICommandHandler<RemovePartnerFromCompanyCommand>
+        : AbstractHandler, ICommandHandler<RemovePartnerFromCompanyCommand>
 {
     public async Task<Result> HandleAsync(RemovePartnerFromCompanyCommand request, CancellationToken cancellationToken)
     {

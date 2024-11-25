@@ -7,7 +7,7 @@ using Companies.Application.Features.Companies.Repositories;
 namespace Companies.Application.Features.Companies.Commands.RemoveCompany;
 
 public class RemoveCompanyCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork) 
-    : CommandHandler, ICommandHandler<RemoveCompanyCommand>
+    : AbstractHandler, ICommandHandler<RemoveCompanyCommand>
 {
     public async Task<Result> HandleAsync(RemoveCompanyCommand request, CancellationToken cancellationToken)
     {

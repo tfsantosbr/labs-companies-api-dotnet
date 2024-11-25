@@ -2,7 +2,7 @@ using Companies.Application.Abstractions.Results;
 
 namespace Companies.Application.Abstractions.Handlers;
 
-public abstract class CommandHandler
+public abstract class AbstractHandler
 {
     protected static Result SuccessResult() =>
         Result.Success();
@@ -12,9 +12,12 @@ public abstract class CommandHandler
 
     protected static Result ErrorResult(Notification notification) =>
         Result.Error(notification);
+
+    protected static Result NotFoundResult(Notification notification) =>
+        Result.NotFound(notification);
 }
 
-public abstract class CommandHandler<TData> where TData : class
+public abstract class AbstractHandler<TData> where TData : class
 {
     protected Result<TData> SuccessResult(TData data) =>
         Result<TData>.Success(data);
@@ -24,4 +27,7 @@ public abstract class CommandHandler<TData> where TData : class
 
     protected Result<TData> ErrorResult(Notification notification) =>
         Result<TData>.Error(notification);
+
+    protected Result<TData> NotFoundResult(Notification notification) =>
+        Result<TData>.NotFound(notification);
 }

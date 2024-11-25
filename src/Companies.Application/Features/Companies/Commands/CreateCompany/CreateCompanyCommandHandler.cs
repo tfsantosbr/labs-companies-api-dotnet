@@ -13,7 +13,7 @@ public class CreateCompanyCommandHandler(
     ICommandValidator<CreateCompanyCommand> validator, 
     ICompanyRepository companyRepository, 
     IUnitOfWork unitOfWork)
-    : CommandHandler<CompanyDetails>, ICommandHandler<CreateCompanyCommand, CompanyDetails>
+    : AbstractHandler<CompanyDetails>, ICommandHandler<CreateCompanyCommand, CompanyDetails>
 {
     // Implementations
 

@@ -12,7 +12,7 @@ namespace Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 public class AddPartnerInCompanyCommandHandler(
     ICommandValidator<AddPartnerInCompanyCommand> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork,
     IPartnerRepository partnerRepository)
-    : CommandHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompanyCommand, CompanyPartnerModel>
+    : AbstractHandler<CompanyPartnerModel>, ICommandHandler<AddPartnerInCompanyCommand, CompanyPartnerModel>
 {
     public async Task<Result<CompanyPartnerModel>> HandleAsync(AddPartnerInCompanyCommand command, CancellationToken cancellationToken)
     {

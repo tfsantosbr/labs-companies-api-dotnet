@@ -10,7 +10,7 @@ namespace Companies.Application.Features.Companies.Commands.UpdateCompany;
 
 public class UpdateCompanyCommandHandler(
     ICommandValidator<UpdateCompanyCommand> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork) 
-    : CommandHandler, ICommandHandler<UpdateCompanyCommand>
+    : AbstractHandler, ICommandHandler<UpdateCompanyCommand>
 {
     // Implementations
 

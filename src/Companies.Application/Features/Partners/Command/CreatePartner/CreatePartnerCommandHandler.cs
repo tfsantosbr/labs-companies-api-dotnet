@@ -9,7 +9,7 @@ using Companies.Application.Features.Partners.Repositories;
 namespace Companies.Application.Features.Partners.Command.CreatePartner;
 
 public class CreatePartnerCommandHandler(IPartnerRepository repository, IUnitOfWork unitOfWork) :
-    CommandHandler<PartnerDetails>, ICommandHandler<CreatePartnerCommand, PartnerDetails>
+    AbstractHandler<PartnerDetails>, ICommandHandler<CreatePartnerCommand, PartnerDetails>
 {
     // Implementation
 

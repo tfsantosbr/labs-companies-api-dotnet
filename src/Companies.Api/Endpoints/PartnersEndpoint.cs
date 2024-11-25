@@ -10,7 +10,7 @@ using Companies.Application.Features.Partners.Queries;
 
 namespace Companies.Api.Endpoints;
 
-public class PartnersEndpoints : IEndpointBuilder
+public class PartnerEndpoints : IEndpointBuilder
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
