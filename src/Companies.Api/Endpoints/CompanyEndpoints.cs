@@ -1,16 +1,19 @@
-﻿using Companies.Api.Extensions;
+﻿using System.Threading;
+using Companies.Api.Extensions;
 using Companies.Api.Extensions.Endpoints;
 using Companies.Api.Models.Companies;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Features.Companies.Commands.CreateCompany;
+using Companies.Application.Features.Companies.Commands.ImportCompanies;
 using Companies.Application.Features.Companies.Commands.RemoveCompany;
 using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 using Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuery;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Companies.Api.Endpoints;
 
@@ -24,6 +27,10 @@ public class CompanyEndpoints : IEndpointBuilder
             .Produces<IPagedList<CompanyItem>>();
 
         group.MapPost("/", CreateCompany)
+            .Produces<CompanyDetails>(StatusCodes.Status201Created)
+            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+
+        group.MapPost("/import", ImportCompanies)
             .Produces<CompanyDetails>(StatusCodes.Status201Created)
             .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
 
@@ -78,14 +85,15 @@ public class CompanyEndpoints : IEndpointBuilder
         return result.Created($"companies/{result.Data!.Id}");
     }
 
-    public static async Task<IResult> ImportCompanies([FromBody] ImportCompanies request)
+    public static async Task<IResult> ImportCompanies(
+        [FromBody] ImportCompaniesRequest request,
+        ICommandHandler<ImportCompaniesCommand> commandHandler, CancellationToken cancellationToken = default)
     {
-        var response = await _importCompaniesHandler.Handle(request);
+        var command = new ImportCompaniesCommand(request.Companies);
 
-        if (response.HasNotifications)
-            return BadRequest(response.Notifications);
+        var result = await commandHandler.HandleAsync(command, cancellationToken);
 
-        return Accepted();
+        return result.Accepted();
     }
 
     public static async Task<IResult> GetCompanyDetails(

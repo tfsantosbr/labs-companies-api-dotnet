@@ -12,6 +12,9 @@ public static class ResultExtensions
     public static IResult NoContent(this Result result) =>
         BaseResult(result, TypedResults.NoContent());
 
+    public static IResult Accepted(this Result result, string? uri = null) =>
+        BaseResult(result, TypedResults.Accepted(uri));
+
     public static IResult Created<TValue>(this Result<TValue> result, string? uri = null) =>
         BaseResult(result, TypedResults.Created(uri, result.Data));
 
