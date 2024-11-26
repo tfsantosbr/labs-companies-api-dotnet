@@ -4,11 +4,22 @@ namespace Companies.Api.Extensions;
 
 public static class EnvironmentExtensions
 {
-    public static WebApplication UseDevelopmentSettings(this WebApplication app, IHostEnvironment environment)
+    public static WebApplication MapEnvironmentConfigurations(this WebApplication app, IHostEnvironment environment)
     {
-        if (!environment.IsDevelopment())
-            return app;
+        if (environment.IsDevelopment())
+        {
+            UseDevelopmentSettings(app);
+        }
+        else if(environment.IsProduction())
+        {
+            UseProductionSettings(app);
+        }
+            
+        return app;
+    }
 
+    public static WebApplication UseDevelopmentSettings(WebApplication app)
+    {
         // swagger
 
         app.UseApiVersionedSwagger();
@@ -26,11 +37,8 @@ public static class EnvironmentExtensions
         return app;
     }
 
-    public static WebApplication UseProductionSettings(this WebApplication app, IHostEnvironment environment)
+    public static WebApplication UseProductionSettings(WebApplication app)
     {
-        if (environment.IsDevelopment())
-            return app;
-
         app.UseExceptionHandler();
 
         return app;

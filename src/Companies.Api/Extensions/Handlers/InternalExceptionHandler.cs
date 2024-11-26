@@ -6,7 +6,8 @@ namespace Companies.Api.Extensions.Handlers;
 
 public class InternalExceptionHandler(ILogger<InternalExceptionHandler> logger) : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         if (exception is BadHttpRequestException)
             return false;

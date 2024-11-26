@@ -12,20 +12,17 @@ builder.Services.AddCorrelation();
 builder.Services.AddHealthChecks(configuration);
 builder.Services.AddSerilog(configuration);
 builder.Services.AddBearerAuthentication(configuration);
-builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructure(configuration);
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureJsonOptions();
 builder.Services.ConfigureExceptionHandlers(environment);
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructure(configuration);
 
 var app = builder.Build();
 
 app.UseHealthChecks();
 app.MapVersionedEndpoints();
-
-app.UseDevelopmentSettings(environment);
-app.UseProductionSettings(environment);
-
+app.MapEnvironmentConfigurations(environment);
 app.UseCorrelationContext();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
