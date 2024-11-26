@@ -5,8 +5,7 @@ namespace Companies.Application.Features.Companies.Models;
 
 public record CompanyDetails(
     Guid Id, string Cnpj, string Name, CompanyLegalNatureType LegalNature, int MainActivityId, 
-    AddressModel Address, DateTime CreatedAt, DateTime UpdatedAt, 
-    IEnumerable<CompanyPartnerModel> Partners, IEnumerable<CompanyPhoneModel> Phones)
+    AddressModel Address, DateTime CreatedAt, DateTime UpdatedAt, IEnumerable<CompanyPhoneModel> Phones)
 {
     public static CompanyDetails FromCompany(Company company) => new(
         company.Id,
@@ -17,7 +16,6 @@ public record CompanyDetails(
         AddressModel.FromAddress(company.Address),
         company.CreatedAt,
         company.UpdatedAt,
-        company.Partners.Select(CompanyPartnerModel.FromCompanyPartner),
         company.Phones.Select(CompanyPhoneModel.FromCompanyPhone)
         );
 }

@@ -12,7 +12,8 @@ public class GetCompanyDetailsQueryHandler(ICompaniesContext context) : IQueryHa
 {
     public async Task<Result<CompanyDetails>> HandleAsync(GetCompanyDetailsQuery query, CancellationToken cancellationToken = default)
     {
-        var companyDetails = await context.Companies.AsNoTracking()
+        var companyDetails = await context.Companies
+            .Include(c => c.Phones).AsNoTracking()
             .Where(company => company.Id == query.CompanyId)
             .Select(company => CompanyDetails.FromCompany(company))
             .FirstOrDefaultAsync(cancellationToken);

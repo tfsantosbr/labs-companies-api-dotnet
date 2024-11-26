@@ -7,8 +7,10 @@ namespace Companies.Api.Extensions;
 public static class EndpointExtensions
 {
     public static IServiceCollection AddEndpoints(
-        this IServiceCollection services, Assembly assembly)
+        this IServiceCollection services)
     {
+        var assembly = typeof(Program).Assembly;
+
         ServiceDescriptor[] serviceDescriptors = assembly
             .DefinedTypes
             .Where(type => type is { IsAbstract: false, IsInterface: false } &&

@@ -9,7 +9,8 @@ public class CompanyPartnerQualificationEndpoints : IEndpointBuilder
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("company-partner-qualifications").WithTags("Company Partner Qualifications");
+        var group = builder.MapGroup("company-partner-qualifications")
+            .WithTags("Company Partner Qualifications");
 
         group.MapGet("/", ListCompanyPartnerQualifications)
             .Produces<List<CompanyPartnerQualification>>(StatusCodes.Status200OK);
@@ -19,7 +20,8 @@ public class CompanyPartnerQualificationEndpoints : IEndpointBuilder
         CompaniesContext context,
         CancellationToken cancellationToken = default)
     {
-        var companyPartnerQualifications = await context.Set<CompanyPartnerQualification>().ToListAsync(cancellationToken);
+        var companyPartnerQualifications = await context.CompanyPartnerQualifications.ToListAsync(cancellationToken);
+
         return Results.Ok(companyPartnerQualifications);
     }
 }

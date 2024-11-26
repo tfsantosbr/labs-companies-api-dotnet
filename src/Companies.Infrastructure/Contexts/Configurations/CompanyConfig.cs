@@ -11,6 +11,8 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
     {
         builder.ToTable("Companies").HasKey(c => c.Id);
 
+        builder.Property(c => c.Id).ValueGeneratedNever();
+
         builder.Property(c => c.Name).HasMaxLength(500);
 
         builder.OwnsOne(c => c.Cnpj, cnpj =>

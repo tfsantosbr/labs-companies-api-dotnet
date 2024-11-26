@@ -9,7 +9,8 @@ public class CompanyMainActivityEndpoints : IEndpointBuilder
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("company-main-activities").WithTags("Company Main Activities");
+        var group = builder.MapGroup("company-main-activities")
+            .WithTags("Company Main Activities");
 
         group.MapGet("/", ListCompanyMainActivities)
             .Produces<List<CompanyMainActivity>>(StatusCodes.Status200OK);

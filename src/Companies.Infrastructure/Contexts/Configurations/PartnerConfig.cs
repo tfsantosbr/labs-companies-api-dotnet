@@ -10,6 +10,8 @@ public class PartnerConfig : IEntityTypeConfiguration<Partner>
     {
         builder.ToTable("Partners").HasKey(u => u.Id);
 
+        builder.Property(p => p.Id).ValueGeneratedNever();
+
         builder.OwnsOne(p => p.CompleteName, completeName =>
         {
             completeName.Property(p => p.FirstName).HasColumnName("FirstName").IsRequired().HasMaxLength(300);

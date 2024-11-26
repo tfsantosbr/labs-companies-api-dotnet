@@ -12,6 +12,9 @@ public class CompanyPartnerConfig : IEntityTypeConfiguration<CompanyPartner>
         builder.ToTable("CompanyPartners")
             .HasKey(ce => new { ce.CompanyId, ce.PartnerId });
 
+        builder.Property(c => c.CompanyId).ValueGeneratedNever();
+        builder.Property(c => c.PartnerId).ValueGeneratedNever();
+
         builder.HasOne(ce => ce.Qualification).WithMany().HasForeignKey(ce => ce.QualificationId);
         builder.HasOne(ce => ce.Partner).WithMany(p => p.Companies).HasForeignKey(ce => ce.PartnerId);
         builder.HasOne(ce => ce.Company).WithMany(p => p.Partners).HasForeignKey(ce => ce.CompanyId);
