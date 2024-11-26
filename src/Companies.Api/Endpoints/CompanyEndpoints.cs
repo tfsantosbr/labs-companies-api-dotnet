@@ -10,6 +10,7 @@ using Companies.Application.Features.Companies.Commands.UpdateCompany;
 using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 using Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuery;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Companies.Api.Endpoints;
 
@@ -75,6 +76,16 @@ public class CompanyEndpoints : IEndpointBuilder
         var result = await handler.HandleAsync(command, cancellationToken);
 
         return result.Created($"companies/{result.Data!.Id}");
+    }
+
+    public static async Task<IResult> ImportCompanies([FromBody] ImportCompanies request)
+    {
+        var response = await _importCompaniesHandler.Handle(request);
+
+        if (response.HasNotifications)
+            return BadRequest(response.Notifications);
+
+        return Accepted();
     }
 
     public static async Task<IResult> GetCompanyDetails(
