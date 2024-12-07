@@ -1,5 +1,5 @@
 ﻿namespace Companies.Application.Abstractions.Results;
 
-public record NotFoundResult(Notification Notification) : Result(Notification);
+public record NotFoundResult(Error Errors) : Result(Errors);
 
-public record NotFoundResult<TValue>(Notification Notification) : Result<TValue>(Notification);
+public record NotFoundResult<TData>(Error Errors) : Result<TData>(Errors);

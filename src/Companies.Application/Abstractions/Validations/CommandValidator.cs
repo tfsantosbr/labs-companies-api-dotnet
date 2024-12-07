@@ -13,7 +13,7 @@ public class CommandValidator<T>(IValidator<T> validator) : ICommandValidator<T>
             return Result.Success();
 
         var notifications = validationResult.Errors.Select(e =>
-            new Notification(e.PropertyName, e.ErrorMessage)
+            new Error(e.PropertyName, e.ErrorMessage)
         ).ToArray();
 
         return Result.Error(notifications);

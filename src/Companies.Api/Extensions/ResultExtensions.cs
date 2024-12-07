@@ -1,4 +1,5 @@
-﻿using Companies.Application.Abstractions.Results;
+﻿using System.ComponentModel;
+using Companies.Application.Abstractions.Results;
 
 namespace Companies.Api.Extensions;
 
@@ -25,7 +26,9 @@ public static class ResultExtensions
         {
             NotFoundResult => TypedResults.NotFound(result.Notifications),
             ErrorResult => TypedResults.BadRequest(result.Notifications),
-            _ => successResult,
+            SuccessResult => successResult,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), $"Unexpected result type: {result.GetType().Name}"),
         };
 
     private static IResult BaseResult<TValue>(Result<TValue> result, IResult successResult) =>
@@ -33,6 +36,8 @@ public static class ResultExtensions
         {
             NotFoundResult<TValue> => TypedResults.NotFound(result.Notifications),
             ErrorResult<TValue> => TypedResults.BadRequest(result.Notifications),
-            _ => successResult,
+            SuccessResult => successResult,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(result), $"Unexpected result type: {result.GetType().Name}"),
         };
 }

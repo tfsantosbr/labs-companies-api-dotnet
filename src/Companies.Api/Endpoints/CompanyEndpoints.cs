@@ -28,11 +28,11 @@ public class CompanyEndpoints : IEndpointBuilder
 
         group.MapPost("/", CreateCompany)
             .Produces<CompanyDetails>(StatusCodes.Status201Created)
-            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+            .Produces<List<Error>>(StatusCodes.Status400BadRequest);
 
         group.MapPost("/import", ImportCompanies)
             .Produces<CompanyDetails>(StatusCodes.Status201Created)
-            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+            .Produces<List<Error>>(StatusCodes.Status400BadRequest);
 
         group.MapGet("/{companyId}", GetCompanyDetails)
             .Produces<CompanyDetails>(StatusCodes.Status200OK)
@@ -41,7 +41,7 @@ public class CompanyEndpoints : IEndpointBuilder
         group.MapPut("/{companyId}", UpdateCompany)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .Produces<List<Notification>>(StatusCodes.Status400BadRequest);
+            .Produces<List<Error>>(StatusCodes.Status400BadRequest);
 
         group.MapDelete("/{companyId}", RemoveCompany)
             .Produces(StatusCodes.Status204NoContent)

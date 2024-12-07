@@ -1,4 +1,4 @@
-﻿namespace Companies.Application.Abstractions.Pagination;
+﻿namespace Companies.Application.Abstractions.Queries;
 
 public abstract record SearchQuery
 {

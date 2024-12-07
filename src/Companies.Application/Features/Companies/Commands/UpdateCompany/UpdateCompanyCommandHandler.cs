@@ -27,7 +27,7 @@ public class UpdateCompanyCommandHandler(
         var company = await companyRepository.GetByIdAsync(command.CompanyId, cancellationToken);
 
         if (company == null)
-            return ErrorResult(CompanyErrors.CompanyNotFound(command.CompanyId));
+            return NotFoundResult(CompanyErrors.CompanyNotFound(command.CompanyId));
 
         var updateCompanyResult = UpdateCompany(command, company);
 

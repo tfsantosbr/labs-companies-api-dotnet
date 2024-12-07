@@ -2,22 +2,22 @@
 
 public record ErrorResult : Result
 {
-    public ErrorResult(Notification notification) : base(notification)
+    public ErrorResult(Error error) : base(error)
     {
     }
 
-    public ErrorResult(Notification[] notifications) : base(notifications)
+    public ErrorResult(Error[] errors) : base(errors)
     {
     }
 }
 
-public record ErrorResult<TValue> : Result<TValue>
+public record ErrorResult<TData> : Result<TData>
 {
-    public ErrorResult(Notification notification) : base(notification)
+    public ErrorResult(Error error) : base(error)
     {
     }
 
-    public ErrorResult(Notification[] notifications) : base(notifications)
+    public ErrorResult(Error[] errors) : base(errors)
     {
     }
 }

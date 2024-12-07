@@ -19,7 +19,7 @@ public class Response<T> : Response where T : class
         return new Response<T>();
     }
 
-    public static new Response<T> Error(Notification notification)
+    public static new Response<T> Error(Error notification)
     {
         var response = new Response<T>();
         response.Notifications.Add(notification);
@@ -27,7 +27,7 @@ public class Response<T> : Response where T : class
         return response;
     }
 
-    public static new Response<T> Error(IEnumerable<Notification> notifications)
+    public static new Response<T> Error(IEnumerable<Error> notifications)
     {
         var response = new Response<T>();
 
@@ -40,10 +40,10 @@ public class Response<T> : Response where T : class
 
 public class Response
 {
-    public List<Notification> Notifications { get; set; } = [];
+    public List<Error> Notifications { get; set; } = [];
     public bool HasNotifications => Notifications?.Any() == true;
 
-    public static Response Error(Notification notification)
+    public static Response Error(Error notification)
     {
         var response = new Response();
         response.Notifications.Add(notification);
@@ -51,7 +51,7 @@ public class Response
         return response;
     }
 
-    public static Response Error(IEnumerable<Notification> notifications)
+    public static Response Error(IEnumerable<Error> notifications)
     {
         var response = new Response();
 

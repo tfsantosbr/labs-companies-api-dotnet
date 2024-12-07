@@ -1,5 +1,6 @@
 ﻿using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
+using Companies.Application.Abstractions.Queries;
 using Companies.Application.Features.Partners.Models;
 
 namespace Companies.Application.Features.Partners.Queries;

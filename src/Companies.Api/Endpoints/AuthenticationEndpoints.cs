@@ -22,7 +22,7 @@ public class AuthenticationEndpoints : IEndpointBuilder
     {
         if (request.Username != "test" || request.Password != "test")
         {
-            return Results.NotFound(new Notification("User", "User not found"));
+            return Results.NotFound(new Error("User", "User not found"));
         }
 
         // fake test user
