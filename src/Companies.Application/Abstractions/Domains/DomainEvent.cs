@@ -1,4 +1,4 @@
-﻿namespace Shared.Application.Domains.DomainEvents;
+﻿namespace Companies.Application.Abstractions.Domains;
 
 public abstract record DomainEvent : IDomainEvent
 {

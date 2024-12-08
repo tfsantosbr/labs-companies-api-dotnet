@@ -36,7 +36,7 @@ public static class ResultExtensions
         {
             NotFoundResult<TValue> => TypedResults.NotFound(result.Notifications),
             ErrorResult<TValue> => TypedResults.BadRequest(result.Notifications),
-            SuccessResult => successResult,
+            SuccessResult<TValue> => successResult,
             _ => throw new ArgumentOutOfRangeException(
                 nameof(result), $"Unexpected result type: {result.GetType().Name}"),
         };

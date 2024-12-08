@@ -1,12 +1,14 @@
+using Companies.Application.Abstractions.Domains;
 using Companies.Application.Abstractions.Results;
 using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Features.Companies.Enums;
+using Companies.Application.Features.Companies.Events;
 using Companies.Application.Features.CompanyMainActivities;
 
 namespace Companies.Application.Features.Companies;
 
-public class Company
+public class Company : AggregateRoot
 {
     // Fields
 
@@ -14,6 +16,22 @@ public class Company
     private readonly List<CompanyPhone> _phones = [];
 
     // Constructors
+
+    private Company(
+        Cnpj cnpj, string name, CompanyLegalNatureType legalNature,
+        int mainActivityId, Address address, Guid id)
+    {
+        Id = id;
+        Cnpj = cnpj;
+        Name = name;
+        LegalNature = legalNature;
+        MainActivityId = mainActivityId;
+        Address = address;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+
+        RaiseEvent(new CompanyCreatedDomainEvent(Id, Name));
+    }
 
     private Company()
     {
@@ -37,20 +55,17 @@ public class Company
     // Public Methods
 
     public static Result<Company> Create(
-        Cnpj cnpj, string name, CompanyLegalNatureType legalNature, int mainActivityId,
-        Address address, Guid? id = null)
+        Cnpj cnpj, string name, CompanyLegalNatureType legalNature, 
+        int mainActivityId, Address address, Guid? id = null)
     {
-        var company = new Company
-        {
-            Id = id ?? Guid.NewGuid(),
-            Cnpj = cnpj,
-            Name = name,
-            LegalNature = legalNature,
-            MainActivityId = mainActivityId,
-            Address = address,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow,
-        };
+        var company = new Company(
+            id: id ?? Guid.NewGuid(),
+            cnpj: cnpj,
+            name: name,
+            legalNature: legalNature,
+            mainActivityId: mainActivityId,
+            address: address
+            );
 
         return Result<Company>.Success(company);
     }
@@ -62,6 +77,8 @@ public class Company
         MainActivityId = mainActivityId;
         Address = address;
         UpdatedAt = DateTime.UtcNow;
+
+        RaiseEvent(new CompanyUpdatedDomainEvent(Id, Name));
 
         return Result.Success();
     }
@@ -75,6 +92,8 @@ public class Company
 
         _partners.Add(partner);
 
+        RaiseEvent(new CompanyPartnerAddedDomainEvent(Id, partnerId));
+
         return Result<CompanyPartner>.Success(partner);
     }
 
@@ -86,6 +105,8 @@ public class Company
             return Result.Error(CompanyErrors.CompanysPartnerNotExists());
 
         _partners.Remove(partner);
+
+        RaiseEvent(new CompanyPartnerRemovedDomainEvent(Id, partnerId));
 
         return Result.Success();
     }
@@ -107,12 +128,17 @@ public class Company
         _phones.Clear();
     }
 
+    public void Remove()
+    {
+        RaiseEvent(new CompanyRemovedDomainEvent(Id, Name));
+    }
+
     // Private Methods
 
     private bool IsDuplicatedPartner(Guid partnerId) => _partners.Any(p => p.PartnerId == partnerId);
 
     private bool IsDuplicatedPhone(Phone phone) => _phones.Any(p => p.Phone == phone);
-    
+
     private bool IsCompanyOperational()
     {
         bool hasAtLeatOnePartner = _partners.Count > 0;

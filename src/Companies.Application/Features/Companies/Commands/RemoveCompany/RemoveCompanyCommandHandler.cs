@@ -16,6 +16,8 @@ public class RemoveCompanyCommandHandler(ICompanyRepository companyRepository, I
         if (company == null)
             return ErrorResult(CompanyErrors.CompanyNotFound(request.CompanyId));
 
+        company.Remove();
+
         companyRepository.Remove(company);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

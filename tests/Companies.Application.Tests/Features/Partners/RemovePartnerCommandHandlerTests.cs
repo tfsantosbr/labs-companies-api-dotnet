@@ -7,7 +7,7 @@ using Companies.Application.Features.Partners.Repositories;
 using Companies.Application.Tests.Features.Partners.Helpers;
 using NSubstitute;
 
-namespace Companies.Application.Tests.Features.Partners.Handlers;
+namespace Companies.Application.Tests.Features.Partners;
 
 public class RemovePartnerCommandHandlerTests
 {
@@ -33,7 +33,7 @@ public class RemovePartnerCommandHandlerTests
 
         // assert
         Assert.True(result.IsFailure);
-        
+
         Assert.Contains(PartnerErrors.PartnerNotFound(command.PartnerId), result.Notifications);
     }
 

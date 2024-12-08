@@ -1,6 +1,4 @@
-﻿using Shared.Application.Domains.DomainEvents;
-
-namespace Shared.Application.Domains;
+﻿namespace Companies.Application.Abstractions.Domains;
 
 public abstract class AggregateRoot : IAggregateRoot
 {
@@ -8,9 +6,7 @@ public abstract class AggregateRoot : IAggregateRoot
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    protected void RaiseEvent(IDomainEvent domainEvent) =>
-        _domainEvents.Add(domainEvent);
+    protected void RaiseEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 
-    public void ClearEvents() =>
-        _domainEvents.Clear();
+    public void ClearEvents() => _domainEvents.Clear();
 }
