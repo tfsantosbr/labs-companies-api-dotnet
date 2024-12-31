@@ -3,7 +3,7 @@ using Companies.Application.Features.CompanyPartnerQualifications;
 using Companies.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.CompanyPartnerQualifications;
 
 public class CompanyPartnerQualificationEndpoints : IEndpointBuilder
 {

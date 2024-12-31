@@ -1,4 +1,4 @@
-﻿namespace Companies.Api.Models.Companies;
+﻿namespace Companies.Api.Features.Companies.Requests;
 
 public record FindCompaniesRequest(
     string? Name,

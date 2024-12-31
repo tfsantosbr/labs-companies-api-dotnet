@@ -1,4 +1,3 @@
-using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Tests.Features.Companies.Helpers;
 
@@ -12,7 +11,7 @@ public class RemovePartnerTests
         // arrange
 
         var company = CompanyHelper.GenerateValidCompany();
-        
+
         // act
 
         var result = company.RemovePartner(new Guid("030068f4-d7bf-484f-8fd0-7b001ed8831a"));

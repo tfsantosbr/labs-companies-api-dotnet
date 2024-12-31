@@ -10,8 +10,8 @@ using Companies.Application.Features.Companies.Repositories;
 namespace Companies.Application.Features.Companies.Commands.CreateCompany;
 
 public class CreateCompanyCommandHandler(
-    ICommandValidator<CreateCompanyCommand> validator, 
-    ICompanyRepository companyRepository, 
+    ICommandValidator<CreateCompanyCommand> validator,
+    ICompanyRepository companyRepository,
     IUnitOfWork unitOfWork)
     : AbstractHandler<CompanyDetails>, ICommandHandler<CreateCompanyCommand, CompanyDetails>
 {
@@ -90,9 +90,9 @@ public class CreateCompanyCommandHandler(
         return Result<Company>.Success(company);
     }
 
-    private async Task<bool> IsDuplicatedName(string name) => 
+    private async Task<bool> IsDuplicatedName(string name) =>
         await companyRepository.AnyByNameAsync(name);
 
-    private async Task<bool> IsDuplicatedCnpj(string cnpj) => 
+    private async Task<bool> IsDuplicatedCnpj(string cnpj) =>
         await companyRepository.AnyByCnpjAsync(cnpj);
 }

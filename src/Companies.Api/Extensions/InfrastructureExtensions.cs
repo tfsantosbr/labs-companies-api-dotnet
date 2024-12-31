@@ -1,14 +1,14 @@
-using Microsoft.EntityFrameworkCore;
-using Companies.Infrastructure.Contexts;
-using Companies.Infrastructure.Contexts.Persistence;
-using Companies.Infrastructure.Services.Messaging;
+using Companies.Application.Abstractions.Database;
 using Companies.Application.Abstractions.Messaging;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Features.Companies.Repositories;
 using Companies.Application.Features.Partners.Repositories;
-using Companies.Infrastructure.Repositories;
-using Companies.Application.Abstractions.Database;
+using Companies.Infrastructure.Contexts;
+using Companies.Infrastructure.Contexts.Persistence;
 using Companies.Infrastructure.Database;
+using Companies.Infrastructure.Repositories;
+using Companies.Infrastructure.Services.Messaging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Companies.Api.Extensions;
 
@@ -19,7 +19,7 @@ public static class InfrastructureExtensions
         // contexts
 
         services.AddDbContext<ICompaniesContext, CompaniesContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Postgres"), 
+                options.UseNpgsql(configuration.GetConnectionString("Postgres"),
                 builder => builder.MigrationsAssembly("Companies.Infrastructure")));
 
         // Dapper factory

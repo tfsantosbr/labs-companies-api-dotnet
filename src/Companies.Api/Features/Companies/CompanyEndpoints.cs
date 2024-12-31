@@ -1,7 +1,6 @@
-﻿using System.Threading;
-using Companies.Api.Extensions;
+﻿using Companies.Api.Extensions;
 using Companies.Api.Extensions.Endpoints;
-using Companies.Api.Models.Companies;
+using Companies.Api.Features.Companies.Requests;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Abstractions.Results;
@@ -13,9 +12,8 @@ using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Queries.FindCompaniesQuery;
 using Companies.Application.Features.Companies.Queries.GetCompanyDetailsQuery;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.Companies;
 
 public class CompanyEndpoints : IEndpointBuilder
 {

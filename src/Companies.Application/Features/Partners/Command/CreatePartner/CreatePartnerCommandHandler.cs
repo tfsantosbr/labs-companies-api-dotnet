@@ -25,7 +25,7 @@ public class CreatePartnerCommandHandler(IPartnerRepository repository, IUnitOfW
             new CompleteName(command.FirstName, command.LastName),
             new Email(command.Email)
         );
-        
+
         await repository.AddAsync(partner, cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

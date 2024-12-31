@@ -1,4 +1,3 @@
-using Companies.Application.Abstractions.Results;
 using Companies.Application.Abstractions.ValueObjects;
 using Companies.Application.Features.Companies;
 

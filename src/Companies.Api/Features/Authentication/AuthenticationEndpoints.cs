@@ -1,9 +1,9 @@
 ﻿using Companies.Api.Extensions.Endpoints;
-using Companies.Api.Models.Authentication;
-using Companies.Api.Services.Interfaces;
+using Companies.Api.Features.Authentication.Requests;
+using Companies.Application.Abstractions.Authentication;
 using Companies.Application.Abstractions.Results;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.Authentication;
 
 public class AuthenticationEndpoints : IEndpointBuilder
 {

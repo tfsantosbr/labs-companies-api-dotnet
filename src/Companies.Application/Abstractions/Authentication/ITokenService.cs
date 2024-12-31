@@ -1,4 +1,4 @@
-namespace Companies.Api.Services.Interfaces;
+namespace Companies.Application.Abstractions.Authentication;
 
 public interface ITokenService
 {

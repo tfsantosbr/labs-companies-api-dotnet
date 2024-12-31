@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Companies.Application.Abstractions.Database;
+﻿using Companies.Application.Abstractions.Database;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Abstractions.Results;
@@ -21,7 +20,7 @@ public class FindCompaniesQueryHandler(ICompaniesContext context) : IQueryHandle
 
         var total = await companies.CountAsync(cancellationToken: cancellationToken);
         var items = await companies
-            .Page(query.PageNumber,query.PageSize)
+            .Page(query.PageNumber, query.PageSize)
             .Select(c => new CompanyItem
             {
                 Id = c.Id,
@@ -61,5 +60,5 @@ public class FindCompaniesQueryHandler(ICompaniesContext context) : IQueryHandle
         return queryable;
     }
 
-    
+
 }

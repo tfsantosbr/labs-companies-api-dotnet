@@ -1,6 +1,6 @@
+using Companies.Application.Features.CompanyMainActivities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Companies.Application.Features.CompanyMainActivities;
 
 namespace Companies.Infrastructure.Contexts.Configurations;
 

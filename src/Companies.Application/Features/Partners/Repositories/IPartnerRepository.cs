@@ -1,5 +1,3 @@
-using Companies.Application.Features.Partners.Models;
-
 namespace Companies.Application.Features.Partners.Repositories;
 
 public interface IPartnerRepository

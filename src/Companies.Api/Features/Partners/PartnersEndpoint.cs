@@ -1,6 +1,6 @@
 ﻿using Companies.Api.Extensions;
 using Companies.Api.Extensions.Endpoints;
-using Companies.Api.Models.Partners;
+using Companies.Api.Features.Partners.Requests;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Abstractions.Pagination;
 using Companies.Application.Features.Partners.Command.CreatePartner;
@@ -8,7 +8,7 @@ using Companies.Application.Features.Partners.Command.RemovePartner;
 using Companies.Application.Features.Partners.Models;
 using Companies.Application.Features.Partners.Queries;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.Partners;
 
 public class PartnerEndpoints : IEndpointBuilder
 {

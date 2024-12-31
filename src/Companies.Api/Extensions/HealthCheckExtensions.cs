@@ -8,7 +8,7 @@ public static class HealthCheckExtensions
 {
     public static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        var postgresConnectionString = configuration.GetConnectionString("Postgres") ?? 
+        var postgresConnectionString = configuration.GetConnectionString("Postgres") ??
             throw new NullReferenceException("Postgres");
 
         services.AddHealthChecks()

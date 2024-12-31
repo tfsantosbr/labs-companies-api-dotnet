@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using System.Xml.Linq;
-using Companies.Application.Abstractions.Results;
+﻿using Companies.Application.Abstractions.Results;
 using Companies.Application.Abstractions.ValueObjects;
 
 namespace Companies.Application.Features.Companies.Constants
@@ -21,10 +19,10 @@ namespace Companies.Application.Features.Companies.Constants
 
         public static Error PartnerAlreadyLinkedWithCompany() =>
             new(nameof(PartnerAlreadyLinkedWithCompany), "This partner is already linked with this company.");
-        
+
         public static Error CompanyCnpjAlreadyExists(string cnpj) =>
             new(nameof(CompanyCnpjAlreadyExists), $"Company with cnpj '{cnpj}' already exists");
-        
+
         public static Error CompanyNameAlreadyExists(string name) =>
             new(nameof(CompanyNameAlreadyExists), $"Company with name '{name}' already exists");
 

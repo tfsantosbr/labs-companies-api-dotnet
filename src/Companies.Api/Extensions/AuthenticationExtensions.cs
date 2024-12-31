@@ -1,8 +1,8 @@
-﻿using Companies.Api.Services.Interfaces;
-using Companies.Api.Services;
+﻿using System.Text;
+using Companies.Application.Abstractions.Authentication;
+using Companies.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace Companies.Api.Extensions;
 

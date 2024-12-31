@@ -6,7 +6,7 @@ using Companies.Application.Abstractions.Validations;
 namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 
 public class ImportCompaniesCommandHandler(
-    IMessageBroker messageBroker, ICommandValidator<ImportCompaniesCommand> validator) 
+    IMessageBroker messageBroker, ICommandValidator<ImportCompaniesCommand> validator)
     : AbstractHandler, ICommandHandler<ImportCompaniesCommand>
 {
     public async Task<Result> HandleAsync(ImportCompaniesCommand command, CancellationToken cancellationToken = default)

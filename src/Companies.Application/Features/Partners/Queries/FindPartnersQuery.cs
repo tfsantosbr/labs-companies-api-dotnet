@@ -7,7 +7,7 @@ namespace Companies.Application.Features.Partners.Queries;
 
 public record FindPartnersQuery : SearchQuery, IQuery<IPagedList<PartnerItem>>
 {
-    public FindPartnersQuery(string? firstName, string? lastName, int? page, int? pageSize, string? orderBy) 
+    public FindPartnersQuery(string? firstName, string? lastName, int? page, int? pageSize, string? orderBy)
         : base(page, pageSize, orderBy)
     {
         FirstName = firstName;

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Companies.Application.Abstractions.Results;
+﻿using Companies.Application.Abstractions.Results;
 
 namespace Companies.Api.Extensions;
 

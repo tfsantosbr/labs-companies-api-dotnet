@@ -7,11 +7,10 @@ using Companies.Application.Features.CompanyPartnerQualifications;
 using Companies.Application.Features.Partners;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Companies.Infrastructure.Contexts;
 
-public class CompaniesContext(DbContextOptions<CompaniesContext> options, IPublisher publisher) 
+public class CompaniesContext(DbContextOptions<CompaniesContext> options, IPublisher publisher)
     : DbContext(options), ICompaniesContext
 {
     public DbSet<Company> Companies => Set<Company>();

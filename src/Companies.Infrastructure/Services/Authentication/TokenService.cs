@@ -1,21 +1,15 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
-using Companies.Api.Services.Interfaces;
-
+using Companies.Application.Abstractions.Authentication;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Companies.Api.Services;
+namespace Companies.Infrastructure.Services.Authentication;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration configuration) : ITokenService
 {
-    private readonly string _tokenSecret;
-
-    public TokenService(IConfiguration configuration)
-    {
-        _tokenSecret = configuration["JwtSettings:Secret"]!;
-    }
+    private readonly string _tokenSecret = configuration["JwtSettings:Secret"]!;
 
     public string GenerateToken(string userId, string userName, string userEmail)
     {
@@ -25,18 +19,18 @@ public class TokenService : ITokenService
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
+            Subject = new ClaimsIdentity(
+            [
                 new(ClaimTypes.NameIdentifier, userId),
                 new(ClaimTypes.Name, userName),
                 new(ClaimTypes.Email, userEmail),
-            }),
+            ]),
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials = signingCredentials
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        
+
         return tokenHandler.WriteToken(token);
     }
 

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Companies.Application.Features.Partners.Queries;
 
-public class FindPartnersQueryHandler(ICompaniesContext context) : 
+public class FindPartnersQueryHandler(ICompaniesContext context) :
     IQueryHandler<FindPartnersQuery, IPagedList<PartnerItem>>
 {
     // Implemenations

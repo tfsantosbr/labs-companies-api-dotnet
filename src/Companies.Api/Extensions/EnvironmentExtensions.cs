@@ -10,11 +10,11 @@ public static class EnvironmentExtensions
         {
             UseDevelopmentSettings(app);
         }
-        else if(environment.IsProduction())
+        else if (environment.IsProduction())
         {
             UseProductionSettings(app);
         }
-            
+
         return app;
     }
 

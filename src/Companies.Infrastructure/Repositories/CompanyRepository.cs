@@ -19,7 +19,7 @@ public class CompanyRepository(CompaniesContext context) : ICompanyRepository
             .AsNoTracking()
             .AnyAsync(company =>
                 company.Cnpj.Number == cnpj &&
-                (ignoredId == null || company.Id == ignoredId), 
+                (ignoredId == null || company.Id == ignoredId),
                 cancellationToken);
     }
 
@@ -30,7 +30,7 @@ public class CompanyRepository(CompaniesContext context) : ICompanyRepository
             .AsNoTracking()
             .AnyAsync(company =>
                 company.Name == name &&
-                (ignoredId == null || company.Id == ignoredId), 
+                (ignoredId == null || company.Id == ignoredId),
                 cancellationToken);
     }
 
@@ -46,7 +46,7 @@ public class CompanyRepository(CompaniesContext context) : ICompanyRepository
         return await context.Companies
             .Include(p => p.Phones)
             .Include(p => p.Partners)
-            .FirstOrDefaultAsync(c => c.Id == companyId, 
+            .FirstOrDefaultAsync(c => c.Id == companyId,
                 cancellationToken);
     }
 

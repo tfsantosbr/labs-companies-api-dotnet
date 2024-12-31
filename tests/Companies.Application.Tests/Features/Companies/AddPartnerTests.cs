@@ -1,4 +1,3 @@
-using Companies.Application.Features.Companies;
 using Companies.Application.Features.Companies.Constants;
 using Companies.Application.Tests.Features.Companies.Helpers;
 

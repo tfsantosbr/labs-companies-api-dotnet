@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Companies.Application.Abstractions.Models;
 using Companies.Application.Abstractions.Persistence;
 using Companies.Application.Abstractions.Validations;

@@ -3,7 +3,7 @@ using Companies.Application.Abstractions.Database;
 using Companies.Application.Features.CompanyMainActivities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.CompanyMainActivities;
 
 public class CompanyMainActivityEndpoints : IEndpointBuilder
 {

@@ -9,7 +9,7 @@ using Companies.Application.Features.Companies.Repositories;
 namespace Companies.Application.Features.Companies.Commands.UpdateCompany;
 
 public class UpdateCompanyCommandHandler(
-    ICommandValidator<UpdateCompanyCommand> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork) 
+    ICommandValidator<UpdateCompanyCommand> validator, ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
     : AbstractHandler, ICommandHandler<UpdateCompanyCommand>
 {
     // Implementations

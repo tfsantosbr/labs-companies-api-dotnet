@@ -3,7 +3,7 @@ using Companies.Application.Abstractions.Models;
 using Companies.Application.Features.Companies.Enums;
 using Companies.Application.Features.Companies.Models;
 
-namespace Companies.Api.Models.Companies;
+namespace Companies.Api.Features.Companies.Requests;
 
 public record CreateCompanyRequest(
     string Cnpj,

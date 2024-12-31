@@ -8,10 +8,10 @@ namespace Companies.Application.Features.Companies.Commands.ImportCompanies;
 public record ImportCompaniesCommand(CompanyToBeImported[] Companies) : ICommand;
 
 public record CompanyToBeImported(
-    string Cnpj, 
-    string Name, 
-    CompanyLegalNatureType LegalNature, 
-    int MainActivityId, 
-    AddressModel Address, 
-    CompanyPartnerModel[] Partners, 
+    string Cnpj,
+    string Name,
+    CompanyLegalNatureType LegalNature,
+    int MainActivityId,
+    AddressModel Address,
+    CompanyPartnerModel[] Partners,
     PhoneModel[] Phones);

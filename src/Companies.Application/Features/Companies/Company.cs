@@ -55,7 +55,7 @@ public class Company : AggregateRoot
     // Public Methods
 
     public static Result<Company> Create(
-        Cnpj cnpj, string name, CompanyLegalNatureType legalNature, 
+        Cnpj cnpj, string name, CompanyLegalNatureType legalNature,
         int mainActivityId, Address address, Guid? id = null)
     {
         var company = new Company(

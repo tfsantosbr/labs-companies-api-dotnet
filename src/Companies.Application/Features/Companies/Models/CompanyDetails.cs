@@ -4,7 +4,7 @@ using Companies.Application.Features.Companies.Enums;
 namespace Companies.Application.Features.Companies.Models;
 
 public record CompanyDetails(
-    Guid Id, string Cnpj, string Name, CompanyLegalNatureType LegalNature, int MainActivityId, 
+    Guid Id, string Cnpj, string Name, CompanyLegalNatureType LegalNature, int MainActivityId,
     AddressModel Address, DateTime CreatedAt, DateTime UpdatedAt, IEnumerable<CompanyPhoneModel> Phones)
 {
     public static CompanyDetails FromCompany(Company company) => new(

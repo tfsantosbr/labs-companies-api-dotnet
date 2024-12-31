@@ -1,6 +1,4 @@
 ﻿using Companies.Application.Abstractions.Persistence;
-using Companies.Application.Abstractions.Results;
-using Companies.Application.Features.Partners;
 using Companies.Application.Features.Partners.Command.RemovePartner;
 using Companies.Application.Features.Partners.Contants;
 using Companies.Application.Features.Partners.Repositories;

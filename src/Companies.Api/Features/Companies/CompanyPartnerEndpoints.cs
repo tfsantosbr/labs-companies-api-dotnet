@@ -1,6 +1,6 @@
 ﻿using Companies.Api.Extensions;
 using Companies.Api.Extensions.Endpoints;
-using Companies.Api.Models.Companies;
+using Companies.Api.Features.Companies.Requests;
 using Companies.Application.Abstractions.Handlers;
 using Companies.Application.Features.Companies.Commands.AddPartnerInCompany;
 using Companies.Application.Features.Companies.Commands.RemovePartnerFromCompany;
@@ -8,7 +8,7 @@ using Companies.Application.Features.Companies.Models;
 using Companies.Application.Features.Companies.Queries.FindCompanyPartnersQuery;
 using Companies.Application.Features.Partners.Models;
 
-namespace Companies.Api.Endpoints;
+namespace Companies.Api.Features.Companies;
 
 public class CompanyPartnerEndpoints : IEndpointBuilder
 {
